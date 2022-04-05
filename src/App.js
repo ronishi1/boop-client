@@ -29,8 +29,11 @@ import Login from './components/modals/Login';
 import SignUp from './components/modals/SignUp';
 import ResetPassword from './components/modals/ResetPassword';
 
+
+
 // FOR DEV PURPOSES DEFINITELY DELETE AFTER
 import Dev from './Dev';
+import StoryEditScreen from './components/story_edit/StoryEditScreen';
 const App = () => {
   return (
     <BrowserRouter>
@@ -56,6 +59,8 @@ const App = () => {
         <Route path="/resetpassword" element={<ResetPassword />} />
 
         <Route path="/dev" element={<Dev />} />
+
+        <Route path="/storyedit" element={<StoryEditScreen />} />
       </Routes>
     </BrowserRouter>
   );
