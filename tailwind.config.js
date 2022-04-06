@@ -11,6 +11,12 @@ module.exports = {
       height: {
         '192' : '48rem',
         '3/4-screen': '75vh',
+      },
+      colors: {
+        'comic': '#57C694',
+        'story' : '#D65A47',
+        'forum' : '#A38FDC',
+        'link' : '#3366BB',
       }
     },
   },
