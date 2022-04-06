@@ -34,6 +34,7 @@ import ResetPassword from './components/modals/ResetPassword';
 // FOR DEV PURPOSES DEFINITELY DELETE AFTER
 import Dev from './Dev';
 import StoryEditScreen from './components/story_edit/StoryEditScreen';
+import ComicEditScreen from './components/comic_edit/ComicEditScreen'
 const App = () => {
   return (
     <BrowserRouter>
@@ -61,6 +62,7 @@ const App = () => {
         <Route path="/dev" element={<Dev />} />
 
         <Route path="/storyedit" element={<StoryEditScreen />} />
+        <Route path="/comic_edit" element={<ComicEditScreen/>} />
       </Routes>
     </BrowserRouter>
   );
