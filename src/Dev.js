@@ -50,6 +50,9 @@ const Dev = () => {
       <button class="btn btn-primary px-16">
         <Link to="/update-account">Update Account</Link>
       </button>
+      <button class="btn btn-primary px-16">
+        <Link to="/storyedit"> Story Edit </Link>
+      </button>
       <div class="prose">
         <h2>Modals</h2>
       </div>
