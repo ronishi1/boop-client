@@ -1,5 +1,7 @@
 import React from 'react';
 import BrowseTrending from './BrowseTrending';
+import BrowsePopular from './BrowsePopular';
+import BrowseTopRated from './BrowseTopRated'
 import FilterDropDown from './FilterDropDown';
 
 const BrowseScreen = () => {
@@ -13,6 +15,10 @@ const BrowseScreen = () => {
         <FilterDropDown />
       </div>
       <BrowseTrending />
+      <br />
+      <BrowsePopular />
+      <br />
+      <BrowseTopRated />
     </div>
   );
 }
