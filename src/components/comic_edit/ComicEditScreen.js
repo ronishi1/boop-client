@@ -20,7 +20,6 @@ const ComicEditScreen = () => {
     //    with their attributes. 
     // Exporting to cloudinary should be done through by calling
     //  stageRef.current.toDataURL()
-    
     console.log(layerRef.current.children)
     console.log(stageRef.current.toDataURL())
   };
