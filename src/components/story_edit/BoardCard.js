@@ -1,8 +1,14 @@
 import React from "react";
 
-const BoardCard = ({ name, image }) => {
+const BoardCard = ({ name, image, renderItem }) => {
+  function handleClick() {
+    renderItem(name);
+  }
   return (
-    <div className="card text-primary-content text-center h-36 w-24 ">
+    <div
+      className="card text-primary-content text-center h-36 w-24 "
+      onClick={handleClick}
+    >
       <div
         className="card-body justify-end p-2 text-white"
         style={{

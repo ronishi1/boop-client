@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import BoardCard from "./BoardCard";
 
 const StoryBoardTool = () => {
+  const [item, setItem] = useState([]);
+
+  function renderItem(e) {
+    // console.log(e);
+    //const hold = characters.filter((char) => char.character_name === e);
+    setItem([0]);
+    //console.log(item);
+  }
   const characters = [
     {
       character_name: "Eren Yeager",
@@ -67,36 +75,84 @@ const StoryBoardTool = () => {
     },
   ];
 
-  return (
-    <div class="drawer-side ">
-      <label for="my-drawer-4" class="drawer-overlay"></label>
+  function handleBackButton() {
+    setItem([]);
+  }
+  let content;
+  console.log(item);
+  if (item.length !== 0)
+    content = (
+      <div class="drawer-side ">
+        <label for="my-drawer-4" class="drawer-overlay"></label>
 
-      <div class="p-4 overflow-y-auto w-1/4 bg-base-100 ">
-        <div>Characters </div>
-        <div class="grid grid-cols-4 ">
-          {characters.map((char) => (
-            <div class="inline-block px-2 py-2">
-              <BoardCard
-                name={char.character_name}
-                image={char.character_image}
+        <div class="p-4 overflow-y-auto w-1/4 bg-base-100 ">
+          <div onClick={handleBackButton}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M10 19l-7-7m0 0l7-7m-7 7h18"
               />
-            </div>
-          ))}
-        </div>
-        <div>Plot Points</div>
-        <div class="grid grid-cols-4 ">
-          {plotpoints.map((pp) => (
-            <div class="inline-block px-2 py-2">
-              <BoardCard
-                name={pp.plot_point_name}
-                image={pp.plot_point_image}
-              />
-            </div>
-          ))}
+            </svg>
+          </div>
+          <div>Eren Yeager</div>
+          <img src="https://pbs.twimg.com/media/FCulVSXXEAMe91s.jpg?name=small" />
+          <div>
+            Birthdate: March 30 Height: 183 cm (6'0") Weight: 63 kg (139 lbs)
+            Position: 104th Trainees Squad, Scouting Legion Graduation rank: 5th
+            Eren is Shingeki no Kyojin's protagonist. His childhood friend,
+            Mikasa, notes on numerous occasions that he acts on impulse without
+            thinking things through, and she often pulls/carries/throws him when
+            he starts fighting with others to protect him from himself. Along
+            with Mikasa, he tends to spend his free time with their mutual
+            friend, Armin. His father is a doctor (whom is well respected by
+            Hannes and potentially many more) whilst his mother is a housewife.
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  else
+    content = (
+      <div class="drawer-side ">
+        <label for="my-drawer-4" class="drawer-overlay"></label>
+
+        <div class="p-4 overflow-y-auto w-1/4 bg-base-100 ">
+          <div>Characters </div>
+          <div class="grid grid-flow-col ">
+            {characters.map((char) => (
+              <div class="inline-block px-2 py-2">
+                <BoardCard
+                  name={char.character_name}
+                  image={char.character_image}
+                  renderItem={renderItem}
+                />
+              </div>
+            ))}
+          </div>
+          <div>Plot Points</div>
+          <div class="grid grid-flow-col ">
+            {plotpoints.map((pp) => (
+              <div class="inline-block px-2 py-2">
+                <BoardCard
+                  name={pp.plot_point_name}
+                  image={pp.plot_point_image}
+                  renderItem={renderItem}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+
+  return content;
 };
 
 export default StoryBoardTool;
