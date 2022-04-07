@@ -21,8 +21,8 @@ const DiscussionPost = ({post}) => {
     <div className='flex flex-row h-full '>
       <img className="h-full object-contain" src={post.cover_image} alt="cover art"/>
       <div className='pl-2 text-xs w-full'>
-        <p className='text-secondary'>{post.title}</p>
-        <p>by: {post.author}</p>
+        <p className='card-title text-link'>{post.title}</p>
+        <p className='flex flex-row'>by: <p className='text-link'>{post.author}</p></p>
         <p>{formatDate()}</p>
       </div>
     </div>
