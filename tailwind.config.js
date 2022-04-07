@@ -17,10 +17,13 @@ module.exports = {
         'story' : '#D65A47',
         'forum' : '#A38FDC',
         'link' : '#3366BB',
+      },
+      lineClamp:{
+        9: '9'
       }
     },
   },
-  plugins: [require("@tailwindcss/typography"), require("daisyui")],
+  plugins: [require('@tailwindcss/line-clamp'),require("@tailwindcss/typography"), require("daisyui")],
   daisyui: {
    styled: true,
    themes: ["emerald"],
