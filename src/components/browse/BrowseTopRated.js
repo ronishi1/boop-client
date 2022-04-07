@@ -54,12 +54,10 @@ const BrowseTopRated = () => {
   return (
     <div>
       <p className="text-2xl">Top Rated</p>
-      <div class="carousel rounded-box">
-        <div className="flex flex-row space-x-3">
-          {data.map((content) => (
-            <ContentCard class="carousel-item" title={content.title} cover={content.cover_image} size="M" />
-          ))}
-        </div>
+      <div className="overflow-x-scroll flex flex-row space-x-3">
+        {data.map((content) => (
+          <ContentCard title={content.title} cover={content.cover_image} size="M" />
+        ))}
       </div>
     </div>
   );

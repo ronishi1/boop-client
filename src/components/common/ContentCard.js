@@ -1,4 +1,5 @@
 import React 	from 'react';
+import { Link } from "react-router-dom";
 
 const ContentCard = ({title,cover,size}) => {
   // Size will be S M L
@@ -13,20 +14,24 @@ const ContentCard = ({title,cover,size}) => {
   let contentCard;
   if(size == "S"){
     contentCard =
+        <Link to="/info">
           <div className="cursor-pointer card text-primary-content text-center h-36 w-24">
             <div className="card-body justify-end p-2 text-white" style={{background:`linear-gradient(180deg, hsl(0, 100%, 100%, 0), hsl(0, 0%, 0%, 0.65)),url(${cover}) no-repeat center center`,backgroundSize:"cover"}}>
               <div className="font-medium card-title block" style={{fontSize:".6rem",lineHeight:".5rem"}}>{title}</div>
             </div>
           </div>
+        </Link>
 
   }
   else if(size == "M"){
     contentCard =
+            <Link to="/info">
               <div className="cursor-pointer card text-primary-content text-center h-48 w-32">
                 <div className="card-body justify-end p-2 text-white" style={{background:`linear-gradient(180deg, hsl(0, 100%, 100%, 0), hsl(0, 0%, 0%, 0.65)),url(${cover}) no-repeat center center`,backgroundSize:"cover"}}>
                   <div className="font-medium card-title leading-4 text-xs block">{title}</div>
                 </div>
               </div>
+            </Link>
   }
 
   return (
