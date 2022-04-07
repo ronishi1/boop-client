@@ -60,9 +60,9 @@ const ContentInfoScreen = () => {
   const contentColor = () => {
     switch(data.content_type) {
       case "C":
-        return "primary";
+        return "comic";
       case "S":
-        return "accent"
+        return "story";
       default:
         return "";
     } 
@@ -76,15 +76,24 @@ const ContentInfoScreen = () => {
     return duplicatedChapters;
   }
 
+  const getContentColoredText = (text) => {
+    switch(data.content_type) {
+      case "C":
+        return (<p class="text-comic">{text}</p>);
+      case "S":
+        return (<p class="text-story">{text}</p>);
+      default:
+        return;
+    } 
+  }
+
   return (
     <div className="flex place-content-center">
       <div className="card w-288 h-192 bg-base-100 shadow-xl bg-secondary-content 
         grid grid-rows-6 grid-cols-6">
           <div className="card-title row-start-1 row-end-2 col-span-full p-5 border-b-2
           align-center">
-            <p className={"text-"+contentColor()}>
-              {data.title}
-            </p>
+            {getContentColoredText(data.title)}
           </div>
           <div className="card-body row-start-2 row-end-4 col-start-1 col-end-3 border-r-2
           px-4 py-4">
@@ -126,7 +135,7 @@ const ContentInfoScreen = () => {
             <label className="label">
               <span className="label-text">Rating: {data.current_rating}/10</span>
             </label>
-            <select className={"select w-1/2 max-w-xs select-"+contentColor()}>
+            <select className={"select select-bordered max-w-xs border-comic"}>
               <option disabled selected>Rate</option>
               <option>1</option>
               <option>2</option>
@@ -142,7 +151,7 @@ const ContentInfoScreen = () => {
           </div>
           <div className="card-body row-start-3 row-end-6 col-start-3 col-end-7">
           {/* DUPLICATE CHAPTERS TESTING PURPOSES ONLY */}
-            <ChapterTable chapters={duplicateChapters()} contentColor={contentColor()}/>
+            <ChapterTable chapters={duplicateChapters()}/>
           </div>
           <div className="card-body row-start-6 row-end-7 col-start-3 col-end-5 border-t-2 p-4">
             <DiscussionPost post={data.forumPosts[0]}/>
