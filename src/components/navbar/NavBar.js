@@ -3,7 +3,7 @@ import React 	from 'react';
 const NavBar = () => {
   // Might split into a logged in nav and logged out nav not sure
   return (
-    <div class="navbar bg-base-100">
+    <div class="navbar bg-base-100 drop-shadow mb-5">
       <div class="navbar-start">
         <div class="dropdown">
           <label tabindex="0" class="btn btn-ghost btn-circle">
