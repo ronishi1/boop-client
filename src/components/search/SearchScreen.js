@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import SearchEntry from './searchEntry';
 const SearchScreen = () => {
-    const [comic, toggleComic] = useState(false);
-    const [story, toggleStory] = useState(false);
-    const [forumPost, toggleForumPost] = useState(false);
+    const [comic, toggleComic] = useState(true);
+    const [story, toggleStory] = useState(true);
+    const [forumPost, toggleForumPost] = useState(true);
     const [searchQuery, setSearch] = useState('Spy');
     const [searchResults, setResults] = useState([])
-    
+    const [filterOptions, setFilter] = useState(new Set(["C", "S", "F"]))
+    // var filterOptions = new Set('C', 'S', 'F')
     const data = [
         {
             title: "Spy x Family",
@@ -106,16 +107,57 @@ const SearchScreen = () => {
         },
         
     ]
+    // filtered = []
+    const handleComic = (e) => {
+        if(comic) {
+            filterOptions.delete('C')
+        } 
+        else {
+            filterOptions.add('C')
+        }
+        toggleComic(!comic)
+        setFilter(filterOptions)
 
-
+    }
+    const handleStory = () => {
+        if(story) {
+            filterOptions.delete('S')
+        } 
+        else {
+            filterOptions.add('S')
+        }
+        
+        toggleStory(!story)
+        setFilter(filterOptions)
+    }
+    const handleForum = () => {
+        if(forumPost) {
+            filterOptions.delete('F')
+        } 
+        else {
+            filterOptions.add('F')
+        }
+        toggleForumPost(!forumPost)
+        setFilter(filterOptions)
+    }
     return (
         <div>
-            <div className="text-lg">
-                Search Results for <strong>{searchQuery}</strong>
+            <div className="grid sm:grid-cols-2">
+                <div className="text-lg">
+                    Search Results for <strong>{searchQuery}</strong>
+                </div>
+                <div>
+                    <button className={`${comic==true ? "bg-comic" : "bg-transparent"} text-white font-bold border border-comic hover:opacity-70 py-4 px-4 mr-4 rounded`} onClick={handleComic}></button>
+                    <button className={`${story==true ? "bg-story" : "bg-transparent"} text-white font-bold border border-story hover:opacity-70 py-4 px-4 mr-4 rounded`} onClick={handleStory}></button>
+                    <button className={`${forumPost==true ? "bg-forum" : "bg-transparent"} text-white font-bold border border-forum hover:opacity-70 py-4 px-4 mr-4 rounded`} onClick={handleForum}></button>
+                </div>
             </div>
             
-            <div className="grid lg:grid-cols-3 md:grid-cols-2">
-                {data.map((result,i) => (
+            <div className="grid pl-10 lg:grid-cols-3">
+                {data.filter(result => { 
+                    return filterOptions.has(result.content_type);
+                    })
+                    .map((result,i) => (
                     <SearchEntry 
                         key={i} 
                         cover={result.cover_image} 

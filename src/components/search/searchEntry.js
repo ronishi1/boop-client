@@ -8,8 +8,7 @@ const SearchEntry = ({cover, title, author, publicationDate, contentType, synops
         let month = publicationDate.getMonth()
         let day = publicationDate.getDate()
         let year = publicationDate.getYear()
-        console.log(month, day, year)
-        return month + "/" + day + "/" + year
+        return month + "/" + day + "/" + `${year + 1900}`
     } 
 
     const badgeColor = () => {
