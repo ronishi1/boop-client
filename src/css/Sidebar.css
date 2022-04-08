@@ -1,0 +1,12 @@
+input:checked ~ .dot {
+  transform: translateX(135%);
+  background-color: #D65A47;
+}
+
+input:not(:checked) ~ .dot {
+  background-color: #57C694;
+}
+
+input:checked ~ .dot-holder {
+  border-color: #D65A47
+}

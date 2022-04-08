@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import "./css/App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import BrowseScreen from "./components/browse/BrowseScreen";
@@ -36,9 +36,20 @@ import CancelPostModal from "./components/modals/CancelPostModal";
 import BoardAddModal from "./components/storyboardModals/BoardAddModal";
 import BoardEditModal from "./components/storyboardModals/BoardEditModal";
 const App = () => {
+
+  const [showSidebar, setShowSidebar] = useState(false);
+
+  const showSidebarCallback = () => {
+    setShowSidebar(true);
+  }
+
+  const hideSidebarCallback = () => {
+    setShowSidebar(false);
+  }
   return (
     <BrowserRouter>
-      <NavBar />
+      <NavBar showSidebarCallback={showSidebarCallback}/>
+      {showSidebar ? <SideBar showSidebar={showSidebar} hideSidebarCallback={hideSidebarCallback}/> : <></>}
       <Routes>
         <Route path="/" element={<HomeScreen />} />
         <Route path="/browse" element={<BrowseScreen />} />
