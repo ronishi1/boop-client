@@ -53,6 +53,9 @@ const Dev = () => {
       <button class="btn btn-primary px-16">
         <Link to="/storyedit"> Story Edit </Link>
       </button>
+      <button class="btn btn-primary px-16">
+        <Link to="/search"> Search </Link>
+      </button>
       <div class="prose">
         <h2>Modals</h2>
       </div>
