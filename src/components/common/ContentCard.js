@@ -21,7 +21,6 @@ const ContentCard = ({title,cover,size}) => {
             </div>
           </div>
         </Link>
-
   }
   else if(size == "M"){
     contentCard =

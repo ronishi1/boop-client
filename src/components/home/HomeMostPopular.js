@@ -74,22 +74,15 @@ const HomeMostPopular = () => {
   ]
   return (
     <div>
-      <div className="flex flex-row">
-        <div className="invisible">
-          <div className="btn btn-circle btn-sm">
-            <svg xmlns="http://www.w3.org/2000/svg" className="cursor-pointer h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </div>
-        </div>
-        <div className="ml-1.5 text-2xl">Most popular</div>
-
-      </div>
+      <div className="ml-10 text-2xl">Most popular</div>
       <Transition
         show={first}
         enter="transition-opacity duration-1000"
         enterFrom="opacity-0"
         enterTo="opacity-100"
+        leave="transition-opacity duration-0"
+        leaveFrom="opacity-100"
+        leaveTo="opacity-0"
       >
       <div className="flex flex-row overflow-x-scroll space-x-2">
         <div className="invisible">
@@ -116,6 +109,9 @@ const HomeMostPopular = () => {
         enter="transition-opacity duration-1000"
         enterFrom="opacity-0"
         enterTo="opacity-100"
+        leave="transition-opacity duration-0"
+        leaveFrom="opacity-100"
+        leaveTo="opacity-0"
       >
         <div className="flex flex-row overflow-x-scroll space-x-2">
           <div className="mt-[6.5rem]">
@@ -143,7 +139,7 @@ const HomeMostPopular = () => {
         enterFrom="opacity-0"
         enterTo="opacity-100"
       >
-        <div className="flex flex-row overflow-x-scroll space-x-2">
+        <div className="flex flex-row overflow-x-scroll space-x-2 mr-10">
           <div className="mt-[6.5rem]">
             <div className="btn btn-circle btn-sm" onClick={() => {setSecond(true);setThird(false);}}>
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={2}>
@@ -154,13 +150,6 @@ const HomeMostPopular = () => {
           {data.slice(6,9).map((content) => (
             <DetailedContentCard title={content.title} cover={content.cover_image} genres={content.genres} synopsis={content.synopsis} />
           ))}
-          <div className="invisible">
-            <div className="btn btn-circle btn-sm">
-              <svg xmlns="http://www.w3.org/2000/svg" className="cursor-pointer h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-              </svg>
-            </div>
-          </div>
         </div>
       </Transition>
 
