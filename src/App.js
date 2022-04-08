@@ -15,7 +15,7 @@ import HomeScreen from "./components/home/HomeScreen";
 import LandingScreen from "./components/landing/LandingScreen";
 import ProfileScreen from "./components/profile/ProfileScreen";
 import UpdateAccountScreen from "./components/update_account/UpdateAccountScreen";
-
+import SearchScreen from "./components/search/SearchScreen"
 // nav and sidebar, might also move or do something else with but will keep explicit path for dev purposes
 import NavBar from "./components/navbar/NavBar";
 import SideBar from "./components/sidebar/SideBar";
@@ -65,6 +65,8 @@ const App = () => {
         <Route path="/landing" element={<LandingScreen />} />
         <Route path="/profile" element={<ProfileScreen />} />
         <Route path="/update-account" element={<UpdateAccountScreen />} />
+        
+        <Route path="/search" element={<SearchScreen/>} />
 
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
