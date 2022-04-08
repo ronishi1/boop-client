@@ -7,7 +7,7 @@ const SideBar = ({showSidebar,hideSidebarCallback}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=312%3A4342
   // need logged in logged out version like nav, might split or do smthing else
   return (
-    <div className="fixed top-0">
+    <div className="absolute top-0">
       <Transition show={showSidebar} appear={true}>
             {/* Background overlay */}
             <Transition.Child
