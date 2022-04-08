@@ -33,6 +33,8 @@ import DeleteContentModal from "./components/modals/DeleteContentModal";
 import DeleteAccountModal from "./components/modals/DeleteAccountModal";
 import DeleteForumModal from "./components/modals/DeleteForumModal";
 import CancelPostModal from "./components/modals/CancelPostModal";
+import BoardAddModal from "./components/storyboardModals/BoardAddModal";
+import BoardEditModal from "./components/storyboardModals/BoardEditModal";
 const App = () => {
   return (
     <BrowserRouter>
@@ -92,6 +94,20 @@ const App = () => {
             </div>
           }
         />
+        <Route
+          path="/editboard"
+          element={
+            <div>
+              <BoardAddModal content="Character" modalName="add-char-modal" />
+              <BoardAddModal content="Plot Point" modalName="add-plot-modal" />
+              <BoardEditModal content="Character" modalName="edit-char-modal" />
+              <BoardEditModal
+                content="Plot Point"
+                modalName="edit-plot-modal"
+              />
+            </div>
+          }
+        ></Route>
       </Routes>
     </BrowserRouter>
   );
