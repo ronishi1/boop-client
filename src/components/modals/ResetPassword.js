@@ -2,18 +2,20 @@ import React, { useState } from "react";
 
 const ResetPassword = () => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=208%3A435
-
-  const [inputs, setInputs] = useState({});
-  function handleSubmit(event) {
-    console.log(inputs);
-    //inputs.map((input) => (input = ""));
+  const [checked, setChecked] = useState(false);
+  function handleChecked() {
+    setChecked(!checked);
   }
-  const handleChange = (event) => {
-    //console.log(inputs);
-    const name = event.target.name;
-    const value = event.target.value;
-    setInputs((values) => ({ ...values, [name]: value }));
-  };
+
+  const [email, setEmail] = useState("");
+
+  function handleSubmit(e) {
+    console.log(email);
+    e.preventDefault();
+    setEmail("");
+    setChecked(false);
+  }
+
   return (
     <div>
       {/* I think we can just move this button to the navbar we might have to rename id */}
@@ -21,7 +23,13 @@ const ResetPassword = () => {
         open modal
       </label>
 
-      <input type="checkbox" id="reset-password-modal" class="modal-toggle" />
+      <input
+        type="checkbox"
+        id="reset-password-modal"
+        class="modal-toggle"
+        checked={checked}
+        onClick={handleChecked}
+      />
 
       <label for="reset-password-modal" class="modal cursor-pointer">
         <label class="modal-box w-1/2 max-w-full h-2/5 max-h-full grid place-items-center items-center">
@@ -56,11 +64,15 @@ const ResetPassword = () => {
                 type="text"
                 placeholder="Email"
                 name="email"
-                value={inputs.email || ""}
-                onChange={handleChange}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 class="input input-bordered w-4/5 focus:outline-none"
               />
-              <button class="btn border-none bg-forum" type="submit">
+              <button
+                class="btn border-none bg-forum"
+                type="submit"
+                onClick={handleChecked}
+              >
                 Reset Password
               </button>
             </div>
