@@ -1,11 +1,15 @@
 import React 	from 'react';
 
-const ProfileFavorites = () => {
+const ProfileFavorites = ({favorites}) => {
   // Holds the users favorites
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=330%3A2331
   return (
-    <div>
-      <h1>Profile Favorites Filler</h1>
+    <div className='flex flex-row space-x-2 overflow-x-auto'>
+      {favorites.map((content) => {
+        return <div className='h-20 w-16'>
+          <img className={'h-full w-full object-cover border-2 border-'+content.content_color} src={content.cover_art}/>
+        </div>
+      })}
     </div>
   );
 }
