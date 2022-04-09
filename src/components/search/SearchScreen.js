@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import SearchEntry from './searchEntry';
+import SearchEntry from './SearchEntry';
 const SearchScreen = () => {
     const [comic, toggleComic] = useState(true);
     const [story, toggleStory] = useState(true);
@@ -7,7 +7,7 @@ const SearchScreen = () => {
     const [searchQuery, setSearch] = useState('Spy');
     const [searchResults, setResults] = useState([])
     const [filterOptions, setFilter] = useState(new Set(["C", "S", "F"]))
-    // var filterOptions = new Set('C', 'S', 'F')
+
     const data = [
         {
             title: "Spy x Family",
@@ -107,8 +107,7 @@ const SearchScreen = () => {
         },
         
     ]
-    // filtered = []
-    const handleComic = (e) => {
+    const handleComic = () => {
         if(comic) {
             filterOptions.delete('C')
         } 
@@ -140,6 +139,17 @@ const SearchScreen = () => {
         toggleForumPost(!forumPost)
         setFilter(filterOptions)
     }
+    const handleClick = (contentType) => {
+        if (contentType=="S") {
+            if(story) {
+                filterOptions.delete('S')
+            } 
+            else {
+                filterOptions.add('S')
+            }
+            
+        }
+    }
     return (
         <div>
             <div className="grid sm:grid-cols-2">
@@ -148,7 +158,7 @@ const SearchScreen = () => {
                 </div>
                 <div>
                     <button className={`${comic==true ? "bg-comic" : "bg-transparent"} text-white font-bold border border-comic hover:opacity-70 py-4 px-4 mr-4 rounded`} onClick={handleComic}></button>
-                    <button className={`${story==true ? "bg-story" : "bg-transparent"} text-white font-bold border border-story hover:opacity-70 py-4 px-4 mr-4 rounded`} onClick={handleStory}></button>
+                    <button className={`${story==true ? "bg-story" : "bg-transparent"} text-white font-bold border border-story hover:opacity-70 py-4 px-4 mr-4 rounded`} onClick={() => handleClick('S')}></button>
                     <button className={`${forumPost==true ? "bg-forum" : "bg-transparent"} text-white font-bold border border-forum hover:opacity-70 py-4 px-4 mr-4 rounded`} onClick={handleForum}></button>
                 </div>
             </div>

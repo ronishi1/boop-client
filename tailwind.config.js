@@ -17,6 +17,9 @@ module.exports = {
         'story' : '#D65A47',
         'forum' : '#A38FDC',
         'link' : '#3366BB',
+        'spoiler' : '#F24E1E',
+        'nsfw' : '#BE1111',
+        'discussion' : '#3366BB'
       },
       lineClamp:{
         9: '9'
