@@ -19,7 +19,8 @@ module.exports = {
         'link' : '#3366BB',
         'spoiler' : '#F24E1E',
         'nsfw' : '#BE1111',
-        'discussion' : '#3366BB'
+        'discussion' : '#3366BB',
+        'icon-grey' : "#737373"
       },
       lineClamp:{
         9: '9'

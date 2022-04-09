@@ -36,6 +36,20 @@ import CancelPostModal from "./components/modals/CancelPostModal";
 import BoardAddModal from "./components/storyboardModals/BoardAddModal";
 import BoardEditModal from "./components/storyboardModals/BoardEditModal";
 const App = () => {
+  // Might be replacing this into a constant variable later when we incorporate the get_current_user query
+  const [auth,setAuth] = useState(false);
+
+  // LOGIN MODAL CODE
+  const [showLogin, setShowLogin] = useState(false);
+  const toggleLoginCallback = () => {
+    setShowLogin(!showLogin);
+  }
+
+  // Temporary for now, will probably delete when login functionality works and auto refetch user query
+  const loginCallback = () => {
+    setAuth(true);
+  }
+
 
   const [showSidebar, setShowSidebar] = useState(false);
 
@@ -48,10 +62,27 @@ const App = () => {
   }
   return (
     <BrowserRouter>
-      <NavBar showSidebarCallback={showSidebarCallback}/>
-      {showSidebar ? <SideBar showSidebar={showSidebar} hideSidebarCallback={hideSidebarCallback}/> : <></>}
+      <NavBar
+        showSidebarCallback={showSidebarCallback}
+        auth={auth}
+        toggleLoginCallback={toggleLoginCallback}
+      />
+      <div>
+        <input
+          type="checkbox"
+          id="login-modal"
+          class="modal-toggle"
+          checked={showLogin}
+        />
+      <label for="login-modal" class="modal cursor-pointer">
+          <label class="modal-box">
+            <Login toggleLoginCallback={toggleLoginCallback} loginCallback={loginCallback}/>
+          </label>
+      </label>
+      </div>
+      {showSidebar ? <SideBar auth={auth} showSidebar={showSidebar} hideSidebarCallback={hideSidebarCallback}/> : <></>}
       <Routes>
-        <Route path="/" element={<HomeScreen />} />
+        <Route path="/" element={<HomeScreen auth={auth}/>} />
         <Route path="/browse" element={<BrowseScreen />} />
         <Route path="/info" element={<ContentInfoScreen />} />
         <Route path="/view" element={<ContentViewScreen />} />
@@ -65,7 +96,7 @@ const App = () => {
         <Route path="/landing" element={<LandingScreen />} />
         <Route path="/profile" element={<ProfileScreen />} />
         <Route path="/update-account" element={<UpdateAccountScreen />} />
-        
+
         <Route path="/search" element={<SearchScreen/>} />
 
         <Route path="/login" element={<Login />} />
