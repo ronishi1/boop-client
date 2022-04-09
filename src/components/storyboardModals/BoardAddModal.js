@@ -57,7 +57,7 @@ const BoardAddModal = ({ content, modalName }) => {
       />
 
       <label for={modalName} class="modal cursor-pointer">
-        <label class="modal-box w-5/12 max-w-full h-1/2  ">
+        <label class="modal-box w-5/12 max-w-full h-5/12  ">
           <form class="w-full h-full" onSubmit={handleSubmit}>
             <div class="grid items-center space-y-4 ">
               <div class="w-full flex flex-row justify-between ">
