@@ -1,6 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 
 const DeleteContentModal = ({ title, modalName, content }) => {
+  const [checked, setChecked] = useState(false);
+  function handleChecked() {
+    setChecked(!checked);
+    setItem("");
+  }
+
+  const [item, setItem] = useState("");
+
+  function handleSubmit(e) {
+    console.log(item);
+    e.preventDefault();
+    setItem("");
+    setChecked(false);
+  }
   function borderColor() {
     if (content === "comic") return `border-[#57C694]`;
     if (content === "story") return `border-[#D65A47]`;
@@ -21,11 +35,20 @@ const DeleteContentModal = ({ title, modalName, content }) => {
         {content}
       </label>
 
-      <input type="checkbox" id={modalName} class="modal-toggle" />
+      <input
+        type="checkbox"
+        id={modalName}
+        class="modal-toggle"
+        checked={checked}
+        onClick={handleChecked}
+      />
 
       <label for={modalName} class="modal cursor-pointer">
         <label class="modal-box w-1/4 max-w-full h-1/4 max-h-full grid place-items-center items-center">
-          <form class="w-full h-full grid place-items-center items-center">
+          <form
+            class="w-full h-full grid place-items-center items-center"
+            onSubmit={handleSubmit}
+          >
             <label class="absolute top-6 right-8 " for={modalName}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -54,6 +77,8 @@ const DeleteContentModal = ({ title, modalName, content }) => {
                 placeholder={`Type in the name of the ${content} to confirm`}
                 name="deleteItem"
                 class={`input  w-11/12 focus:outline-none border  ${borderColor()}`}
+                value={item}
+                onChange={(e) => setItem(e.target.value)}
               />
               <span class="w-full flex auto-cols-auto place-items-center items-center ">
                 <label

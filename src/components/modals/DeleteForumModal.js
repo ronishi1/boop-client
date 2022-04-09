@@ -1,6 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 
 const DeleteForumModal = ({ title }) => {
+  const [checked, setChecked] = useState(false);
+
+  function handleChecked() {
+    setChecked(!checked);
+  }
+
+  function handleSubmit(e) {
+    console.log(title);
+    e.preventDefault();
+    setChecked(!checked);
+  }
   return (
     <div>
       {/* I think we can just move this button to the navbar we might have to rename id */}
@@ -8,11 +19,20 @@ const DeleteForumModal = ({ title }) => {
         Delete Forum
       </label>
 
-      <input type="checkbox" id="delete-forum-modal" class="modal-toggle" />
+      <input
+        type="checkbox"
+        id="delete-forum-modal"
+        class="modal-toggle"
+        checked={checked}
+        onClick={handleChecked}
+      />
 
       <label for="delete-forum-modal" class="modal cursor-pointer">
         <label class="modal-box w-1/3 max-w-full h-5/12 max-h-full grid place-items-center items-center ">
-          <form class="w-full h-full grid place-items-center items-center">
+          <form
+            class="w-full h-full grid place-items-center items-center"
+            onSubmit={handleSubmit}
+          >
             <label class="absolute top-6 right-8 " for="delete-forum-modal">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

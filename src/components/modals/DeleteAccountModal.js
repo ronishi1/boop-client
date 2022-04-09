@@ -1,6 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 
 const DeleteAccountModal = () => {
+  const [checked, setChecked] = useState(false);
+  function handleChecked() {
+    setChecked(!checked);
+    setPassword("");
+  }
+  const [password, setPassword] = useState("");
+
+  function handleSubmit(e) {
+    console.log(password);
+    e.preventDefault();
+    setPassword("");
+    setChecked(false);
+  }
   return (
     <div>
       {/* I think we can just move this button to the navbar we might have to rename id */}
@@ -8,12 +21,21 @@ const DeleteAccountModal = () => {
         Delete Account
       </label>
 
-      <input type="checkbox" id="account-delete-modal" class="modal-toggle" />
+      <input
+        type="checkbox"
+        id="account-delete-modal"
+        class="modal-toggle"
+        checked={checked}
+        onClick={handleChecked}
+      />
 
       <label for="account-delete-modal" class="modal cursor-pointer">
         <label class="modal-box w-1/4 max-w-full h-1/4 max-h-full grid place-items-center items-center">
-          <form class="w-full h-full grid place-items-center items-center">
-            <label class="absolute top-6 right-8 " for="account-delete-modal">
+          <form
+            class="w-full h-full grid place-items-center items-center"
+            onSubmit={handleSubmit}
+          >
+            <label class="absolute top-6 right-8 " onClick={handleChecked}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"
@@ -40,10 +62,12 @@ const DeleteAccountModal = () => {
                 </h3>
               </div>
               <input
-                type="text"
+                type="password"
                 placeholder="Password"
                 name="password"
                 class="input input-bordered w-4/5 focus:outline-none"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <button
                 class="btn btn-outline border-story  text-story"

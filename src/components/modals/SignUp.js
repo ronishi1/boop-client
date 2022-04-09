@@ -6,6 +6,14 @@ const SignUp = () => {
   const [checked, setChecked] = useState(false);
   function handleChecked() {
     setChecked(!checked);
+    setInputValues({
+      firstname: "",
+      lastname: "",
+      emailaddress: "",
+      username: "",
+      createpassword: "",
+      confirmpassword: "",
+    });
   }
   const [inputValues, setInputValues] = useState({
     firstname: "",
@@ -58,7 +66,7 @@ const SignUp = () => {
             class="w-full h-full grid place-items-center items-center"
             onSubmit={handleSubmit}
           >
-            <label class="absolute top-6 right-8 " for="signup-modal">
+            <label class="absolute top-6 right-8 " onClick={handleChecked}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"
@@ -142,7 +150,7 @@ const SignUp = () => {
               <span class="w-full flex auto-cols-auto place-items-center items-center ">
                 <label
                   class="text-zinc-400 text-sm absolute bottom-10 left-20"
-                  for="signup-modal"
+                  onClick={handleChecked}
                 >
                   Cancel
                 </label>

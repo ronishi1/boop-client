@@ -5,6 +5,7 @@ const ResetPassword = () => {
   const [checked, setChecked] = useState(false);
   function handleChecked() {
     setChecked(!checked);
+    setEmail("");
   }
 
   const [email, setEmail] = useState("");
@@ -68,11 +69,7 @@ const ResetPassword = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 class="input input-bordered w-4/5 focus:outline-none"
               />
-              <button
-                class="btn border-none bg-forum"
-                type="submit"
-                onClick={handleChecked}
-              >
+              <button class="btn border-none bg-forum" type="submit">
                 Reset Password
               </button>
             </div>

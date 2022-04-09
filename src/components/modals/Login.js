@@ -5,6 +5,8 @@ const Login = () => {
   const [checked, setChecked] = useState(false);
   function handleChecked() {
     setChecked(!checked);
+    setUsername("");
+    setPassword("");
   }
 
   const [username, setUsername] = useState("");
@@ -38,7 +40,7 @@ const Login = () => {
             class="w-full h-full grid place-items-center items-center m-4"
             onSubmit={handleSubmit}
           >
-            <label class="absolute top-6 right-8 " for="signup-modal">
+            <label class="absolute top-6 right-8 " onClick={handleChecked}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"
@@ -96,14 +98,13 @@ const Login = () => {
               <span class="w-full flex auto-cols-auto place-items-center items-center ">
                 <label
                   class="text-zinc-400 text-sm absolute bottom-12 left-20"
-                  for="signup-modal"
+                  onClick={handleChecked}
                 >
                   Cancel
                 </label>
                 <button
                   class="btn border-none bg-forum absolute bottom-8 right-[72px]"
                   type="submit"
-                  onClick={handleChecked}
                 >
                   Create
                 </button>
