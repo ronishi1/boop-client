@@ -50,7 +50,7 @@ const ForumCreateScreen = () => {
   }
   return (
     <div>
-    <form className="w-full h-full m-4" onSubmit={handleSubmit}>
+    <form className="w-full h-full m-1.5" onSubmit={handleSubmit}>
       <label for="forum-modal" className="btn modal-button">Create Forum Post</label>
 
       <input type="checkbox" id="forum-modal" className="modal-toggle w-max"/>
