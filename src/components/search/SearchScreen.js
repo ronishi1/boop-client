@@ -107,49 +107,37 @@ const SearchScreen = () => {
         },
         
     ]
-    const handleComic = () => {
-        if(comic) {
-            filterOptions.delete('C')
-        } 
-        else {
-            filterOptions.add('C')
-        }
-        toggleComic(!comic)
-        setFilter(filterOptions)
 
-    }
-    const handleStory = () => {
-        if(story) {
-            filterOptions.delete('S')
-        } 
-        else {
-            filterOptions.add('S')
-        }
-        
-        toggleStory(!story)
-        setFilter(filterOptions)
-    }
-    const handleForum = () => {
-        if(forumPost) {
-            filterOptions.delete('F')
-        } 
-        else {
-            filterOptions.add('F')
-        }
-        toggleForumPost(!forumPost)
-        setFilter(filterOptions)
-    }
     const handleClick = (contentType) => {
-        if (contentType=="S") {
-            if(story) {
-                filterOptions.delete('S')
+        if (contentType == "C") {
+            if (comic) {
+                filterOptions.delete('C')
             } 
+            else {
+                filterOptions.add('C')
+            }
+            toggleComic(!comic)
+        } 
+        else if (contentType == "S") {
+            if (story) {
+                filterOptions.delete('S')
+            }
             else {
                 filterOptions.add('S')
             }
-            
+            toggleStory(!story)
+        }
+        else if (contentType == "F") {
+            if (forumPost) {
+                filterOptions.delete('F')
+            }
+            else {
+                filterOptions.add('F')
+            }
+            toggleForumPost(!forumPost)
         }
     }
+    
     return (
         <div>
             <div className="grid sm:grid-cols-2">
@@ -157,9 +145,9 @@ const SearchScreen = () => {
                     Search Results for <strong>{searchQuery}</strong>
                 </div>
                 <div>
-                    <button className={`${comic==true ? "bg-comic" : "bg-transparent"} text-white font-bold border border-comic hover:opacity-70 py-4 px-4 mr-4 rounded`} onClick={handleComic}></button>
+                    <button className={`${comic==true ? "bg-comic" : "bg-transparent"} text-white font-bold border border-comic hover:opacity-70 py-4 px-4 mr-4 rounded`} onClick={() => handleClick('C')}></button>
                     <button className={`${story==true ? "bg-story" : "bg-transparent"} text-white font-bold border border-story hover:opacity-70 py-4 px-4 mr-4 rounded`} onClick={() => handleClick('S')}></button>
-                    <button className={`${forumPost==true ? "bg-forum" : "bg-transparent"} text-white font-bold border border-forum hover:opacity-70 py-4 px-4 mr-4 rounded`} onClick={handleForum}></button>
+                    <button className={`${forumPost==true ? "bg-forum" : "bg-transparent"} text-white font-bold border border-forum hover:opacity-70 py-4 px-4 mr-4 rounded`} onClick={() => handleClick('F')}></button>
                 </div>
             </div>
             
