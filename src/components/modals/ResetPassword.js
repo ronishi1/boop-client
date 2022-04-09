@@ -1,44 +1,26 @@
 import React, { useState } from "react";
 
-const ResetPassword = () => {
+const ResetPassword = ({toggleResetPasswordCallback}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=208%3A435
-  const [checked, setChecked] = useState(false);
-  function handleChecked() {
-    setChecked(!checked);
-    setEmail("");
-  }
-
   const [email, setEmail] = useState("");
 
   function handleSubmit(e) {
     console.log(email);
     e.preventDefault();
     setEmail("");
-    setChecked(false);
+    toggleResetPasswordCallback(false);
   }
 
   return (
     <div>
-      {/* I think we can just move this button to the navbar we might have to rename id */}
-      <label for="reset-password-modal" class="btn modal-button">
-        open modal
-      </label>
-
-      <input
-        type="checkbox"
-        id="reset-password-modal"
-        class="modal-toggle"
-        checked={checked}
-        onClick={handleChecked}
-      />
-
-      <label for="reset-password-modal" class="modal cursor-pointer">
-        <label class="modal-box w-1/2 max-w-full h-2/5 max-h-full grid place-items-center items-center">
-          <form
-            class="w-full h-full grid place-items-center items-center"
-            onSubmit={handleSubmit}
-          >
-            <label class="absolute top-6 right-8 " for="reset-password-modal">
+      <form
+        class="w-full h-full m-1.5"
+        onSubmit={handleSubmit}
+      >
+        <div class="grid items-center space-y-4 p-4 mr-8 ml-8">
+          <div class="w-full flex flex-row justify-between">
+            <div class="text-left text-xl font-medium">Reset Password</div>
+            <div className="cursor-pointer" onClick={() => {toggleResetPasswordCallback(false)}}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"
@@ -53,29 +35,21 @@ const ResetPassword = () => {
                   d="M6 18L18 6M6 6l12 12"
                 />
               </svg>
-            </label>
-
-            <div class="w-full grid place-items-center items-center space-y-4">
-              <div class="place-items-start w-full">
-                <h3 class="text-left indent-24 text-lg font-medium">
-                  Reset Password
-                </h3>
-              </div>
-              <input
-                type="text"
-                placeholder="Email"
-                name="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                class="input input-bordered w-4/5 focus:outline-none"
-              />
-              <button class="btn border-none bg-forum" type="submit">
-                Reset Password
-              </button>
             </div>
-          </form>
-        </label>
-      </label>
+          </div>
+          <input
+            type="text"
+            placeholder="Email"
+            name="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            class="input input-bordered focus:outline-none"
+          />
+        <button class="btn border-none bg-forum" type="submit">
+            Reset Password
+          </button>
+        </div>
+      </form>
     </div>
   );
 };

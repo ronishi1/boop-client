@@ -32,6 +32,16 @@ const ContentCard = ({title,cover,size}) => {
               </div>
             </Link>
   }
+  else if(size == "L"){
+    contentCard =
+            <Link to="/info">
+              <div className="cursor-pointer card text-primary-content text-center h-60 w-40">
+                <div className="card-body justify-end p-2 text-white" style={{background:`linear-gradient(180deg, hsl(0, 100%, 100%, 0), hsl(0, 0%, 0%, 0.65)),url(${cover}) no-repeat center center`,backgroundSize:"cover"}}>
+                  <div className="font-medium card-title leading-4 text-sm block">{title}</div>
+                </div>
+              </div>
+            </Link>
+  }
 
   return (
     <div>

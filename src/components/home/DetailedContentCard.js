@@ -1,4 +1,5 @@
 import React 	from 'react';
+import { Link } from "react-router-dom";
 
 const DetailedContentCard = ({title,cover,genres,synopsis}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=211%3A556

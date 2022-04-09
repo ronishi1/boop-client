@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-const Login = ({toggleLoginCallback, toggleSignUpCallback, loginCallback}) => {
+const Login = ({toggleLoginCallback, toggleSignUpCallback, toggleResetPasswordCallback, loginCallback}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=208%3A348
 
   const [username, setUsername] = useState("");
@@ -69,9 +69,9 @@ const Login = ({toggleLoginCallback, toggleSignUpCallback, loginCallback}) => {
             />
           </span>
           <div class="w-full">
-            <a class="text-forum text-xs pl-1" href="./resetpassword">
+            <div class="text-forum text-xs pl-1 cursor-pointer" onClick={() => {toggleResetPasswordCallback(true)}}>
               Forgot Password
-            </a>
+            </div>
           </div>
 
           <span class="w-full flex flex-row justify-between items-center">

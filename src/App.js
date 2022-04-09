@@ -16,6 +16,8 @@ import LandingScreen from "./components/landing/LandingScreen";
 import ProfileScreen from "./components/profile/ProfileScreen";
 import UpdateAccountScreen from "./components/update_account/UpdateAccountScreen";
 import SearchScreen from "./components/search/SearchScreen"
+import FavoritesScreen from './components/profile_lists/FavoritesScreen';
+import ReadListScreen from './components/profile_lists/ReadListScreen';
 // nav and sidebar, might also move or do something else with but will keep explicit path for dev purposes
 import NavBar from "./components/navbar/NavBar";
 import SideBar from "./components/sidebar/SideBar";
@@ -42,6 +44,7 @@ const App = () => {
   // MODAL CODE
   const [showLogin, setShowLogin] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
+  const [showResetPassword, setShowResetPassword] = useState(false);
 
   const toggleLoginCallback = (show) => {
     setShowLogin(show);
@@ -52,6 +55,13 @@ const App = () => {
 
   const toggleSignUpCallback = (show) => {
     setShowSignUp(show);
+    if(show){
+      setShowLogin(false);
+    }
+  }
+
+  const toggleResetPasswordCallback = (show) => {
+    setShowResetPassword(show);
     if(show){
       setShowLogin(false);
     }
@@ -88,6 +98,22 @@ const App = () => {
       <div>
         <input
           type="checkbox"
+          id="reset-password-modal"
+          class="modal-toggle"
+          checked={showResetPassword}
+          onClick={() => {toggleResetPasswordCallback(false)}}
+        />
+
+        <label for="reset-password-modal" class="modal cursor-pointer">
+          <label class="modal-box w-4/12 max-w-5xl">
+            <ResetPassword
+              toggleResetPasswordCallback={toggleResetPasswordCallback}/>
+          </label>
+        </label>
+      </div>
+      <div>
+        <input
+          type="checkbox"
           id="login-modal"
           class="modal-toggle"
           checked={showLogin}
@@ -98,6 +124,7 @@ const App = () => {
             <Login
               toggleLoginCallback={toggleLoginCallback}
               toggleSignUpCallback={toggleSignUpCallback}
+              toggleResetPasswordCallback={toggleResetPasswordCallback}
               loginCallback={authTrueCallback}/>
           </label>
       </label>
@@ -141,6 +168,8 @@ const App = () => {
         <Route path="/topic" element={<ForumTopicScreen />} />
         <Route path="/landing" element={<LandingScreen />} />
         <Route path="/profile" element={<ProfileScreen />} />
+        <Route path="/favorites" element={<FavoritesScreen />} />
+        <Route path="/read-list" element={<ReadListScreen />} />
         <Route path="/update-account" element={<UpdateAccountScreen />} />
 
         <Route path="/search" element={<SearchScreen/>} />
