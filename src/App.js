@@ -18,6 +18,8 @@ import UpdateAccountScreen from "./components/update_account/UpdateAccountScreen
 import SearchScreen from "./components/search/SearchScreen"
 import FavoritesScreen from './components/profile_lists/FavoritesScreen';
 import ReadListScreen from './components/profile_lists/ReadListScreen';
+import AboutScreen from './components/about/AboutScreen';
+import HelpScreen from './components/help/HelpScreen';
 // nav and sidebar, might also move or do something else with but will keep explicit path for dev purposes
 import NavBar from "./components/navbar/NavBar";
 import SideBar from "./components/sidebar/SideBar";
@@ -74,6 +76,7 @@ const App = () => {
 
   const authFalseCallback = () => {
     setAuth(false);
+
   }
 
 
@@ -173,10 +176,8 @@ const App = () => {
         <Route path="/update-account" element={<UpdateAccountScreen />} />
 
         <Route path="/search" element={<SearchScreen/>} />
-
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/resetpassword" element={<ResetPassword />} />
+        <Route path="/about" element={<AboutScreen />} />
+        <Route path="/help" element={<HelpScreen />} />
 
         <Route path="/dev" element={<Dev />} />
 

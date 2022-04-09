@@ -8,8 +8,10 @@ const HomeScreen = ({auth}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=207%3A324
   return (
     <div className="container mx-auto">
-      {auth ? <HomeReadList /> : <></>}
       <div className="grid grid-flow-row auto-rows-max gap-6">
+        <div>
+          {auth ? <HomeReadList /> : <></>}
+        </div>
         <div className="h-64">
           <HomeMostPopular />
         </div>
