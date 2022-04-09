@@ -8,7 +8,7 @@ const ForumTopicScreen = () => {
     topic_description: "this is the description of topic title",
     topic_color: "comic",
     topic_posts: [{
-      cover_image: "https://i.pinimg.com/originals/66/6e/59/666e59a6a8e6982d099a552eb6cdd99f.jpg",
+      cover_image: "http://animeushi.com/wp-content/uploads/2018/07/kaguyasama.jpg",
       title: "sample post 1",
       replies: [{},{},{},{},{},{}],
       tags: ["Discussion","Spoilers"],
@@ -16,7 +16,7 @@ const ForumTopicScreen = () => {
       author: "post author",
       recent_post: new Date(2022,4,16,4,17),
     },{
-      cover_image: "https://i.pinimg.com/originals/0d/19/39/0d1939679a3a4377383d5c38f928d5d8.jpg",
+      cover_image: "http://animeushi.com/wp-content/uploads/2018/07/kaguyasama.jpg",
       title: "sample post 2",
       replies: [{},{},{},],
       tags: ["Discussion","Spoilers"],
