@@ -79,7 +79,7 @@ const BoardEditModal = ({ content, modalName }) => {
                 <h3 class="text-left text-xl font-bold">
                   Edit "{inputValues.character_name}" ?
                 </h3>
-                <label onClick={handleChecked}>
+                <label onClick={handleChecked} class="cursor-pointer">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-6 w-6"
@@ -145,13 +145,13 @@ const BoardEditModal = ({ content, modalName }) => {
               </div>
               <div class="w-full h-full flex flex-row justify-between items-end ">
                 <label
-                  class="text-zinc-400 text-baseline "
+                  class="text-zinc-400 text-baseline cursor-pointer"
                   onClick={handleChecked}
                 >
                   Cancel
                 </label>
                 <label
-                  class="text-story text-baseline font-bold"
+                  class="text-story text-baseline font-bold cursor-pointer"
                   onClick={handleDelete}
                 >
                   DELETE

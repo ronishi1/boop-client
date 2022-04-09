@@ -33,7 +33,7 @@ const CancelPostModal = () => {
             <div class="grid items-center space-y-4 ">
               <div class="w-full flex flex-row justify-between ">
                 <h3 class="font-bold text-xl">Cancel Post Creation</h3>
-                <label for="cancel-post-modal">
+                <label for="cancel-post-modal" class="cursor-pointer">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-6 w-6"
@@ -57,18 +57,20 @@ const CancelPostModal = () => {
                     this page?
                   </div>
                 </div>
-
-                <div class="w-full flex flex-row justify-between items-center ">
-                  <button
-                    class="btn btn-outline text-zinc-400 text-sm ml-4"
-                    for="signup-modal"
-                  >
-                    Cancel
-                  </button>
-                  <button class="btn border-forum bg-forum mr-4" type="submit">
-                    Confirm
-                  </button>
-                </div>
+              </div>
+              <div class="w-full flex flex-row justify-between items-center ">
+                <label
+                  class="text-zinc-400 text-baseline font-bold cursor-pointer ml-2"
+                  onClick={handleChecked}
+                >
+                  Cancel
+                </label>
+                <button
+                  class={`text-forum text-baseline font-bold font-large mr-2`}
+                  type="submit"
+                >
+                  Confirm
+                </button>
               </div>
             </div>
           </form>

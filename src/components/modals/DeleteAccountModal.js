@@ -35,7 +35,7 @@ const DeleteAccountModal = () => {
             <div class="grid items-center  space-y-4 p-2">
               <div class="w-full flex flex-row justify-between">
                 <h3 class="text-xl font-bold">Delete Account?</h3>
-                <label class="absolute top-6 right-8 " onClick={handleChecked}>
+                <label class="cursor-pointer " onClick={handleChecked}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-6 w-6"
@@ -67,7 +67,7 @@ const DeleteAccountModal = () => {
               </div>
               <span class="w-full flex flex-row justify-between items-center ">
                 <label
-                  class="text-zinc-400 text-sm ml-1"
+                  class="text-zinc-400 text-sm ml-1 cursor-pointer "
                   for="account-delete-modal"
                 >
                   Cancel

@@ -68,7 +68,7 @@ const PublishModal = ({ title, content, modalName }) => {
                   </h3>
                 </div>
                 <div>
-                  <label onClick={handleChecked}>
+                  <label onClick={handleChecked} class="cursor-pointer ">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="h-6 w-6"
@@ -122,7 +122,10 @@ const PublishModal = ({ title, content, modalName }) => {
                   value={inputValues.confirm}
                   onChange={handleChange}
                 />
-                <label class="text-zinc-400 text-sm " onClick={handleChecked}>
+                <label
+                  class="text-zinc-400 text-sm cursor-pointer"
+                  onClick={handleChecked}
+                >
                   Cancel
                 </label>
                 <button

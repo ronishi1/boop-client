@@ -50,7 +50,7 @@ const CreateChapterModal = ({ modalName, content }) => {
             <div class="grid items-center space-y-4 ">
               <div class="w-full flex flex-row justify-between ">
                 <h3 class="text-left text-lg font-bold">New Chapter</h3>
-                <label for={modalName}>
+                <label for={modalName} class="cursor-pointer">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-6 w-6"
@@ -90,7 +90,10 @@ const CreateChapterModal = ({ modalName, content }) => {
                 onChange={(e) => setSearch(e.target.value)}
               />
               <div class="w-full h-full flex flex-row justify-between items-end">
-                <label class="text-zinc-400 text-sm " for={modalName}>
+                <label
+                  class="text-zinc-400 text-sm cursor-pointer"
+                  for={modalName}
+                >
                   Cancel
                 </label>
                 <button class={`text-sm text-${content}`} type="submit">

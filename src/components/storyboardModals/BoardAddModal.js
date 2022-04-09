@@ -62,7 +62,7 @@ const BoardAddModal = ({ content, modalName }) => {
             <div class="grid items-center space-y-4 ">
               <div class="w-full flex flex-row justify-between ">
                 <h3 class="text-left text-xl font-bold">Add New {content}</h3>
-                <label onClick={handleChecked}>
+                <label onClick={handleChecked} class="cursor-pointer">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-6 w-6"
@@ -130,7 +130,7 @@ const BoardAddModal = ({ content, modalName }) => {
 
               <div class="w-full h-full flex flex-row justify-between items-end ">
                 <label
-                  class="text-zinc-400 text-baseline "
+                  class="text-zinc-400 text-baseline cursor-pointer"
                   onClick={handleChecked}
                 >
                   Cancel

@@ -50,7 +50,7 @@ const DeleteContentModal = ({ title, modalName, content }) => {
                 <h3 class="text-left text-lg font-bold">Delete "{title}" ?</h3>
 
                 <div>
-                  <label for={modalName}>
+                  <label for={modalName} class="cursor-pointer">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="h-6 w-6"
@@ -79,7 +79,10 @@ const DeleteContentModal = ({ title, modalName, content }) => {
                 />
               </div>
               <span class="w-full flex flex-row justify-between items-center ">
-                <label class="text-zinc-400 text-sm ml-1" for={modalName}>
+                <label
+                  class="text-zinc-400 text-sm ml-1 cursor-pointer"
+                  for={modalName}
+                >
                   Cancel
                 </label>
                 <button

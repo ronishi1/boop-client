@@ -36,10 +36,7 @@ const UploadPicture = () => {
                   <h3 class="font-bold text-xl">Upload Profile Picture</h3>
                 </div>
 
-                <label
-                  class="absolute top-6 right-8 "
-                  for="upload-picture-modal"
-                >
+                <label class="cursor-pointer " for="upload-picture-modal">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-6 w-6"
@@ -61,7 +58,7 @@ const UploadPicture = () => {
                   <div>
                     <label
                       for="upload-photo"
-                      class="grid place-items-center items-center w-full h-full"
+                      class="grid place-items-center items-center w-full h-full cursor-pointer "
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -83,7 +80,10 @@ const UploadPicture = () => {
                 </div>
               </div>
               <div class="w-full h-1/12 flex flex-row justify-between items-center">
-                <label class="text-zinc-400 text-base " onClick={handleChecked}>
+                <label
+                  class="text-zinc-400 text-base cursor-pointer "
+                  onClick={handleChecked}
+                >
                   Cancel
                 </label>
                 <button class={`text-forum text-base font-bold `} type="submit">

@@ -37,7 +37,7 @@ const UploadCoverModal = ({ title, content, modalName }) => {
                   <h3 class="font-bold text-xl">Upload cover for "{title}"</h3>
                 </div>
                 <div>
-                  <label for={modalName}>
+                  <label for={modalName} class="cursor-pointer ">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="h-6 w-6"
@@ -60,7 +60,7 @@ const UploadCoverModal = ({ title, content, modalName }) => {
                   <div>
                     <label
                       for="upload-photo"
-                      class="grid place-items-center items-center "
+                      class="grid place-items-center items-center cursor-pointer "
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -82,7 +82,10 @@ const UploadCoverModal = ({ title, content, modalName }) => {
                 </div>
               </div>
               <div class="w-full h-1/12 flex flex-row justify-between items-center">
-                <label class="text-zinc-400 text-base " onClick={handleChecked}>
+                <label
+                  class="text-zinc-400 text-base cursor-pointer "
+                  onClick={handleChecked}
+                >
                   Cancel
                 </label>
                 <button

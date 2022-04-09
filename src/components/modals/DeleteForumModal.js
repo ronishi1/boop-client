@@ -38,7 +38,7 @@ const DeleteForumModal = ({ title }) => {
                 <h3 class="font-medium text-xl items-center">
                   Delete Forum Post?
                 </h3>
-                <label for="delete-forum-modal">
+                <label for="delete-forum-modal" class="cursor-pointer">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-6 w-6"
@@ -68,14 +68,17 @@ const DeleteForumModal = ({ title }) => {
                 </div>
 
                 <div class="w-full flex flex-row justify-between items-center ">
-                  <button
-                    class="btn btn-outline text-zinc-400 text-sm "
-                    for="signup-modal"
+                  <label
+                    class="text-zinc-400 text-baseline font-bold cursor-pointer ml-2"
+                    onClick={handleChecked}
                   >
                     Cancel
-                  </button>
-                  <button class="btn border-story bg-story " type="submit">
-                    Delete
+                  </label>
+                  <button
+                    class={`text-story text-baseline font-bold font-large mr-2`}
+                    type="submit"
+                  >
+                    DELETE
                   </button>
                 </div>
               </div>
