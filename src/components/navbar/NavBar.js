@@ -3,7 +3,7 @@ import { Transition } from '@headlessui/react'
 import { Link } from "react-router-dom";
 import Login from '../modals/Login';
 
-const NavBar = ({showSidebarCallback,auth,toggleLoginCallback}) => {
+const NavBar = ({showSidebarCallback,auth,toggleLoginCallback,toggleSignUpCallback,logoutCallback}) => {
   // Might split into a logged in nav and logged out nav not sure
   return (
     <div class="navbar bg-base-100 drop-shadow mb-5 h-14 min-h-0">
@@ -34,14 +34,112 @@ const NavBar = ({showSidebarCallback,auth,toggleLoginCallback}) => {
         </div>
         <div class="navbar-end">
           {auth ?
-          <></>
+          <div>
+            <Link to="/studio">
+              <div className="btn btn-ghost btn-circle h-9 w-9 min-h-0 m-1">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 stroke-icon-grey stroke-[1.5]" fill="none" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z" />
+                </svg>
+              </div>
+            </Link>
+            <div className="dropdown dropdown-end">
+              <label tabindex="0" className="btn btn-ghost btn-circle h-9 w-9 min-h-0 m-2">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 stroke-icon-grey stroke-[1.5]" fill="none" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
+                </svg>
+              </label>
+              <ul tabindex="0" class="dropdown-content menu mt-3 shadow bg-base-100 rounded-box w-52">
+                <li>
+                  <Link to="/forum-create">
+                    <a className="flex flex-row">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 stroke-icon-grey stroke-[1.5]" fill="none" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                      </svg>
+                      <div className="ml-3">
+                        Create new post
+                      </div>
+                    </a>
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/forum-management">
+                    <a className="flex flex-row">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 stroke-icon-grey stroke-[1.5]" fill="none" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                      <div className="ml-3">
+                        Manage posts
+                      </div>
+                    </a>
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/forum-home">
+                    <a className="flex flex-row">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 stroke-icon-grey stroke-[1.5]" fill="none" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                      </svg>
+                      <div className="ml-3">
+                        Go to forums
+                      </div>
+                    </a>
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div className="dropdown dropdown-end">
+              <label tabindex="0" className="btn btn-ghost btn-circle h-9 w-9 min-h-0 m-2">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 stroke-[1.5] stroke-icon-grey" fill="none" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </label>
+              <ul tabindex="0" class="dropdown-content menu mt-3 shadow bg-base-100 rounded-box w-52">
+                <li>
+                  <Link to="/search">
+                    <a className="flex flex-row">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 stroke-icon-grey stroke-[1.5]" fill="none" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
+                      <div className="ml-3">
+                        My Profile
+                      </div>
+                    </a>
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/search">
+                    <a className="flex flex-row">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 stroke-icon-grey stroke-[1.5]" fill="none" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                      <div className="ml-3">
+                        Account Settings
+                      </div>
+                    </a>
+                  </Link>
+                </li>
+                <li>
+                  <a onClick={() => {logoutCallback()}}>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 stroke-icon-grey stroke-[1.5]" fill="none" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                    Logout
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
           :
           <div>
-            <div className="btn btn-ghost btn-circle h-9 w-9 min-h-0 m-1">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 stroke-[1.5] stroke-icon-grey" fill="none" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
-              </svg>
-            </div>
+            <Link to="/forum-home">
+              <div className="btn btn-ghost btn-circle h-9 w-9 min-h-0 m-1">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 stroke-[1.5] stroke-icon-grey" fill="none" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                </svg>
+              </div>
+            </Link>
             <div className="dropdown dropdown-end">
               <label tabindex="0" className="btn btn-ghost btn-circle h-9 w-9 min-h-0 m-1">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 stroke-[1.5] stroke-icon-grey" fill="none" viewBox="0 0 24 24">
@@ -50,7 +148,7 @@ const NavBar = ({showSidebarCallback,auth,toggleLoginCallback}) => {
               </label>
               <ul tabindex="0" class="dropdown-content menu mt-3 shadow bg-base-100 rounded-box w-40">
                 <li>
-                  <a onClick={toggleLoginCallback}>
+                  <a onClick={() => {toggleLoginCallback(true)}}>
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 stroke-icon-grey stroke-[1.5]" fill="none" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
                     </svg>
@@ -58,7 +156,7 @@ const NavBar = ({showSidebarCallback,auth,toggleLoginCallback}) => {
                   </a>
                 </li>
                 <li>
-                  <a>
+                  <a onClick={() => {toggleSignUpCallback(true)}}>
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 stroke-icon-grey stroke-[1.5]" fill="none" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                     </svg>

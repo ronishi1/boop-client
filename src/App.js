@@ -39,15 +39,31 @@ const App = () => {
   // Might be replacing this into a constant variable later when we incorporate the get_current_user query
   const [auth,setAuth] = useState(false);
 
-  // LOGIN MODAL CODE
+  // MODAL CODE
   const [showLogin, setShowLogin] = useState(false);
-  const toggleLoginCallback = () => {
-    setShowLogin(!showLogin);
+  const [showSignUp, setShowSignUp] = useState(false);
+
+  const toggleLoginCallback = (show) => {
+    setShowLogin(show);
+    if(show){
+      setShowSignUp(false)
+    }
+  }
+
+  const toggleSignUpCallback = (show) => {
+    setShowSignUp(show);
+    if(show){
+      setShowLogin(false);
+    }
   }
 
   // Temporary for now, will probably delete when login functionality works and auto refetch user query
-  const loginCallback = () => {
+  const authTrueCallback = () => {
     setAuth(true);
+  }
+
+  const authFalseCallback = () => {
+    setAuth(false);
   }
 
 
@@ -66,6 +82,8 @@ const App = () => {
         showSidebarCallback={showSidebarCallback}
         auth={auth}
         toggleLoginCallback={toggleLoginCallback}
+        toggleSignUpCallback={toggleSignUpCallback}
+        logoutCallback={authFalseCallback}
       />
       <div>
         <input
@@ -73,14 +91,42 @@ const App = () => {
           id="login-modal"
           class="modal-toggle"
           checked={showLogin}
+          onClick={() => {toggleLoginCallback(false)}}
         />
       <label for="login-modal" class="modal cursor-pointer">
-          <label class="modal-box">
-            <Login toggleLoginCallback={toggleLoginCallback} loginCallback={loginCallback}/>
+          <label class="modal-box w-5/12 max-w-5xl">
+            <Login
+              toggleLoginCallback={toggleLoginCallback}
+              toggleSignUpCallback={toggleSignUpCallback}
+              loginCallback={authTrueCallback}/>
           </label>
       </label>
       </div>
-      {showSidebar ? <SideBar auth={auth} showSidebar={showSidebar} hideSidebarCallback={hideSidebarCallback}/> : <></>}
+      <div>
+        <input
+          type="checkbox"
+          id="signup-modal"
+          class="modal-toggle"
+          checked={showSignUp}
+          onClick={() => {toggleSignUpCallback(false)}}
+        />
+
+        <label for="signup-modal" class="modal cursor-pointer">
+          <label class="modal-box w-6/12 max-w-5xl">
+            <SignUp
+              toggleLoginCallback={toggleLoginCallback}
+              toggleSignUpCallback={toggleSignUpCallback}
+              signUpCallback={authTrueCallback}
+              />
+          </label>
+        </label>
+      </div>
+      {showSidebar ?
+        <SideBar
+          auth={auth}
+          showSidebar={showSidebar}
+          hideSidebarCallback={hideSidebarCallback}/>
+         : <></>}
       <Routes>
         <Route path="/" element={<HomeScreen auth={auth}/>} />
         <Route path="/browse" element={<BrowseScreen />} />

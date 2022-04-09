@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-const Login = ({toggleLoginCallback, loginCallback}) => {
+const Login = ({toggleLoginCallback, toggleSignUpCallback, loginCallback}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=208%3A348
 
   const [username, setUsername] = useState("");
@@ -23,7 +23,7 @@ const Login = ({toggleLoginCallback, loginCallback}) => {
         <div class="grid items-center space-y-4 p-4 mr-8 ml-8">
           <div class="w-full flex flex-row justify-between">
             <div class="text-left text-xl font-medium">Log In</div>
-            <div className="cursor-pointer" onClick={toggleLoginCallback}>
+            <div className="cursor-pointer" onClick={() => {toggleLoginCallback(false)}}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"
@@ -43,11 +43,9 @@ const Login = ({toggleLoginCallback, loginCallback}) => {
           <div class="place-items-start w-full">
             <div class="text-left text-sm">
               Don't have an account?
-              <Link to="/signup">
-                <a class="ml-1 text-forum">
-                  Sign up here.
-                </a>
-              </Link>
+              <a class="ml-1 text-forum cursor-pointer" onClick={() => {toggleSignUpCallback(true)}}>
+                Sign up here.
+              </a>
             </div>
           </div>
           <span class="w-full">
@@ -70,7 +68,7 @@ const Login = ({toggleLoginCallback, loginCallback}) => {
               class="input input-bordered w-full focus:outline-none"
             />
           </span>
-          <div class="place-items-start w-full">
+          <div class="w-full">
             <a class="text-forum text-xs pl-1" href="./resetpassword">
               Forgot Password
             </a>
@@ -79,7 +77,7 @@ const Login = ({toggleLoginCallback, loginCallback}) => {
           <span class="w-full flex flex-row justify-between items-center">
             <label
               class="text-zinc-400 text-sm ml-2 cursor-pointer"
-              onClick={toggleLoginCallback}
+              onClick={() => {toggleLoginCallback(false)}}
             >
               Cancel
             </label>
