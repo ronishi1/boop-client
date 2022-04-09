@@ -5,10 +5,8 @@ import { Transition } from '@headlessui/react'
 const HomeMostPopular = () => {
   // USES DETAILED CONTENT CARD
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=211%3A556
-  const [first,setFirst] = useState(true);
-  const [second,setSecond] = useState(false);
-  const [third,setThird] = useState(false);
 
+  const [slide,setSlide] = useState({first:true,second:false,third:false});
   // ASSUMES THAT THERE ARE 9 MOST POPULAR THINGS RETURNED IN THE QUERY
   // ASSUMES THAT THERE ARE 9 MOST POPULAR THINGS RETURNED IN THE QUERY
   // ASSUMES THAT THERE ARE 9 MOST POPULAR THINGS RETURNED IN THE QUERY
@@ -76,7 +74,7 @@ const HomeMostPopular = () => {
     <div>
       <div className="ml-10 text-2xl">Most popular</div>
       <Transition
-        show={first}
+        show={slide.first}
         enter="transition-opacity duration-1000"
         enterFrom="opacity-0"
         enterTo="opacity-100"
@@ -84,18 +82,11 @@ const HomeMostPopular = () => {
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
       >
-      <div className="flex flex-row overflow-x-scroll space-x-2">
-        <div className="invisible">
-          <div className="btn btn-circle btn-sm">
-            <svg xmlns="http://www.w3.org/2000/svg" className="cursor-pointer h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </div>
-        </div>
+      <div className="flex flex-row overflow-x-scroll space-x-2 ml-10">
         {data.slice(0,3).map((content) => (
           <DetailedContentCard title={content.title} cover={content.cover_image} genres={content.genres} synopsis={content.synopsis} />
         ))}
-        <div className="mt-[6.5rem]" onClick={() => {setFirst(false);setSecond(true);}}>
+        <div className="mt-[6.5rem]" onClick={() => {setSlide({first:false,second:true,third:false})}}>
           <div className="btn btn-circle btn-sm">
             <svg xmlns="http://www.w3.org/2000/svg" className="cursor-pointer h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
@@ -105,7 +96,7 @@ const HomeMostPopular = () => {
       </div>
       </Transition>
       <Transition
-        show={second}
+        show={slide.second}
         enter="transition-opacity duration-1000"
         enterFrom="opacity-0"
         enterTo="opacity-100"
@@ -115,7 +106,7 @@ const HomeMostPopular = () => {
       >
         <div className="flex flex-row overflow-x-scroll space-x-2">
           <div className="mt-[6.5rem]">
-            <div className="btn btn-circle btn-sm" onClick={() => {setFirst(true);setSecond(false);}}>
+            <div className="btn btn-circle btn-sm" onClick={() => {setSlide({first:true,second:false,third:false})}}>
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
               </svg>
@@ -125,7 +116,7 @@ const HomeMostPopular = () => {
             <DetailedContentCard title={content.title} cover={content.cover_image} genres={content.genres} synopsis={content.synopsis} />
           ))}
           <div className="mt-[6.5rem]">
-            <div className="btn btn-circle btn-sm" onClick={() => {setSecond(false);setThird(true);}}>
+            <div className="btn btn-circle btn-sm" onClick={() => {setSlide({first:false,second:false,third:true})}}>
               <svg xmlns="http://www.w3.org/2000/svg" className="cursor-pointer h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
               </svg>
@@ -134,14 +125,17 @@ const HomeMostPopular = () => {
         </div>
       </Transition>
       <Transition
-        show={third}
+        show={slide.third}
         enter="transition-opacity duration-1000"
         enterFrom="opacity-0"
         enterTo="opacity-100"
+        leave="transition-opacity duration-0"
+        leaveFrom="opacity-100"
+        leaveTo="opacity-0"
       >
         <div className="flex flex-row overflow-x-scroll space-x-2 mr-10">
           <div className="mt-[6.5rem]">
-            <div className="btn btn-circle btn-sm" onClick={() => {setSecond(true);setThird(false);}}>
+            <div className="btn btn-circle btn-sm" onClick={() => {setSlide({first:false,second:true,third:false})}}>
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
               </svg>
