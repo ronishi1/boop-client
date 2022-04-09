@@ -15,7 +15,7 @@ const DeleteForumModal = ({ title }) => {
   return (
     <div>
       {/* I think we can just move this button to the navbar we might have to rename id */}
-      <label for="delete-forum-modal" class="btn modal-button">
+      {/* <label for="delete-forum-modal" class="btn modal-button">
         Delete Forum
       </label>
 
@@ -28,7 +28,7 @@ const DeleteForumModal = ({ title }) => {
       />
 
       <label for="delete-forum-modal" class="modal cursor-pointer">
-        <label class="modal-box w-1/3 max-w-full h-5/12">
+        <label class="modal-box w-1/3 max-w-full h-5/12"> */}
           <form
             class="w-full h-full grid place-items-center items-center"
             onSubmit={handleSubmit}
@@ -84,8 +84,8 @@ const DeleteForumModal = ({ title }) => {
               </div>
             </div>
           </form>
-        </label>
-      </label>
+        {/* </label>
+      </label> */}
     </div>
   );
 };

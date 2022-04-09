@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-// import link
 
 const SearchEntry = ({cover, title, author, publicationDate, contentType, synopsis}) => {
     

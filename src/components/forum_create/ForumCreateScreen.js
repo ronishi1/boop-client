@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import CancelPostModal from "../modals/CancelPostModal";
 
 // Can use this class for reply, edit, and create
-const ForumCreateScreen = () => {
+const ForumCreateScreen = ({toggleForumCallback}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=274%3A632
   const [spoiler, toggleSpoiler] = useState(false);
   const [nsfw, toggleNSFW] = useState(false);
@@ -51,12 +51,6 @@ const ForumCreateScreen = () => {
   return (
     <div>
     <form className="w-full h-full m-1.5" onSubmit={handleSubmit}>
-      <label for="forum-modal" className="btn modal-button">Create Forum Post</label>
-
-      <input type="checkbox" id="forum-modal" className="modal-toggle w-max"/>
-        <div className="modal">
-        
-          <div className="modal-box">
             <div className="flex flex-row justify-between">
               <div>
                 <h3 className="font-bold text-lg">{forumType}</h3>
@@ -82,10 +76,7 @@ const ForumCreateScreen = () => {
               <label for="forum-modal" className="cursor-pointer ml-4">Cancel</label>
                 <button className="btn border-none bg-forum normal-case mr-4" type="submit">Post</button>
             </div>
-          </div>
-        </div>
         </form>
-      <CancelPostModal />
     </div>
   );
 };
