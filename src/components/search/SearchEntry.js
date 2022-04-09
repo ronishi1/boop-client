@@ -12,10 +12,10 @@ const SearchEntry = ({cover, title, author, publicationDate, contentType, synops
     } 
 
     const badgeColor = () => {
-        if (contentType == "C") {
+        if (contentType === "C") {
             return "bg-comic"
         } 
-        else if (contentType == "S"){
+        else if (contentType === "S"){
             return "bg-story"
         }
         else {
@@ -23,10 +23,10 @@ const SearchEntry = ({cover, title, author, publicationDate, contentType, synops
         }
     }   
     const setContent = () => {
-        if (contentType == "C") {
+        if (contentType === "C") {
             return "Comic"
         } 
-        else if (contentType == "S"){
+        else if (contentType === "S"){
             return "Story"
         }
         else {

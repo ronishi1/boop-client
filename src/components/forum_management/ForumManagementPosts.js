@@ -9,4 +9,4 @@ const ForumManagementPosts = () => {
   );
 }
 
-export default ForumManagementReplies;
+export default ForumManagementPosts;
