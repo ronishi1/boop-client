@@ -1,6 +1,8 @@
 import React from "react";
 import StoryBoardTool from "./StoryBoardTool";
 import QuillEditor from "./QuillEditor";
+import BoardAddModal from "../storyboardModals/BoardAddModal";
+import BoardEditModal from "../storyboardModals/BoardEditModal";
 
 const StoryEditScreen = () => {
   // Use this for your normal storyboard testing
@@ -11,6 +13,10 @@ const StoryEditScreen = () => {
         <label for="my-drawer-4" class="drawer-button btn btn-primary">
           Open drawer
         </label>
+        <BoardAddModal content="Character" modalName="add-char-modal" />
+        <BoardAddModal content="Plot Point" modalName="add-plot-modal" />
+        <BoardEditModal content="Character" modalName="edit-char-modal" />
+        <BoardEditModal content="Plot Point" modalName="edit-plot-modal" />
       </div>
       <StoryBoardTool></StoryBoardTool>
     </div>

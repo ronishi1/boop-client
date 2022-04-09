@@ -121,7 +121,11 @@ const BoardAddModal = ({ content, modalName }) => {
                     ></img>
                   </div>
                   <br />
-                  <label class="btn border-none bg-story">Upload Image</label>
+
+                  <label for="upload-photo" class="btn border-none bg-story">
+                    Upload Image
+                  </label>
+                  <input type="file" id="upload-photo" hidden="true" />
                 </div>
               </div>
               <span class="w-full flex auto-cols-auto place-items-center items-center ">
