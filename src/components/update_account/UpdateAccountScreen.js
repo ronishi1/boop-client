@@ -72,6 +72,5 @@ const UpdateAccountScreen = () => {
     </div>
   );
 };
-{/* 
-      <UploadPicture /> */}
+
 export default UpdateAccountScreen;
