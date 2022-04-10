@@ -7,7 +7,9 @@ const DetailedContentCard = ({title,cover,genres,synopsis}) => {
     <div className="flex flex-row">
       <img className="object-fit min-w-40 min-h-60 max-h-60 max-w-40 rounded" src={cover}/>
       <div className="ml-2 min-h-60 max-h-60 min-w-96 max-w-96">
-        <div className="text-lg font-medium">{title}</div>
+        <Link to="/info">
+          <div className="text-lg font-medium">{title}</div>
+        </Link>
         <div className="-mt-1.5">
           {genres.map((genre) => (
             <div className="badge bg-comic text-xs border-none mr-1">{genre}</div>
