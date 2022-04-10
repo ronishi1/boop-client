@@ -78,12 +78,12 @@ const ContentInfoScreen = () => {
         return (<p class="text-story">{text}</p>);
       default:
         return;
-    } 
+    }
   }
 
   return (
     <div className="flex place-content-center">
-      <div className="card w-288 h-192 bg-base-100 shadow-xl bg-secondary-content 
+      <div className="card static w-288 h-192 bg-base-100 shadow-xl bg-secondary-content
         grid grid-rows-6 grid-cols-6">
           <div className="card-title row-start-1 row-end-2 col-span-full p-5 border-b-2
           align-center">
@@ -135,7 +135,7 @@ const ContentInfoScreen = () => {
                 {ratings.map((rating) => {
                   return <li><a className="text-sm py-1.5 h-8 hover:bg-gray-400/25" onClick={() => {handleRate(rating)}}>{rating}</a></li>
                 })}
-                
+
               </ul>
             </div>
           </div>

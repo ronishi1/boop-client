@@ -4,7 +4,7 @@ const ProfileActivity = ({activities}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=330%3A2333
   const months = [ "Jan", "Feb", "Mar", "April", "May", "June",
   "July", "Aug", "Sep", "Oct", "Nov", "Dec" ];
-  
+
   const formatDate = (content) => {
     let date = content.publication_date;
     console.log(date)
@@ -17,9 +17,9 @@ const ProfileActivity = ({activities}) => {
     let strMinutes = ("0" + date.getMinutes()).slice(-2);
     return month + " " + date.getDate() + ", " + strHour + ":" + strMinutes + (pm ? "pm" : "am");
   }
-  
+
   return (
-    <div className='card ml-8 py-4 px-12 shadow'>
+    <div className='card static ml-8 py-4 px-12 shadow'>
       <p className='py-4'>Recent Activity</p>
       {activities.map((activity) => {
         return (
@@ -31,7 +31,7 @@ const ProfileActivity = ({activities}) => {
             <p className='text-right'>{formatDate(activity.content)}</p>
           </div>)
       })}
-      
+
     </div>
   );
 }
