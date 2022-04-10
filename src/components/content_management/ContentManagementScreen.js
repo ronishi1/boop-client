@@ -1,5 +1,6 @@
 import React 	from 'react';
 import ChapterEntry from './ChapterEntry'
+import {Link} from 'react-router-dom'
 const ContentManagementScreen = () => {
   const content = {
     title:"Attack on Titan",
@@ -61,7 +62,9 @@ const ContentManagementScreen = () => {
           <div className="card rounded-none">
             <div className="flex flex-row items-center justify-between ">
               <p className='text-2xl font-medium'>Chapter List</p>
+              <Link to='/comic-edit'>
               <div className="btn btn-xs bg-base-content/90 pr-3 border-none">+ Create chapter</div>
+              </Link>
             </div>
             <div className="card rounded-none h-full overflow-y-auto">
               {content.chapters.map(chapter => (
