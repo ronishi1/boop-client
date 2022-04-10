@@ -15,9 +15,9 @@ const UploadPicture = () => {
   return (
     <div>
       {/* I think we can just move this button to the navbar we might have to rename id */}
-      <label for="upload-picture-modal" class="btn modal-button">
+      {/* <label for="upload-picture-modal" class="btn modal-button">
         Upload Picture
-      </label>
+      </label> */}
 
       <input
         type="checkbox"

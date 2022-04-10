@@ -17,7 +17,9 @@ const DeleteAccountModal = () => {
   return (
     <div>
       {/* I think we can just move this button to the navbar we might have to rename id */}
-      <label for="account-delete-modal" class="btn modal-button">
+      <label for="account-delete-modal" 
+      class="btn btn-outline border-red-500 text-red-500 modal-button
+      hover:bg-red-500 hover:text-white hover:border-red-500">
         Delete Account
       </label>
 

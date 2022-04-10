@@ -1,4 +1,5 @@
 import React 	from 'react';
+import { Link } from "react-router-dom";
 
 const ForumTopicTableEntry = ({post}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=275%3A1703
@@ -23,11 +24,15 @@ const ForumTopicTableEntry = ({post}) => {
         <div className='h-16 flex flex-row'>
           <img className="h-full w-16 mr-2 object-contain" src={post.cover_image} alt="cover art"/>
           <div className='flex flex-col'>
-            <div className='text-lg text-link'>{post.title}</div>
+            <Link to="/post">
+              <div className='text-lg text-link'>{post.title}</div>
+            </Link>
             <div className='flex flex-row text-sm'>
               <div>{formatDate(post.publication_date)}</div>
               <div className='px-1'> by </div>
-              <div className='text-link'>{post.author}</div>
+              <Link to="/profile">
+                <div className='text-link'>{post.author}</div>
+              </Link>
             </div>
           </div>
         </div>

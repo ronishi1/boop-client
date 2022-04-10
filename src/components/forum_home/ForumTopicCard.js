@@ -1,14 +1,17 @@
 import React 	from 'react';
 import ForumPostCard from './ForumPostCard';
+import { Link } from "react-router-dom";
 
 const ForumTopicCard = ({data}) => {
   // USED ON FORUM HOME SCREEN
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=255%3A540
   return (
     <div>
-      <div className='text-lg font-medium text-link'>
-        {data.title}
-      </div>
+      <Link to="/topic">
+        <div className='text-lg font-medium text-link'>
+          {data.title}
+        </div>
+      </Link>
       <div className='text-sm'>
         {data.description}
       </div>

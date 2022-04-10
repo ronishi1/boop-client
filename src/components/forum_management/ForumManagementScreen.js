@@ -25,17 +25,20 @@ const ForumManagementScreen = () => {
   }
   return (
     <div>
-      <p className="text-lg ml-4">
+      <p className="text-lg ml-4 mb-4 font-semibold">
         Forum Management
       </p>
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-3 gap-3 divide-x">
         <div className="col-span-2 ml-4 ">
+          <p className="text-lg font-semibold">
+            My Posts
+          </p>
           <ForumManagementPosts 
             toggleForumCallback={toggleForumCallback} 
             toggleForumDeleteCallback={toggleForumDeleteCallback}/>
         </div>
-        <div>
-          <p className="text-lg">
+        <div className="pl-4">
+          <p className="text-lg font-semibold">
             Recent Replies To Your Posts
           </p>
           <ForumManagementReplies />
