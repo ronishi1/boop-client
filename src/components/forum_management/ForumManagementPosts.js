@@ -8,31 +8,36 @@ const ForumManagementPosts = ({toggleForumCallback, toggleForumDeleteCallback}) 
       cover_image: "https://cover.nep.li/cover/Spy-X-Family.jpg",
       forum_title: "Comic with great action!!!",
       publication_date: new Date(2022, 3, 24, 14, 11),
-      tags:["Spoiler", "NSFW", "Discussion"]
+      tags:["Spoiler", "NSFW", "Discussion"],
+      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     },
     {
       cover_image: "https://cover.nep.li/cover/Spy-X-Family.jpg",
       forum_title: "Comic with great action!!!",
       publication_date: new Date(2022, 3, 24, 14, 11),
-      tags:["Spoiler", "NSFW", "Discussion"]
+      tags:["Spoiler", "NSFW", "Discussion"],
+      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     },
     {
       cover_image: "https://cover.nep.li/cover/Spy-X-Family.jpg",
       forum_title: "Comic with great action!!!",
       publication_date: new Date(2022, 3, 24, 14, 11),
-      tags:["Spoiler", "NSFW", "Discussion"]
+      tags:["Spoiler", "NSFW", "Discussion"],
+      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     },
     {
       cover_image: "https://cover.nep.li/cover/Spy-X-Family.jpg",
       forum_title: "Comic with great action!!!",
       publication_date: new Date(2022, 3, 24, 14, 11),
-      tags:["Spoiler", "NSFW", "Discussion"]
+      tags:["Spoiler", "NSFW", "Discussion"],
+      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     },
     {
       cover_image: "https://cover.nep.li/cover/Spy-X-Family.jpg",
       forum_title: "Comic with great action!!!",
       publication_date: new Date(2022, 3, 24, 14, 11),
-      tags:["Spoiler", "NSFW", "Discussion"]
+      tags:["Spoiler", "NSFW", "Discussion"],
+      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     },
   ]
   
@@ -45,6 +50,7 @@ const ForumManagementPosts = ({toggleForumCallback, toggleForumDeleteCallback}) 
               title={post.forum_title} 
               publicationDate={post.publication_date} 
               tags={post.tags}
+              content={post.content}
               toggleForumCallback={toggleForumCallback}
               toggleForumDeleteCallback={toggleForumDeleteCallback}
           />
