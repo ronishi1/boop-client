@@ -2,8 +2,15 @@ import React 	from 'react';
 import {Link} from 'react-router-dom';
 const ChapterEntry = ({chapter}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=311%3A3160
+  let link;
+  if(chapter.publication_date){
+    link = "/view"
+  }
+  else {
+    link = "/comic-edit"
+  }
   return (
-    <Link to="/comic-edit">
+    <Link to={link}>
       <div className="flex flex-row justify-between border-b-2 border-base-content/10 hover:cursor-pointer hover:bg-gray-400/25">
         <p>{chapter.title}</p>
         {chapter.publication_date ?
