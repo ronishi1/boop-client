@@ -1,55 +1,92 @@
 import React from "react";
-import DeleteContentModal from "../modals/DeleteContentModal";
-import PublishModal from "../modals/PublishModal";
-import UploadCoverModal from "../modals/UploadCoverModal";
-import CreateChapterModal from "../modals/CreateChapterModal";
-
-// WIP DIFFICULT TO BREAK INTO COMPONENTS RIGHT NOW
+import WorkCard from './WorkCard';
+import WorkListEntry from './WorkListEntry';
 const CreatorStudioScreen = () => {
+  // will replace published with dates later, currently just using booleans to make it easier
+  let data =[
+    {
+      title: "Attack on Titan",
+      cover_image: "https://static.wikia.nocookie.net/shingekinokyojin/images/d/db/Volume_1_Cover.png",
+      content_type: "C",
+      published: true
+    },
+    {
+      title: "Berserk",
+      cover_image:"https://static.wikia.nocookie.net/berserk/images/2/26/Manga_V1_Cover.png",
+      content_type: "S",
+      published: true
+    },
+    {
+      title: "One Piece",
+      cover_image:"https://images-na.ssl-images-amazon.com/images/I/91NxYvUNf6L.jpg",
+      content_type: "C",
+      published: false
+    },
+    {
+      title: "Naruto",
+      cover_image:"https://images-na.ssl-images-amazon.com/images/I/912xRMMra4L.jpg",
+      content_type: "C",
+      published: false
+    },
+    {
+      title: "My Hero Academia",
+      cover_image:"https://upload.wikimedia.org/wikipedia/en/5/5a/Boku_no_Hero_Academia_Volume_1.png",
+      content_type: "S",
+      published: true
+    },
+    {
+      title: "Horimiya",
+      cover_image: "https://static.wikia.nocookie.net/horimiya/images/6/60/Horimiya_Volume_1.png",
+      content_type: "S",
+      published: true
+    },
+    {
+      title: "Tokyo Ghoul",
+      cover_image:"https://static.wikia.nocookie.net/tokyoghoul/images/6/6a/Volume_01.jpg",
+      content_type: "S",
+      published: false
+    },
+    {
+      title: "One Punch Man",
+      cover_image:"https://images-na.ssl-images-amazon.com/images/I/51dYG1ZNFaL._SX342_SY445_QL70_ML2_.jpg",
+      content_type: "S",
+      published: true
+    }
+  ]
   return (
-    <div>
-      <DeleteContentModal
-        title="Percy Jackson"
-        modalName="delete-story-modal"
-        content="story"
-      />
-      <DeleteContentModal
-        title="Attack on Titan"
-        modalName="delete-comic-modal"
-        content="comic"
-      />
-      <DeleteContentModal
-        title="Eren Yeager"
-        modalName="delete-char-modal"
-        content="character"
-      />
-      <DeleteContentModal
-        title="Army Training"
-        modalName="delete-plot-modal"
-        content="plot point"
-      />
-      <PublishModal
-        title="Spiderman"
-        modalName="publish-comic-modal"
-        content="comic"
-      />
-      <PublishModal
-        title="Harry Potter"
-        modalName="publish-story-modal"
-        content="story"
-      />
-      <UploadCoverModal
-        title="Spiderman"
-        modalName="cover-comic-modal"
-        content="comic"
-      />
-      <UploadCoverModal
-        title="Harry Potter"
-        modalName="cover-story-modal"
-        content="story"
-      />
-      <CreateChapterModal modalName="comic-chap-modal" content="comic" />
-      <CreateChapterModal modalName="story-chap-modal" content="story" />
+    <div class="container mx-auto">
+      <div className="grid grid-cols-4">
+        <div className="col-span-1 border-r-2  border-base-content/10">
+          <div className="flex flex-row items-center justify-between">
+            <div className="text-2xl font-normal">Works Overview</div>
+            <div className="btn btn-xs mr-7 bg-base-content/90 pr-3 border-none">+ Create</div>
+          </div>
+          {data.map((content) => (
+            <WorkListEntry title={content.title} content_type={content.content_type} published={content.published} />
+          ))}
+        </div>
+        <div className="col-span-3 ml-10">
+          <div className="text-2xl font-normal">Published Works</div>
+          <div className="flex flex-row overflow-x-scroll space-x-5">
+            {data.map((content) => {
+              console.log(content.publication_date);
+              if(content.published){
+                return <WorkCard title={content.title} cover={content.cover_image} content_type={content.content_type}/>
+              }
+            })}
+          </div>
+          <div className="divider"></div>
+          <div className="text-2xl font-normal">Unpublished Works</div>
+          <div className="flex flex-row overflow-x-scroll space-x-5">
+            {data.map((content) => {
+              console.log(content.publication_date);
+              if(!content.published){
+                return <WorkCard title={content.title} cover={content.cover_image} content_type={content.content_type}/>
+              }
+            })}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
