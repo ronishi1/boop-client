@@ -23,7 +23,7 @@ const ForumManagementPost = ({cover, title, publicationDate, tags, content, togg
     <div className="flex flex-row mb-4">
         {/* <div className="col-span-1"> */}
           <div>
-            <Link to="/post"><img className="object-fit max-h-40 min-w-40  mr-28 rounded" src={cover}/></Link>
+            <Link to="/post"><img className="object-fit max-h-40  mr-28 rounded" src={cover}/></Link>
           </div>
         {/* </div> */}
         {/* <div className="col-span-3"> */}
