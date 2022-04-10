@@ -20,6 +20,7 @@ import FavoritesScreen from './components/profile_lists/FavoritesScreen';
 import ReadListScreen from './components/profile_lists/ReadListScreen';
 import AboutScreen from './components/about/AboutScreen';
 import HelpScreen from './components/help/HelpScreen';
+import ContentManagementScreen from './components/content_management/ContentManagementScreen'
 // nav and sidebar, might also move or do something else with but will keep explicit path for dev purposes
 import NavBar from "./components/navbar/NavBar";
 import SideBar from "./components/sidebar/SideBar";
@@ -174,6 +175,7 @@ const App = () => {
         <Route path="/favorites" element={<FavoritesScreen />} />
         <Route path="/read-list" element={<ReadListScreen />} />
         <Route path="/update-account" element={<UpdateAccountScreen />} />
+        <Route path="/content-management" element={<ContentManagementScreen />} />
 
         <Route path="/search" element={<SearchScreen/>} />
         <Route path="/about" element={<AboutScreen />} />
@@ -182,7 +184,7 @@ const App = () => {
         <Route path="/dev" element={<Dev />} />
 
         <Route path="/story-edit" element={<StoryEditScreen />} />
-        <Route path="/comic_edit" element={<ComicEditScreen />} />
+        <Route path="/comic-edit" element={<ComicEditScreen />} />
 
         <Route
           path="/deletestory"
