@@ -6,6 +6,10 @@ import IroColorPicker from "./IroColorPicker"
 import Draggable from 'react-draggable'; // The default
 
 const ComicEditScreen = () => {
+  const [seriesTitle, setSeriesTitle] = useState("Attack on Titan")
+  const [chapterTitle, setChapterTitle] = useState("Big Titan Leans on Wall")
+  const [chapter, setChapter] = useState("5")
+
   const [tool, setTool] = useState('pen');
   const [lines, setLines] = useState([]);
   const [stroke, setStroke] = useState('#df4b26')
@@ -57,6 +61,17 @@ const ComicEditScreen = () => {
 
   return (
     <div>
+      <div className="ml-4 mb-4">
+            Series Title: <strong>{seriesTitle}</strong>
+      </div>
+      <div className="flex flex-row justify-between">
+        <div className="ml-4 mb-4">
+          Chapter {chapter} : <strong>{chapterTitle}</strong>
+        </div>
+        <div>
+          <div className="btn cursor-pointer mr-4 mb-4">Save</div>
+        </div>
+      </div>
       <select
         value={tool}
         onChange={(e) => {
@@ -79,7 +94,7 @@ const ComicEditScreen = () => {
         <Html
             divProps={{
               style: {
-                position: 'absolute',
+                position: 'inline',
                 top: 10,
                 left: 10,
                 zIndex: 1
