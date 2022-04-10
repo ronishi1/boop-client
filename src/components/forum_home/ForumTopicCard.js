@@ -7,11 +7,11 @@ const ForumTopicCard = ({data}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=255%3A540
   return (
     <div>
-      <Link to="/topic">
         <div className='text-lg font-medium text-link'>
-          {data.title}
+          <Link to="/topic">
+            {data.title}
+          </Link>
         </div>
-      </Link>
       <div className='text-sm'>
         {data.description}
       </div>
