@@ -1,4 +1,5 @@
 import React 	from 'react';
+import { Link } from "react-router-dom";
 
 const ForumPostCard = ({post}) => {
   // USED ON FORUM HOME SCREEN
@@ -23,11 +24,15 @@ const ForumPostCard = ({post}) => {
       <figure className='h-full inline-flex'>
         <img className="h-full object-contain pr-4" src={post.cover_image} alt="cover art"/>
         <div className='flex flex-col'>
-          <div className='text-md text-link fond-md'>{post.title}</div>
+          <Link to="/post">
+            <div className='text-md text-link fond-md'>{post.title}</div>
+          </Link>
           <div className='text-xs'>
             <div className='flex flex-row'>
               <div className='mr-1'>by</div>
-            <div className='text-link'>{post.author}</div>
+              <Link to="/profile">
+                <div className='text-link'>{post.author}</div>
+              </Link>
             </div>
             {formatDate()}
           </div>
