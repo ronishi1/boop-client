@@ -2,9 +2,23 @@ import React , {useState} from 'react';
 import { Transition } from '@headlessui/react'
 import { Link,useNavigate } from "react-router-dom";
 import Login from '../modals/Login';
+import { useMutation, useApolloClient }     from '@apollo/client';
+import { LOGOUT }	from '../../cache/mutations';
 
-const NavBar = ({showSidebarCallback,auth,toggleLoginCallback,toggleSignUpCallback,logoutCallback}) => {
+const NavBar = ({showSidebarCallback,auth,toggleLoginCallback,toggleRegisterCallback,fetchUser}) => {
   let navigate = useNavigate();
+
+  const client = useApolloClient();
+  const [Logout] = useMutation(LOGOUT);
+
+  const handleLogout = async() => {
+    Logout();
+    const { data } = await fetchUser();
+    if (data) {
+        let reset = await client.resetStore();
+        navigate("/");
+    }
+  }
   return (
     <div class="navbar bg-base-100 drop-shadow mb-5 h-14 min-h-0">
       <div class="navbar-start">
@@ -109,7 +123,7 @@ const NavBar = ({showSidebarCallback,auth,toggleLoginCallback,toggleSignUpCallba
                   </Link>
                 </li>
                 <li>
-                  <a onClick={() => {logoutCallback();navigate('/')}}>
+                  <a onClick={() => {handleLogout()}}>
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 stroke-icon-grey stroke-[1.5]" fill="none" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                     </svg>
@@ -144,7 +158,7 @@ const NavBar = ({showSidebarCallback,auth,toggleLoginCallback,toggleSignUpCallba
                   </a>
                 </li>
                 <li>
-                  <a onClick={() => {toggleSignUpCallback(true)}}>
+                  <a onClick={() => {toggleRegisterCallback(true)}}>
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 stroke-icon-grey stroke-[1.5]" fill="none" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                     </svg>

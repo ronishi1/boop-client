@@ -27,7 +27,7 @@ import SideBar from "./components/sidebar/SideBar";
 
 // modals (to get rid of after dev, since they are modals that should load from navbar for example)
 import Login from "./components/modals/Login";
-import SignUp from "./components/modals/SignUp";
+import Register from "./components/modals/Register";
 import ResetPassword from "./components/modals/ResetPassword";
 
 // FOR DEV PURPOSES DEFINITELY DELETE AFTER
@@ -40,24 +40,40 @@ import DeleteForumModal from "./components/modals/DeleteForumModal";
 import CancelPostModal from "./components/modals/CancelPostModal";
 import BoardAddModal from "./components/storyboardModals/BoardAddModal";
 import BoardEditModal from "./components/storyboardModals/BoardEditModal";
+
+import { useMutation, useQuery } 		from '@apollo/client';
+import { GET_CURRENT_USER } 				from './cache/queries';
+
 const App = () => {
+  let user = null;
+  const { loading, error, data, refetch } = useQuery(GET_CURRENT_USER);
+  if(error) { console.log(error); }
+  if(loading) { console.log(loading); }
+  if(data) {
+    let { getCurrentUser } = data;
+    console.log(getCurrentUser);
+    if(getCurrentUser !== null) { user = getCurrentUser; }
+    console.log(user);
+  }
+  const auth = user === null ? false : true;
+
   // Might be replacing this into a constant variable later when we incorporate the get_current_user query
-  const [auth,setAuth] = useState(false);
+  // const [auth,setAuth] = useState(false);
 
   // MODAL CODE
   const [showLogin, setShowLogin] = useState(false);
-  const [showSignUp, setShowSignUp] = useState(false);
+  const [showRegister, setShowRegister] = useState(false);
   const [showResetPassword, setShowResetPassword] = useState(false);
 
   const toggleLoginCallback = (show) => {
     setShowLogin(show);
     if(show){
-      setShowSignUp(false)
+      setShowRegister(false)
     }
   }
 
-  const toggleSignUpCallback = (show) => {
-    setShowSignUp(show);
+  const toggleRegisterCallback = (show) => {
+    setShowRegister(show);
     if(show){
       setShowLogin(false);
     }
@@ -71,14 +87,14 @@ const App = () => {
   }
 
   // Temporary for now, will probably delete when login functionality works and auto refetch user query
-  const authTrueCallback = () => {
-    setAuth(true);
-  }
-
-  const authFalseCallback = () => {
-    setAuth(false);
-
-  }
+  // const authTrueCallback = () => {
+  //   setAuth(true);
+  // }
+  //
+  // const authFalseCallback = () => {
+  //   setAuth(false);
+  //
+  // }
 
 
   const [showSidebar, setShowSidebar] = useState(false);
@@ -96,8 +112,8 @@ const App = () => {
         showSidebarCallback={showSidebarCallback}
         auth={auth}
         toggleLoginCallback={toggleLoginCallback}
-        toggleSignUpCallback={toggleSignUpCallback}
-        logoutCallback={authFalseCallback}
+        toggleRegisterCallback={toggleRegisterCallback}
+        fetchUser={refetch}
       />
       <div>
         <input
@@ -127,9 +143,10 @@ const App = () => {
           <label class="modal-box w-5/12 max-w-5xl">
             <Login
               toggleLoginCallback={toggleLoginCallback}
-              toggleSignUpCallback={toggleSignUpCallback}
+              toggleRegisterCallback={toggleRegisterCallback}
               toggleResetPasswordCallback={toggleResetPasswordCallback}
-              loginCallback={authTrueCallback}/>
+              fetchUser={refetch}
+              />
           </label>
       </label>
       </div>
@@ -138,16 +155,16 @@ const App = () => {
           type="checkbox"
           id="signup-modal"
           class="modal-toggle"
-          checked={showSignUp}
-          onClick={() => {toggleSignUpCallback(false)}}
+          checked={showRegister}
+          onClick={() => {toggleRegisterCallback(false)}}
         />
 
         <label for="signup-modal" class="modal cursor-pointer">
           <label class="modal-box w-6/12 max-w-5xl">
-            <SignUp
+            <Register
               toggleLoginCallback={toggleLoginCallback}
-              toggleSignUpCallback={toggleSignUpCallback}
-              signUpCallback={authTrueCallback}
+              toggleRegisterCallback={toggleRegisterCallback}
+              fetchUser={refetch}
               />
           </label>
         </label>

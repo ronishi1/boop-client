@@ -1,18 +1,35 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useMutation } 		from '@apollo/client';
+import { LOGIN }	from '../../cache/mutations';
 
-const Login = ({toggleLoginCallback, toggleSignUpCallback, toggleResetPasswordCallback, loginCallback}) => {
+const Login = ({toggleLoginCallback, toggleRegisterCallback, toggleResetPasswordCallback, fetchUser}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=208%3A348
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [Login] = useMutation(LOGIN);
 
-  function handleSubmit(e) {
+  const [inputValues, setInputValues] = useState({ username: '', password: '' });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setInputValues({
+      ...inputValues,
+      [name]: value,
+    });
+  }
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setUsername("");
-    setPassword("");
+    const { loading, error, data } = await Login({ variables: { ...inputValues } });
+    setInputValues({
+      username:'',
+      password:''
+    })
+    if (data) {
+      // Might need to do more things if login was successful (maybe routing?)
+      fetchUser()
+    }
     toggleLoginCallback();
-    loginCallback();
   }
   return (
     <div>
@@ -43,7 +60,7 @@ const Login = ({toggleLoginCallback, toggleSignUpCallback, toggleResetPasswordCa
           <div class="place-items-start w-full">
             <div class="text-left text-sm">
               Don't have an account?
-              <a class="ml-1 text-forum cursor-pointer" onClick={() => {toggleSignUpCallback(true)}}>
+              <a class="ml-1 text-forum cursor-pointer" onClick={() => {toggleRegisterCallback(true)}}>
                 Sign up here.
               </a>
             </div>
@@ -52,9 +69,9 @@ const Login = ({toggleLoginCallback, toggleSignUpCallback, toggleResetPasswordCa
             <input
               type="text"
               name="username"
-              value={username}
+              value={inputValues.username}
               placeholder="Username"
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={handleChange}
               class="input input-bordered w-full focus:outline-none"
             />
           </span>
@@ -62,9 +79,9 @@ const Login = ({toggleLoginCallback, toggleSignUpCallback, toggleResetPasswordCa
             <input
               type="password"
               name="password"
-              value={password}
+              value={inputValues.password}
               placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={handleChange}
               class="input input-bordered w-full focus:outline-none"
             />
           </span>

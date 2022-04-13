@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
-const SignUp = ({toggleLoginCallback,toggleSignUpCallback,signUpCallback}) => {
+import { REGISTER }	from '../../cache/mutations';
+import { useMutation } 		from '@apollo/client';
+const Register = ({toggleLoginCallback,toggleRegisterCallback,registerCallback,fetchUser}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=208%3A296
+  const [Register] = useMutation(REGISTER);
+
   const [inputValues, setInputValues] = useState({
-    firstname: "",
-    lastname: "",
-    emailaddress: "",
+    email: "",
     username: "",
-    createpassword: "",
-    confirmpassword: "",
+    password: "",
+    confirm_password: "",
   });
 
-  function handleChange(event) {
+  const handleChange = (event) => {
     const { name, value } = event.target;
     setInputValues({
       ...inputValues,
@@ -20,20 +21,20 @@ const SignUp = ({toggleLoginCallback,toggleSignUpCallback,signUpCallback}) => {
     });
   }
 
-  function handleSubmit(e) {
-    console.log(inputValues);
-    e.preventDefault();
-    setInputValues({
-      firstname: "",
-      lastname: "",
-      emailaddress: "",
-      username: "",
-      createpassword: "",
-      confirmpassword: "",
-    });
-    toggleSignUpCallback(false);
-    signUpCallback();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const { loading, error, data } = await Register({ variables: { ...inputValues } });
+    if(data){
+      await fetchUser()
+    }
 
+    setInputValues({
+      email: "",
+      username: "",
+      create_password: "",
+      confirm_password: "",
+    });
+    toggleRegisterCallback(false);
   }
 
   return (
@@ -47,7 +48,7 @@ const SignUp = ({toggleLoginCallback,toggleSignUpCallback,signUpCallback}) => {
             <div class="text-left text-xl font-medium">
               Sign up for a free account
             </div>
-            <div className="cursor-pointer" onClick={() => {toggleSignUpCallback(false)}}>
+            <div className="cursor-pointer" onClick={() => {toggleRegisterCallback(false)}}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"
@@ -72,24 +73,6 @@ const SignUp = ({toggleLoginCallback,toggleSignUpCallback,signUpCallback}) => {
               </a>
             </div>
           </div>
-          <span class="w-full flex auto-cols-auto place-items-center items-center space-x-4">
-            <input
-              type="text"
-              name="firstname"
-              placeholder="First name"
-              class="input input-bordered w-1/2 focus:outline-none "
-              value={inputValues.firstname}
-              onChange={handleChange}
-            />
-            <input
-              type="text"
-              name="lastname"
-              placeholder="Last name"
-              class="input input-bordered w-1/2  focus:outline-none"
-              value={inputValues.lastname}
-              onChange={handleChange}
-            />
-          </span>
           <span class="w-full">
             <input
               type="text"
@@ -103,37 +86,37 @@ const SignUp = ({toggleLoginCallback,toggleSignUpCallback,signUpCallback}) => {
           <span class="w-full">
             <input
               type="text"
-              name="emailaddress"
+              name="email"
               placeholder="Email Address"
               class="input input-bordered w-full focus:outline-none"
-              value={inputValues.emailaddress}
+              value={inputValues.email}
               onChange={handleChange}
             />
           </span>
           <span class="w-full">
             <input
               type="password"
-              name="createpassword"
+              name="password"
               placeholder="Create password"
               class="input input-bordered w-full focus:outline-none"
-              value={inputValues.createpassword}
+              value={inputValues.password}
               onChange={handleChange}
             />
           </span>
           <span class="w-full">
             <input
               type="password"
-              name="confirmpassword"
+              name="confirm_password"
               placeholder="Confirm password"
               class="input input-bordered w-full focus:outline-none"
-              value={inputValues.confirmpassword}
+              value={inputValues.confirm_password}
               onChange={handleChange}
             />
           </span>
           <span class="w-full flex flex-row justify-between items-center">
             <label
               class="text-zinc-400 text-sm ml-2 cursor-pointer"
-              onClick={() => {toggleSignUpCallback(false)}}
+              onClick={() => {toggleRegisterCallback(false)}}
             >
               Cancel
             </label>
@@ -150,4 +133,4 @@ const SignUp = ({toggleLoginCallback,toggleSignUpCallback,signUpCallback}) => {
   );
 };
 
-export default SignUp;
+export default Register;
