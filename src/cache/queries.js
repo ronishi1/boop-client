@@ -10,6 +10,12 @@ export const GET_CURRENT_USER = gql`
 	}
 `;
 
+export const GET_RESET_USER = gql`
+	query GetResetUser($reset_string: String!) {
+		getResetUser(reset_string:$reset_string)
+	}
+`;
+
 export const GET_USER_PROFILE = gql`
 	query GetUserProfile($username:String!) {
 		getUserProfile(username:$username) {
