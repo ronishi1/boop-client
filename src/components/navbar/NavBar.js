@@ -49,15 +49,22 @@ const NavBar = ({showSidebarCallback,auth,toggleLoginCallback,toggleRegisterCall
         <div class="navbar-end">
           {auth ?
           <div>
+            <Link to="/browse" className="btn btn-ghost btn-circle h-9 w-9 min-h-0 m-1">
+              <div title="Browse content">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 stroke-icon-grey stroke-[1.5]" fill="none" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M10 21h7a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v11m0 5l4.879-4.879m0 0a3 3 0 104.243-4.242 3 3 0 00-4.243 4.242z" />
+                </svg>
+              </div>
+            </Link>
             <Link to="/studio">
-              <div className="btn btn-ghost btn-circle h-9 w-9 min-h-0 m-1">
+              <div className="btn btn-ghost btn-circle h-9 w-9 min-h-0 m-1" title="Creator Studio">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 stroke-icon-grey stroke-[1.5]" fill="none" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z" />
                 </svg>
               </div>
             </Link>
             <div className="dropdown dropdown-end">
-              <label tabindex="0" className="btn btn-ghost btn-circle h-9 w-9 min-h-0 m-2">
+              <label tabindex="0" className="btn btn-ghost btn-circle h-9 w-9 min-h-0 m-2" title="Forums">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 stroke-icon-grey stroke-[1.5]" fill="none" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
                 </svg>
@@ -90,8 +97,8 @@ const NavBar = ({showSidebarCallback,auth,toggleLoginCallback,toggleRegisterCall
                 </li>
               </ul>
             </div>
-            <div className="dropdown dropdown-end">
-              <label tabindex="0" className="btn btn-ghost btn-circle h-9 w-9 min-h-0 m-2">
+            <div className="dropdown dropdown-end" >
+              <label tabindex="0" className="btn btn-ghost btn-circle h-9 w-9 min-h-0 m-2" title="Profile">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 stroke-[1.5] stroke-icon-grey" fill="none" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
@@ -135,15 +142,22 @@ const NavBar = ({showSidebarCallback,auth,toggleLoginCallback,toggleRegisterCall
           </div>
           :
           <div>
-            <Link to="/forum-home">
-              <div className="btn btn-ghost btn-circle h-9 w-9 min-h-0 m-1">
+            <Link to="/browse" className="btn btn-ghost btn-circle h-9 w-9 min-h-0 m-1">
+              <div title="Browse content">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 stroke-icon-grey stroke-[1.5]" fill="none" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M10 21h7a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v11m0 5l4.879-4.879m0 0a3 3 0 104.243-4.242 3 3 0 00-4.243 4.242z" />
                 </svg>
               </div>
             </Link>
+            <Link to="/forum-home">
+                <div className="btn btn-ghost btn-circle h-9 w-9 min-h-0 m-1" title="Forums">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 stroke-icon-grey stroke-[1.5]" fill="none" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
+                  </svg>
+                </div>
+            </Link>
             <div className="dropdown dropdown-end">
-              <label tabindex="0" className="btn btn-ghost btn-circle h-9 w-9 min-h-0 m-1">
+              <label tabindex="0" className="btn btn-ghost btn-circle h-9 w-9 min-h-0 m-1" title="Login/Register">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 stroke-[1.5] stroke-icon-grey" fill="none" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
