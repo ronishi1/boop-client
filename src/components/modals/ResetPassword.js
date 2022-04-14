@@ -8,15 +8,16 @@ const ResetPassword = ({toggleResetPasswordCallback}) => {
   const [email, setEmail] = useState("");
   const [GenerateResetPassword] = useMutation(GENERATE_RESET_PASSWORD);
   const [submitted,setSubmitted] = useState(false);
+
   const handleSubmit = async(e) => {
     e.preventDefault();
-    await GenerateResetPassword({ variables: {email:email} });
     setEmail("");
     setSubmitted(true);
     setTimeout(() => {
       setSubmitted(false);
       toggleResetPasswordCallback(false);
     }, 3000);
+    await GenerateResetPassword({ variables: {email:email} });
   }
 
   return (
