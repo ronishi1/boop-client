@@ -20,16 +20,17 @@ const ForumPostCard = ({post}) => {
   }
 
   return (
-    <div className='card-content flex flex-row'>
-      <figure className='h-full inline-flex'>
-        <img className="h-full object-contain pr-4" src={post.cover_image} alt="cover art"/>
+    <div className='card-content grid content-center'>
+      <Link to="/post">
+      <figure className='flex'>
+        <img className="h-16 w-16 object-cover pr-2" src={post.cover_image} alt="cover art"/>
         <div className='flex flex-col'>
-          <Link to="/post">
-            <div className='text-md text-link fond-md'>{post.title}</div>
-          </Link>
-          <div className='text-xs'>
+          <div className='text-lg text-link font-medium leading-none'>
+            {post.title}
+          </div>
+          <div className='text-xs leading-snug flex flex-col'>
             <div className='flex flex-row'>
-              <div className='mr-1'>by</div>
+              <p className='mr-1'>by</p>
               <Link to="/profile">
                 <div className='text-link'>{post.author}</div>
               </Link>
@@ -37,8 +38,8 @@ const ForumPostCard = ({post}) => {
             {formatDate()}
           </div>
         </div>
-        
       </figure>
+      </Link>
     </div>
   );
 }

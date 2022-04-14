@@ -1,4 +1,5 @@
 import React 	from 'react';
+import { Link } from "react-router-dom";
 
 const ForumReply = ({reply}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=341%3A2898
@@ -22,11 +23,13 @@ const ForumReply = ({reply}) => {
       <div className='border-b-2'>{formatDate(reply.publication_date)}</div>
       <div className='flex flex-cols items-stretch'>
         <div className='w-1/6 border-r-2'>
-          <div className='flex flex-col'>
-            <p className='text-link font-medium'>{reply.username}</p>
-            <img className="h-full object-contain" src={reply.profile_picture}/>
-            <p>Posts: {reply.post_count}</p>
-          </div>
+          <Link to='/profile'>
+            <div className='flex flex-col'>
+              <p className='text-link font-medium'>{reply.username}</p>
+              <img className="h-full object-contain" src={reply.profile_picture}/>
+              <p>Posts: {reply.post_count}</p>
+            </div>
+          </Link>
         </div>
         <div className='w-5/6'>
           <p className='text-left h-min'>

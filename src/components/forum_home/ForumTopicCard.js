@@ -7,15 +7,15 @@ const ForumTopicCard = ({data}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=255%3A540
   return (
     <div>
-        <div className='text-lg font-medium text-link'>
+        <div className='text-lg font-medium text-link leading-normal'>
           <Link to="/topic">
             {data.title}
           </Link>
         </div>
-      <div className='text-sm'>
+      <div className='text-sm leading-none pb-2'>
         {data.description}
       </div>
-      <div className='h-16 flex flex-row'>
+      <div className='h-20 grid grid-cols-3'>
         <ForumPostCard post={data.posts[0]}/>
         <ForumPostCard post={data.posts[1]}/>
         <ForumPostCard post={data.posts[2]}/>
