@@ -21,6 +21,8 @@ import ReadListScreen from './components/profile_lists/ReadListScreen';
 import AboutScreen from './components/about/AboutScreen';
 import HelpScreen from './components/help/HelpScreen';
 import ContentManagementScreen from './components/content_management/ContentManagementScreen'
+import ResetPasswordScreen from './components/reset_password/ResetPasswordScreen';
+
 // nav and sidebar, might also move or do something else with but will keep explicit path for dev purposes
 import NavBar from "./components/navbar/NavBar";
 import SideBar from "./components/sidebar/SideBar";
@@ -83,17 +85,6 @@ const App = () => {
       setShowLogin(false);
     }
   }
-
-  // Temporary for now, will probably delete when login functionality works and auto refetch user query
-  // const authTrueCallback = () => {
-  //   setAuth(true);
-  // }
-  //
-  // const authFalseCallback = () => {
-  //   setAuth(false);
-  //
-  // }
-
 
   const [showSidebar, setShowSidebar] = useState(false);
 
@@ -192,6 +183,7 @@ const App = () => {
         <Route path="/read-list" element={<ReadListScreen />} />
         <Route path="/update-account" element={<UpdateAccountScreen />} />
         <Route path="/content-management" element={<ContentManagementScreen />} />
+        <Route path="/reset/:reset_string" element={<ResetPasswordScreen />} />
 
         <Route path="/search" element={<SearchScreen/>} />
         <Route path="/about" element={<AboutScreen />} />

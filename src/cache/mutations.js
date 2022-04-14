@@ -21,3 +21,15 @@ export const LOGOUT = gql`
 		logout
 	}
 `;
+
+export const GENERATE_RESET_PASSWORD = gql`
+	mutation GenerateResetPassword($email: String!) {
+		generateResetPassword(email: $email)
+	}
+`;
+
+export const RESET_PASSWORD = gql`
+	mutation ResetPassword($reset_string: String!,$password: String!) {
+		resetPassword(reset_string: $reset_string,password: $password)
+	}
+`;
