@@ -107,18 +107,6 @@ const ProfileScreen = ({user}) => {
 
   return (
     <div className="flex flex-row place-content-center">
-      <div className="float-left flex flex-col">
-        <button class="btn float-left" onClick={() => setViewer(0)}>
-          logged out
-        </button>
-        <button class="btn float-left" onClick={() => setViewer(1)}>
-          logged in
-        </button>
-        <button class="btn float-left" onClick={() => setViewer(2)}>
-          self
-        </button>
-      </div>
-
       <div className="card w-1/4 shadow">
         <div className="text-center font-bold pt-10 pb-4">
           {profile.username}
