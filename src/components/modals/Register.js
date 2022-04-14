@@ -30,7 +30,7 @@ const Register = ({toggleLoginCallback,toggleRegisterCallback,registerCallback,f
     setInputValues({
       email: "",
       username: "",
-      create_password: "",
+      password: "",
       confirm_password: "",
     });
     if (!(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(inputValues.email))) {
