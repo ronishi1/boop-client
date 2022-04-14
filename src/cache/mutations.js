@@ -33,3 +33,21 @@ export const RESET_PASSWORD = gql`
 		resetPassword(reset_string: $reset_string,password: $password)
 	}
 `;
+
+export const UPDATE_BIO = gql`
+	mutation UpdateBio($newBio: String!) {
+		updateBio(newBio: $newBio)
+	}
+`;
+
+export const FOLLOW_USER = gql`
+	mutation FollowUser($followID: ID!) {
+		followUser(followID: $followID)
+	}
+`;
+
+export const UNFOLLOW_USER = gql`
+	mutation UnfollowUser($followID: ID!) {
+		unfollowUser(followID: $followID)
+	}
+`;

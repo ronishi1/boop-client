@@ -4,7 +4,8 @@ import ProfileFavorites from "./ProfileFavorites";
 import ProfilePublished from "./ProfilePublished";
 import { useParams } from 'react-router-dom'
 import { GET_USER_PROFILE } from '../../cache/queries';
-import { useQuery } 	from '@apollo/client';
+import { UPDATE_BIO, FOLLOW_USER, UNFOLLOW_USER } from '../../cache/mutations';
+import { useQuery, useMutation } 	from '@apollo/client';
 
 const ProfileScreen = ({user}) => {
   let profile = {};
@@ -20,10 +21,13 @@ const ProfileScreen = ({user}) => {
     profile = data.getUserProfile;
   }
 
+  const [UpdateBio] = useMutation(UPDATE_BIO);
+  const [FollowUser] = useMutation(FOLLOW_USER);
+  const [UnfollowUser] = useMutation(UNFOLLOW_USER);
+
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=294%3A2257
-  const [followed, setFollow] = useState(false);
-  // 0 = GUEST, 1 = LOGGED-IN+NOT SELF, 2 = LOGGED-IN+SELF
-  const [viewer, setViewer] = useState(0);
+  const [editingBio, toggleBioEdit] = useState(false);
+  const [input, setInput] = useState("");
   const [selectedCollection, setSelectedCollection] = useState("Published");
 
   const user_data = {
@@ -79,6 +83,7 @@ const ProfileScreen = ({user}) => {
     ],
   };
 
+  // converts follower/following count to a readable number
   const readableNumber = (number) => {
     if (number < 1000) return number;
     var s = ["", "k", "m"];
@@ -86,10 +91,24 @@ const ProfileScreen = ({user}) => {
     return (number / Math.pow(1000, e)).toFixed(1) + " " + s[e];
   };
 
-  const handleFollow = () => {
-    setFollow(!followed);
+  // handles following/unfollowing of user who owns this profile
+  const handleFollow = async () => {
+    if(!profile.followers.includes(user._id)){
+      await FollowUser({variables:{followID: profile._id}});
+    }
+    else{
+      await UnfollowUser({variables:{followID: profile._id}});
+    }
+    refetch();
   };
 
+  const handleBioEdit = async () => {
+    await UpdateBio({variables:{newBio: input}});
+    toggleBioEdit(!editingBio);
+    refetch();
+  }
+
+  // changes which collection is being viewed
   const handleSelectedCollection = (collection) => {
     setSelectedCollection(collection);
   };
@@ -138,10 +157,22 @@ const ProfileScreen = ({user}) => {
           </div>
         </div>
         <div className="flex flex-col place-content-center mb-8 pt-4 px-16">
-          <div className="w-full">{profile.bio}</div>
-          {user && profile && profile.username == user.username ? (
+          {editingBio ? 
+          (<div className="flex flex-col">
+            <textarea class="textarea" placeholder="Bio" onChange={(event) => { setInput(event.target.value);}}>{profile.bio}</textarea>
+            <div className="flex justify-end space-x-4">
+              <a className="link no-underline text-forum py-4 w-min" onClick={() => toggleBioEdit(!editingBio)}>
+                Cancel
+              </a>
+              <a className="link no-underline text-forum py-4 w-min" onClick={() => handleBioEdit()}>
+                Save
+              </a>
+            </div>
+          </div>)
+          : (<div className="w-full">{profile.bio}</div>)}
+          {user && profile && profile.username == user.username && !editingBio ? (
             <div className="flex justify-end">
-              <a className="link no-underline text-forum py-4 w-min">Edit</a>
+              <a className="link no-underline text-forum py-4 w-min" onClick={() => toggleBioEdit(!editingBio)}>Edit</a>
             </div>
           ) : (
             <></>
@@ -153,7 +184,7 @@ const ProfileScreen = ({user}) => {
               class="btn bg-forum border-forum w-1/5 hover:bg-forum hover:opacity-50 hover:border-forum"
               onClick={() => handleFollow()}
             >
-              {followed ? "Followed" : "Follow"}
+              {profile.followers.includes(user._id) ? "Followed" : "Follow"}
             </button>
           </div>
         ) : (

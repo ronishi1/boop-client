@@ -7,7 +7,6 @@ const ProfileActivity = ({activities}) => {
 
   const formatDate = (content) => {
     let date = content.publication_date;
-    console.log(date)
     let month = months[date.getMonth()-1];
     let pm = date.getHours() > 12;
     let hour = date.getHours();
