@@ -27,6 +27,12 @@ const Register = ({toggleLoginCallback,toggleRegisterCallback,registerCallback,f
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setInputValues({
+      email: "",
+      username: "",
+      create_password: "",
+      confirm_password: "",
+    });
     if (!(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(inputValues.email))) {
       setError({status:true,message:"Invalid email format"});
       setTimeout(() => setError({status:false,message:""}), 3000);
@@ -49,12 +55,6 @@ const Register = ({toggleLoginCallback,toggleRegisterCallback,registerCallback,f
       setTimeout(() => setError({status:false,message:""}), 3000);
       return;
     }
-    // setInputValues({
-    //   email: "",
-    //   username: "",
-    //   create_password: "",
-    //   confirm_password: "",
-    // });
   }
 
   return (

@@ -25,18 +25,22 @@ const Login = ({toggleLoginCallback, toggleRegisterCallback, toggleResetPassword
     try{
       const result = await Login({ variables: { ...inputValues } });
       if(result.data){
-        await fetchUser()
+        await fetchUser();
+        setInputValues({
+          username:'',
+          password:''
+        });
         toggleLoginCallback(false);
       }
     } catch (e) {
       setError({status:true,message:e.message});
       setTimeout(() => setError({status:false,message:""}), 3000);
+      setInputValues({
+        username:'',
+        password:''
+      })
       return;
     }
-    // setInputValues({
-    //   username:'',
-    //   password:''
-    // })
     // if (data) {
       // Might need to do more things if login was successful (maybe routing?)
     //   fetchUser()
