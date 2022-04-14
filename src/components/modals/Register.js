@@ -2,9 +2,13 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { REGISTER }	from '../../cache/mutations';
 import { useMutation } 		from '@apollo/client';
+import { Transition } from '@headlessui/react'
+
 const Register = ({toggleLoginCallback,toggleRegisterCallback,registerCallback,fetchUser}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=208%3A296
   const [Register] = useMutation(REGISTER);
+
+  const [error,setError] = useState({status:false,message:""});
 
   const [inputValues, setInputValues] = useState({
     email: "",
@@ -23,18 +27,34 @@ const Register = ({toggleLoginCallback,toggleRegisterCallback,registerCallback,f
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const { loading, error, data } = await Register({ variables: { ...inputValues } });
-    if(data){
-      await fetchUser()
+    if (!(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(inputValues.email))) {
+      setError({status:true,message:"Invalid email format"});
+      setTimeout(() => setError({status:false,message:""}), 3000);
+      return;
     }
-
-    setInputValues({
-      email: "",
-      username: "",
-      create_password: "",
-      confirm_password: "",
-    });
-    toggleRegisterCallback(false);
+    if(inputValues.password !== inputValues.confirm_password){
+      setError({status:true,message:"Passwords do not match"})
+      setTimeout(() => setError({status:false,message:""}), 3000);
+      return;
+    }
+    try{
+      const result = await Register({ variables: { ...inputValues } });
+      if(result.data){
+        await fetchUser()
+        toggleRegisterCallback(false);
+      }
+    } catch (e) {
+      console.log(e.message);
+      setError({status:true,message:e.message});
+      setTimeout(() => setError({status:false,message:""}), 3000);
+      return;
+    }
+    // setInputValues({
+    //   email: "",
+    //   username: "",
+    //   create_password: "",
+    //   confirm_password: "",
+    // });
   }
 
   return (
@@ -44,6 +64,22 @@ const Register = ({toggleLoginCallback,toggleRegisterCallback,registerCallback,f
         onSubmit={handleSubmit}
       >
       <div class="grid items-center space-y-4 p-4 mr-8 ml-8">
+        <Transition
+          show={error.status}
+          enter="transition-opacity duration-300"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="transition-opacity duration-500"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <div class="alert alert-error py-1.5 shadow-lg">
+            <div>
+              <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              <span>{error.message}</span>
+            </div>
+          </div>
+        </Transition>
         <div class="w-full flex flex-row justify-between">
             <div class="text-left text-xl font-medium">
               Sign up for a free account

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useMutation } 		from '@apollo/client';
 import { LOGIN }	from '../../cache/mutations';
+import { Transition } from '@headlessui/react'
 
 const Login = ({toggleLoginCallback, toggleRegisterCallback, toggleResetPasswordCallback, fetchUser}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=208%3A348
@@ -9,6 +10,7 @@ const Login = ({toggleLoginCallback, toggleRegisterCallback, toggleResetPassword
   const [Login] = useMutation(LOGIN);
 
   const [inputValues, setInputValues] = useState({ username: '', password: '' });
+  const [error,setError] = useState({status:false,message:""});
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -20,16 +22,26 @@ const Login = ({toggleLoginCallback, toggleRegisterCallback, toggleResetPassword
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { loading, error, data } = await Login({ variables: { ...inputValues } });
-    setInputValues({
-      username:'',
-      password:''
-    })
-    if (data) {
-      // Might need to do more things if login was successful (maybe routing?)
-      fetchUser()
+    try{
+      const result = await Login({ variables: { ...inputValues } });
+      if(result.data){
+        await fetchUser()
+        toggleLoginCallback(false);
+      }
+    } catch (e) {
+      setError({status:true,message:e.message});
+      setTimeout(() => setError({status:false,message:""}), 3000);
+      return;
     }
-    toggleLoginCallback();
+    // setInputValues({
+    //   username:'',
+    //   password:''
+    // })
+    // if (data) {
+      // Might need to do more things if login was successful (maybe routing?)
+    //   fetchUser()
+    // }
+    // toggleLoginCallback(false);
   }
   return (
     <div>
@@ -38,6 +50,22 @@ const Login = ({toggleLoginCallback, toggleRegisterCallback, toggleResetPassword
         onSubmit={handleSubmit}
       >
         <div class="grid items-center space-y-4 p-4 mr-8 ml-8">
+          <Transition
+            show={error.status}
+            enter="transition-opacity duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="transition-opacity duration-500"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div class="alert alert-error py-1.5 shadow-lg">
+              <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <span>{error.message}</span>
+              </div>
+            </div>
+          </Transition>
           <div class="w-full flex flex-row justify-between">
             <div class="text-left text-xl font-medium">Log In</div>
             <div className="cursor-pointer" onClick={() => {toggleLoginCallback(false)}}>

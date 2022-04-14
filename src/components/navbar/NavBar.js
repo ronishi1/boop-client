@@ -5,7 +5,7 @@ import Login from '../modals/Login';
 import { useMutation, useApolloClient }     from '@apollo/client';
 import { LOGOUT }	from '../../cache/mutations';
 
-const NavBar = ({showSidebarCallback,auth,toggleLoginCallback,toggleRegisterCallback,fetchUser}) => {
+const NavBar = ({showSidebarCallback,auth,toggleLoginCallback,toggleRegisterCallback,fetchUser,user}) => {
   let navigate = useNavigate();
 
   const client = useApolloClient();
@@ -98,7 +98,7 @@ const NavBar = ({showSidebarCallback,auth,toggleLoginCallback,toggleRegisterCall
               </label>
               <ul tabindex="0" class="dropdown-content menu mt-3 shadow bg-base-100 rounded-box w-52">
                 <li>
-                  <Link to="/profile">
+                  <Link to={`/profile/${user.username}`}>
                     <a className="flex flex-row">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 stroke-icon-grey stroke-[1.5]" fill="none" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />

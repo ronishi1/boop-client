@@ -51,9 +51,7 @@ const App = () => {
   if(loading) { console.log(loading); }
   if(data) {
     let { getCurrentUser } = data;
-    console.log(getCurrentUser);
     if(getCurrentUser !== null) { user = getCurrentUser; }
-    console.log(user);
   }
   const auth = user === null ? false : true;
 
@@ -114,6 +112,7 @@ const App = () => {
         toggleLoginCallback={toggleLoginCallback}
         toggleRegisterCallback={toggleRegisterCallback}
         fetchUser={refetch}
+        user={user}
       />
       <div>
         <input
@@ -188,7 +187,7 @@ const App = () => {
         <Route path="/post" element={<ForumPostScreen />} />
         <Route path="/topic" element={<ForumTopicScreen />} />
         <Route path="/landing" element={<LandingScreen />} />
-        <Route path="/profile" element={<ProfileScreen />} />
+        <Route path="/profile/:username" element={<ProfileScreen user={user}/>} />
         <Route path="/favorites" element={<FavoritesScreen />} />
         <Route path="/read-list" element={<ReadListScreen />} />
         <Route path="/update-account" element={<UpdateAccountScreen />} />

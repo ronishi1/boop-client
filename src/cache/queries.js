@@ -9,3 +9,18 @@ export const GET_CURRENT_USER = gql`
 		}
 	}
 `;
+
+export const GET_USER_PROFILE = gql`
+	query GetUserProfile($username:String!) {
+		getUserProfile(username:$username) {
+			_id
+	    username
+	    bio
+	    profile_pic
+	    favorites
+	    following
+	    followers
+	    user_content
+		}
+	}
+`;

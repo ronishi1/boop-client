@@ -2,8 +2,24 @@ import React, { useState } from "react";
 import ProfileActivity from "./ProfileActivity";
 import ProfileFavorites from "./ProfileFavorites";
 import ProfilePublished from "./ProfilePublished";
+import { useParams } from 'react-router-dom'
+import { GET_USER_PROFILE } from '../../cache/queries';
+import { useQuery } 	from '@apollo/client';
 
-const ProfileScreen = () => {
+const ProfileScreen = ({user}) => {
+  let profile = {};
+  let { username } = useParams();
+
+  const { loading, error, data, refetch } = useQuery(GET_USER_PROFILE, {
+      variables: { username: username },
+    });
+
+  if(loading) { console.log(loading, 'loading'); }
+	if(error) { console.log(error, 'error'); }
+  if(data) {
+    profile = data.getUserProfile;
+  }
+
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=294%3A2257
   const [followed, setFollow] = useState(false);
   // 0 = GUEST, 1 = LOGGED-IN+NOT SELF, 2 = LOGGED-IN+SELF
@@ -105,9 +121,9 @@ const ProfileScreen = () => {
 
       <div className="card w-1/4 shadow">
         <div className="text-center font-bold pt-10 pb-4">
-          {user_data.username}
+          {profile.username}
         </div>
-        {viewer == 2 ? (
+        {user && profile && profile.username == user.username ? (
           <img
             className="mb-10 h-48 object-contain mask mask-circle hover:cursor-pointer hover:opacity-70"
             title="Edit Profile Picture"
@@ -122,28 +138,28 @@ const ProfileScreen = () => {
         <div className="grid grid-cols-2 justify-items-center">
           <div>
             <div className="font-bold text-center">
-              {readableNumber(user_data.followers)}
+              {profile.followers ? readableNumber(profile.followers.length) : 0}
             </div>
             <div>Followers</div>
           </div>
           <div>
             <div className="font-bold text-center">
-              {readableNumber(user_data.following)}
+              {profile.following ? readableNumber(profile.following.length) : 0}
             </div>
             <div>Following</div>
           </div>
         </div>
         <div className="flex flex-col place-content-center mb-8 pt-4 px-16">
-          <div className="w-full">{user_data.bio}</div>
-          {viewer == 2 ? (
+          <div className="w-full">{profile.bio}</div>
+          {user && profile && profile.username == user.username ? (
             <div className="flex justify-end">
               <a className="link no-underline text-forum py-4 w-min">Edit</a>
             </div>
           ) : (
-            ""
+            <></>
           )}
         </div>
-        {viewer == 1 ? (
+        {user && profile && profile.username != user.username ? (
           <div className="flex place-content-center py-8">
             <button
               class="btn bg-forum border-forum w-1/5 hover:bg-forum hover:opacity-50 hover:border-forum"
