@@ -69,3 +69,9 @@ export const UPDATE_PASSWORD = gql`
 		updatePassword(oldPassword: $oldPassword, newPassword: $newPassword)
 	}
 `;
+
+export const DELETE_ACCOUNT = gql`
+	mutation DeleteAccount($password: String!) {
+		deleteAccount(password: $password)
+	}
+`;
