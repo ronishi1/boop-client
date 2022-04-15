@@ -33,7 +33,7 @@ const Register = ({toggleLoginCallback,toggleRegisterCallback,registerCallback,f
       password: "",
       confirm_password: "",
     });
-    if (!(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(inputValues.email))) {
+    if (!(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inputValues.email))) {
       setError({status:true,message:"Invalid email format"});
       setTimeout(() => setError({status:false,message:""}), 3000);
       return;
