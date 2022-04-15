@@ -49,17 +49,17 @@ const NavBar = ({showSidebarCallback,auth,toggleLoginCallback,toggleRegisterCall
         <div class="navbar-end">
           {auth ?
           <div>
-            <Link to="/browse" className="btn btn-ghost btn-circle h-9 w-9 min-h-0 m-1">
-              <div title="Browse content">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 stroke-icon-grey stroke-[1.5]" fill="none" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M10 21h7a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v11m0 5l4.879-4.879m0 0a3 3 0 104.243-4.242 3 3 0 00-4.243 4.242z" />
-                </svg>
-              </div>
-            </Link>
             <Link to="/studio">
               <div className="btn btn-ghost btn-circle h-9 w-9 min-h-0 m-1" title="Creator Studio">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 stroke-icon-grey stroke-[1.5]" fill="none" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z" />
+                </svg>
+              </div>
+            </Link>
+            <Link to="/browse" className="btn btn-ghost btn-circle h-9 w-9 min-h-0 m-1">
+              <div title="Browse content">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 stroke-icon-grey stroke-[1.5]" fill="none" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M10 21h7a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v11m0 5l4.879-4.879m0 0a3 3 0 104.243-4.242 3 3 0 00-4.243 4.242z" />
                 </svg>
               </div>
             </Link>
