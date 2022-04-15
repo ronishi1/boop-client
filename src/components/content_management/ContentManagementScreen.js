@@ -59,14 +59,14 @@ const ContentManagementScreen = () => {
 
         </div>
         <div className="col-span-2 ml-5">
-          <div className="card rounded-none">
-            <div className="flex flex-row items-center justify-between ">
+          <div className="card rounded-none static">
+            <div className="flex flex-row items-center justify-between">
               <p className='text-2xl font-medium'>Chapter List</p>
               <Link to='/comic-edit'>
               <div className="btn btn-xs bg-base-content/90 pr-3 border-none">+ Create chapter</div>
               </Link>
             </div>
-            <div className="card rounded-none h-full overflow-y-auto">
+            <div className="card static rounded-none h-full overflow-y-auto">
               {content.chapters.map(chapter => (
                 <ChapterEntry chapter={chapter}/>
               ))}

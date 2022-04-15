@@ -15,7 +15,7 @@ const ContentCard = ({title,cover,size}) => {
   if(size == "S"){
     contentCard =
         <Link to="/info">
-          <div className="cursor-pointer card text-primary-content text-center h-36 w-24">
+          <div className="cursor-pointer card static text-primary-content text-center h-36 w-24">
             <div className="card-body justify-end p-2 text-white" style={{background:`linear-gradient(180deg, hsl(0, 100%, 100%, 0), hsl(0, 0%, 0%, 0.65)),url(${cover}) no-repeat center center`,backgroundSize:"cover"}}>
               <div className="font-medium card-title block" style={{fontSize:".6rem",lineHeight:".5rem"}}>{title}</div>
             </div>
@@ -25,7 +25,7 @@ const ContentCard = ({title,cover,size}) => {
   else if(size == "M"){
     contentCard =
             <Link to="/info">
-              <div className="cursor-pointer card text-primary-content text-center h-48 w-32">
+              <div className="cursor-pointer card static text-primary-content text-center h-48 w-32">
                 <div className="card-body justify-end p-2 text-white" style={{background:`linear-gradient(180deg, hsl(0, 100%, 100%, 0), hsl(0, 0%, 0%, 0.65)),url(${cover}) no-repeat center center`,backgroundSize:"cover"}}>
                   <div className="font-medium card-title leading-4 text-xs block">{title}</div>
                 </div>
@@ -35,7 +35,7 @@ const ContentCard = ({title,cover,size}) => {
   else if(size == "L"){
     contentCard =
             <Link to="/info">
-              <div className="cursor-pointer card text-primary-content text-center h-60 w-40">
+              <div className="cursor-pointer card static text-primary-content text-center h-60 w-40">
                 <div className="card-body justify-end p-2 text-white" style={{background:`linear-gradient(180deg, hsl(0, 100%, 100%, 0), hsl(0, 0%, 0%, 0.65)),url(${cover}) no-repeat center center`,backgroundSize:"cover"}}>
                   <div className="font-medium card-title leading-4 text-sm block">{title}</div>
                 </div>
