@@ -79,8 +79,8 @@ const HomeMostPopular = () => {
         enterFrom="opacity-0"
         enterTo="opacity-100"
         leave="transition-opacity duration-0"
-        leaveFrom="opacity-100"
-        leaveTo="opacity-0"
+        leaveFrom="hidden"
+        leaveTo="hidden"
       >
       <div className="flex flex-row overflow-x-scroll space-x-2 ml-10">
         {data.slice(0,3).map((content) => (
@@ -101,8 +101,8 @@ const HomeMostPopular = () => {
         enterFrom="opacity-0"
         enterTo="opacity-100"
         leave="transition-opacity duration-0"
-        leaveFrom="opacity-100"
-        leaveTo="opacity-0"
+        leaveFrom="hidden"
+        leaveTo="hidden"
       >
         <div className="flex flex-row overflow-x-scroll space-x-2">
           <div className="mt-[6.5rem]">
@@ -130,8 +130,8 @@ const HomeMostPopular = () => {
         enterFrom="opacity-0"
         enterTo="opacity-100"
         leave="transition-opacity duration-0"
-        leaveFrom="opacity-100"
-        leaveTo="opacity-0"
+        leaveFrom="hidden"
+        leaveTo="hidden"
       >
         <div className="flex flex-row overflow-x-scroll space-x-2 mr-10">
           <div className="mt-[6.5rem]">
