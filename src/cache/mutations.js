@@ -51,3 +51,21 @@ export const UNFOLLOW_USER = gql`
 		unfollowUser(followID: $followID)
 	}
 `;
+
+export const UPDATE_USERNAME = gql`
+	mutation UpdateUsername($username: String!) {
+		updateUsername(username: $username)
+	}
+`;
+
+export const UPDATE_EMAIL = gql`
+	mutation UpdateEmail($newEmail: String!, $password: String!){
+		updateEmail(newEmail: $newEmail, password: $password)
+	}
+`;
+
+export const UPDATE_PASSWORD = gql`
+	mutation UpdatePassword($oldPassword: String!, $newPassword: String!) {
+		updatePassword(oldPassword: $oldPassword, newPassword: $newPassword)
+	}
+`;

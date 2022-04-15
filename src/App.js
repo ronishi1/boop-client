@@ -181,7 +181,7 @@ const App = () => {
         <Route path="/profile/:username" element={<ProfileScreen user={user}/>} />
         <Route path="/favorites" element={<FavoritesScreen />} />
         <Route path="/read-list" element={<ReadListScreen />} />
-        <Route path="/update-account" element={<UpdateAccountScreen />} />
+        <Route path="/update-account" element={<UpdateAccountScreen fetchUser={refetch} user={user}/>} />
         <Route path="/content-management" element={<ContentManagementScreen />} />
         <Route path="/reset/:reset_string" element={<ResetPasswordScreen />} />
 

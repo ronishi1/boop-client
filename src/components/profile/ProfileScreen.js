@@ -124,7 +124,7 @@ const ProfileScreen = ({user}) => {
     }
   };
 
-  return (
+  return user && profile ? (
     <div className="flex flex-row place-content-center">
       <div className="card w-1/4 shadow">
         <div className="text-center font-bold pt-10 pb-4">
@@ -220,7 +220,7 @@ const ProfileScreen = ({user}) => {
         </div>
       </div>
     </div>
-  );
+  ) : <div>loading...</div>;
 };
 
 export default ProfileScreen;
