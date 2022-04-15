@@ -79,6 +79,13 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
   }
 
   const handleChangePassword = async () => {
+    // check if password is blank
+    if(input.password == ''){
+      setPasswordError({status:true,message:"Password cannot be empty"});
+      setTimeout(() => setPasswordError({status:false,message:""}), 3000);
+      setInput({password:"",confirmPassword:"",passwordPW:""});
+      return;
+    }
     // check if password and confirmPassword match
     if(input.password != input.confirmPassword){
       setPasswordError({status:true,message:"Passwords do not match"});
@@ -101,148 +108,143 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
   }
   
   return user ? (
-    <div className="flex flex-col">
-      <div className="flex flex-row place-content-center">
-        <div className="w-1/3 flex flex-col place-content-center">
-          <div className="w-full flex place-content-center">
-            <div className="avatar">
-              <div className="mt-20 w-64 rounded-full border-2 border-forum">
-                <label for="upload-picture-modal" class="modal-button hover:cursor-pointer hover:opacity-80">
-                  <img src={user_data.profile_picture} />
-                </label>
-                <UploadPicture/>
-              </div>
-            </div>
-          </div>
-          <div className="flex place-content-center">
-            <div className="card w-3/4 mt-10 p-8 shadow">
-              <Transition
-                show={usernameError.status}
-                enter="transition-opacity duration-300"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="transition-opacity duration-500"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
-              >
-                <div class="alert alert-error py-1.5 shadow-lg">
-                  <div>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    <span>{usernameError.message}</span>
-                  </div>
-                </div>
-              </Transition>
-              <div className="flex flex-row ">
-                <p className="pr-1">Username: </p>
-                <p className="font-medium">{user.username}</p>
-              </div>
-              <input 
-                type="text" 
-                placeholder="Enter new username" 
-                class="mt-4 input input-bordered w-full"
-                name="username"
-                value={input.username}
-                onChange={handleChange}
-              />
-              <div className="flex justify-end">
-                <a class="link no-underline text-forum mt-2" onClick={handleChangeUsername}>Update</a>
-              </div>
-            </div>
+    <div className="flex flex-col place-content-center">
+      <div className="flex place-content-center">
+        <div className="avatar">
+          <div className="mt-20 w-64 rounded-full border-2 border-forum">
+            <label for="upload-picture-modal" class="modal-button hover:cursor-pointer hover:opacity-80" title="Change Profile Picture">
+              <img src={user_data.profile_picture} />
+            </label>
+            <UploadPicture/>
           </div>
         </div>
-        <div className="w-1/3 flex flex-col">
-          <div className="flex place-content-center">
-            <div className="card w-3/4 mt-10 p-8 shadow">
-              <Transition
-                show={emailError.status}
-                enter="transition-opacity duration-300"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="transition-opacity duration-500"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
-              >
-                <div class="alert alert-error py-1.5 shadow-lg">
-                  <div>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    <span>{emailError.message}</span>
-                  </div>
-                </div>
-              </Transition>
-              <div className="flex flex-row ">
-                <p className="pr-1">Email: </p>
-                <p className="font-medium">{user.email}</p>
-              </div>
-              <input 
-                type="text" 
-                placeholder="Enter new email" 
-                class="mt-4 input input-bordered w-full" 
-                name="email"
-                value={input.email}
-                onChange={handleChange}
-              />
-              <input 
-                type="password" 
-                placeholder="Enter password" 
-                class="mt-4 input input-bordered w-full" 
-                name="emailPW"
-                value={input.emailPW}
-                onChange={handleChange}
-              />
-              <div className="flex justify-end">
-                <a class="link no-underline text-forum mt-2" onClick={handleChangeEmail}>Update</a>
+      </div>
+      <div className="flex place-content-center">
+        <div className="card w-1/3 mt-10 p-8 shadow">
+          <Transition
+            show={usernameError.status}
+            enter="transition-opacity duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="transition-opacity duration-500"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div class="alert alert-error py-1.5 shadow-lg">
+              <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <span>{usernameError.message}</span>
               </div>
             </div>
+          </Transition>
+          <div className="flex flex-row ">
+            <p className="pr-1">Username: </p>
+            <p className="font-medium">{user.username}</p>
           </div>
-          <div className="flex place-content-center">
-            <div className="card w-3/4 mt-10 p-8 shadow">
-              <Transition
-                show={passwordError.status}
-                enter="transition-opacity duration-300"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="transition-opacity duration-500"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
-              >
-                <div class="alert alert-error py-1.5 shadow-lg">
-                  <div>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    <span>{passwordError.message}</span>
-                  </div>
-                </div>
-              </Transition>
-              <div className="flex flex-row ">
-                <p className="pr-1">Password</p>
-              </div>
-              <input 
-                type="password" 
-                placeholder="Enter new password" 
-                class="mt-4 input input-bordered w-full" 
-                name="password"
-                value={input.password}
-                onChange={handleChange}
-              />
-              <input 
-                type="password" 
-                placeholder="Confirm new Password" 
-                class="mt-4 input input-bordered w-full" 
-                name="confirmPassword"
-                value={input.confirmPassword}
-                onChange={handleChange}
-              />
-              <input 
-                type="password" 
-                placeholder="Enter old Password" 
-                class="mt-4 input input-bordered w-full" 
-                name="passwordPW"
-                value={input.passwordPW}
-                onChange={handleChange}
-              />
-              <div className="flex justify-end">
-                <a class="link no-underline text-forum mt-2" onClick={handleChangePassword}>Update</a>
+          <input 
+            type="text" 
+            placeholder="Enter new username" 
+            class="mt-4 input input-bordered w-full"
+            name="username"
+            value={input.username}
+            onChange={handleChange}
+          />
+          <div className="flex justify-end">
+            <a class="link no-underline text-forum mt-2" onClick={handleChangeUsername}>Update</a>
+          </div>
+        </div>
+      </div>
+      
+      <div className="flex place-content-center">
+        <div className="card w-1/3 mt-10 p-8 shadow">
+          <Transition
+            show={emailError.status}
+            enter="transition-opacity duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="transition-opacity duration-500"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div class="alert alert-error py-1.5 shadow-lg">
+              <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <span>{emailError.message}</span>
               </div>
             </div>
+          </Transition>
+          <div className="flex flex-row ">
+            <p className="pr-1">Email: </p>
+            <p className="font-medium">{user.email}</p>
+          </div>
+          <input 
+            type="text" 
+            placeholder="Enter new email" 
+            class="mt-4 input input-bordered w-full" 
+            name="email"
+            value={input.email}
+            onChange={handleChange}
+          />
+          <input 
+            type="password" 
+            placeholder="Enter password" 
+            class="mt-4 input input-bordered w-full" 
+            name="emailPW"
+            value={input.emailPW}
+            onChange={handleChange}
+          />
+          <div className="flex justify-end">
+            <a class="link no-underline text-forum mt-2" onClick={handleChangeEmail}>Update</a>
+          </div>
+        </div>
+      </div>
+      <div className="flex place-content-center">
+        <div className="card w-1/3 mt-10 p-8 shadow">
+          <Transition
+            show={passwordError.status}
+            enter="transition-opacity duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="transition-opacity duration-500"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div class="alert alert-error py-1.5 shadow-lg">
+              <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <span>{passwordError.message}</span>
+              </div>
+            </div>
+          </Transition>
+          <div className="flex flex-row ">
+            <p className="pr-1">Password</p>
+          </div>
+          <input 
+            type="password" 
+            placeholder="Enter new password" 
+            class="mt-4 input input-bordered w-full" 
+            name="password"
+            value={input.password}
+            onChange={handleChange}
+          />
+          <input 
+            type="password" 
+            placeholder="Confirm new Password" 
+            class="mt-4 input input-bordered w-full" 
+            name="confirmPassword"
+            value={input.confirmPassword}
+            onChange={handleChange}
+          />
+          <input 
+            type="password" 
+            placeholder="Enter old Password" 
+            class="mt-4 input input-bordered w-full" 
+            name="passwordPW"
+            value={input.passwordPW}
+            onChange={handleChange}
+          />
+          <div className="flex justify-end">
+            <a class="link no-underline text-forum mt-2" onClick={handleChangePassword}>Update</a>
           </div>
         </div>
       </div>
