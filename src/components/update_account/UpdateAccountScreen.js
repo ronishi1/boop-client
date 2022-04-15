@@ -59,7 +59,7 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
 
   const handleChangeEmail = async () => {
     // handle if email is actually invalid
-    if (!(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(input.email))) {
+    if (!(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.email))) {
       setEmailError({status:true,message:"Invalid email format"});
       setTimeout(() => setEmailError({status:false,message:""}), 3000);
       return;
