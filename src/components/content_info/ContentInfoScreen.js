@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ChapterTable from "./ChapterTable";
 import DiscussionPost from "./DiscussionPost";
 import PopularPost from "./PopularPost";
+import { Link} from "react-router-dom";
 
 const ContentInfoScreen = () => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=311%3A1266
@@ -82,9 +83,9 @@ const ContentInfoScreen = () => {
   const getContentColoredText = (text) => {
     switch (data.content_type) {
       case "C":
-        return <p class="text-comic">{text}</p>;
+        return <p class="text-comic text-2xl">{text}</p>;
       case "S":
-        return <p class="text-story">{text}</p>;
+        return <p class="text-story text-2xl">{text}</p>;
       default:
         return;
     }
@@ -115,7 +116,7 @@ const ContentInfoScreen = () => {
             <div className="self-start pt-1">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="cursor-pointer h-5 w-5 hover:opacity-70"
+                className="cursor-pointer h-7 w-7 hover:opacity-70"
                 fill={favorited ? "currentColor" : "none"}
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -130,7 +131,7 @@ const ContentInfoScreen = () => {
               </svg>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="cursor-pointer h-5 w-5 hover:opacity-70"
+                className="cursor-pointer h-7 w-7 hover:opacity-70"
                 fill={bookmarked ? "currentColor" : "none"}
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -145,7 +146,7 @@ const ContentInfoScreen = () => {
               </svg>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="cursor-pointer h-5 w-5 hover:opacity-70"
+                className="cursor-pointer h-7 w-7 hover:opacity-70"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -165,6 +166,16 @@ const ContentInfoScreen = () => {
           className="card-body card-compact row-start-4 row-end-7 col-start-1 col-end-3 border-r-2
           pt-0 px-5"
         >
+          {/* Either start from beginning or continue */}
+          <button
+            className={`${
+              data.content_type == "C"
+                ? "bg-comic "
+                : "bg-story"
+            } w-full text-white font-bold border border-comic hover:opacity-70 py-2 px-2 mr-4 rounded`}
+          >
+            Read
+          </button>
           <div className="card-body rounded-none max-h-48 overflow-y-auto">
             <p className="text-xs">{data.synopsis}</p>
           </div>
@@ -195,7 +206,9 @@ const ContentInfoScreen = () => {
               d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
             />
           </svg>
-          Author: {data.author}
+          <Link to={`/profile/${data.author}`}>
+            Author: {data.author}
+          </Link>
         </div>
         <div className="card-body row-start-2 row-end-3 col-start-5 col-end-7 border-b-2 flex-col items-center justify-end">
           Rating: {data.current_rating}/10
