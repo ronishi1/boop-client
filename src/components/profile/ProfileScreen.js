@@ -157,9 +157,9 @@ const ProfileScreen = ({user}) => {
           </div>
         </div>
         <div className="flex flex-col place-content-center mb-8 pt-4 px-16">
-          {editingBio ? 
+          {editingBio ?
           (<div className="flex flex-col">
-            <textarea class="textarea" placeholder="Bio" onChange={(event) => { setInput(event.target.value);}}>{profile.bio}</textarea>
+            <textarea class="textarea border-2 border-gray-500/30 focus:ring-0 focus:outline-none" placeholder="Bio" onChange={(event) => { setInput(event.target.value);}}>{profile.bio}</textarea>
             <div className="flex justify-end space-x-4">
               <a className="link no-underline text-forum py-4 w-min" onClick={() => toggleBioEdit(!editingBio)}>
                 Cancel
@@ -184,7 +184,7 @@ const ProfileScreen = ({user}) => {
               class="btn bg-forum border-forum w-1/5 hover:bg-forum hover:opacity-50 hover:border-forum"
               onClick={() => handleFollow()}
             >
-              {profile.followers.includes(user._id) ? "Followed" : "Follow"}
+              {profile.followers ? (profile.followers.includes(user._id) ? "Followed" : "Follow") : <></>}
             </button>
           </div>
         ) : (
