@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import DeleteAccountModal from "../modals/DeleteAccountModal";
+import DeleteAccountModal from "../update_account/DeleteAccountModal";
 import UploadPicture from "../modals/UploadPicture";
 import { UPDATE_USERNAME, UPDATE_PASSWORD, UPDATE_EMAIL } from '../../cache/mutations';
 import { useMutation } 	from '@apollo/client';

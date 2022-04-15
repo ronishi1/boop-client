@@ -37,7 +37,7 @@ import Dev from "./Dev";
 import StoryEditScreen from "./components/story_edit/StoryEditScreen";
 import ComicEditScreen from "./components/comic_edit/ComicEditScreen";
 import DeleteContentModal from "./components/modals/DeleteContentModal";
-import DeleteAccountModal from "./components/modals/DeleteAccountModal";
+import DeleteAccountModal from "./components/update_account/DeleteAccountModal";
 import DeleteForumModal from "./components/modals/DeleteForumModal";
 import CancelPostModal from "./components/modals/CancelPostModal";
 import BoardAddModal from "./components/storyboardModals/BoardAddModal";
@@ -218,7 +218,7 @@ const App = () => {
                 modalName="delete-plot-modal"
                 content="plot point"
               />
-              <DeleteAccountModal />
+              <DeleteAccountModal fetchUser={refetch}/>
               <DeleteForumModal title="Dark Fantasy Recs" />
               <CancelPostModal />
             </div>
