@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const UploadPicture = () => {
+const UploadPicture = ({updateProfilePicture}) => {
   const [checked, setChecked] = useState(false);
 
   function handleChecked() {
@@ -11,6 +11,56 @@ const UploadPicture = () => {
     console.log("Uploaded Picture");
     e.preventDefault();
     setChecked(!checked);
+  }
+  
+  const handleUpload = async(e) => {
+    const file = e.target.files[0]
+    
+    var data = new FormData();
+    // data.append('file', e.target.files[0])
+    var reader = new FileReader()
+    // reader.addEventListender("load",)
+    var fileContent = "";
+    reader.readAsDataURL(file)
+    reader.onload = async e => {
+      
+      console.log(typeof(e.target.result))
+      fileContent = b64toBlob(e.target.result, file.type)
+      console.log(fileContent)
+      data.append('content', fileContent)
+      console.log(data)
+      data.append('data', e.target.result)
+      fetch('http://localhost:4000/imageUpload', {
+        method: 'post',
+        // headers: {
+        //   'Content-type': 'application/json'
+        // },
+        body: data
+      }).then(
+        response => response.json()
+      ).then(data=> {
+        
+        console.log(data)
+        updateProfilePicture(data.url)
+      })
+    }
+    
+  }
+  function b64toArrayBuffer(dataURI) {
+    const byteString = atob(dataURI.split(',')[1]);
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+    return ia;
+  }
+
+
+  function b64toBlob(dataURI, mimetype) {
+      return new Blob([b64toArrayBuffer(dataURI)], {
+          type: mimetype
+      });
   }
   return (
     <div>
@@ -75,7 +125,7 @@ const UploadPicture = () => {
                         />
                       </svg>
                     </label>
-                    <input type="file" id="upload-photo" hidden="true" />
+                    <input type="file" id="upload-photo" hidden="true" onChange={handleUpload}/>
                   </div>
                 </div>
               </div>

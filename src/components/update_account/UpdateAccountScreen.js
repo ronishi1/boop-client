@@ -12,7 +12,7 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
     email: "currentemail@email.com",
     profile_picture: "https://wallpapercave.com/wp/wp5338281.jpg",
   }
-
+  
   const [input, setInput] = useState({
     username: "",
     email: "",
@@ -21,10 +21,12 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
     confirmPassword: "",
     passwordPW: "",
   });
+  const [userPFP, setPFP] = useState(user_data.profile_picture)
+
   const [usernameError, setUsernameError] = useState({status:false,message:""});
   const [emailError, setEmailError] = useState({status:false,message:""});
   const [passwordError, setPasswordError] = useState({status:false,message:""});
-
+  
   const [UpdateUsername] = useMutation(UPDATE_USERNAME);
   const [UpdateEmail] = useMutation(UPDATE_EMAIL);
   const [UpdatePassword] = useMutation(UPDATE_PASSWORD);
@@ -106,16 +108,19 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
       return;
     }
   }
-  
+  const updateProfilePicture = (url) => {
+    console.log(url)
+    setPFP(url)
+  }
   return user ? (
     <div className="flex flex-col place-content-center">
       <div className="flex place-content-center">
         <div className="avatar">
           <div className="mt-20 w-64 rounded-full border-2 border-forum">
             <label for="upload-picture-modal" class="modal-button hover:cursor-pointer hover:opacity-80" title="Change Profile Picture">
-              <img src={user_data.profile_picture} />
+              <img src={userPFP} />
             </label>
-            <UploadPicture/>
+            <UploadPicture updateProfilePicture={updateProfilePicture}/>
           </div>
         </div>
       </div>
