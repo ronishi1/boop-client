@@ -1,6 +1,8 @@
-import React 	from 'react';
+import React, { useState } 	from 'react';
 import ChapterEntry from './ChapterEntry'
+import GenreSelector from './GenreSelector';
 import {Link} from 'react-router-dom'
+
 const ContentManagementScreen = () => {
   const content = {
     title:"Attack on Titan",
@@ -38,40 +40,116 @@ const ContentManagementScreen = () => {
         title:"Rumble",
         publication_date: null,
       },
-    ]
+    ],
+    genres: ["Action","Adventure"],
+  }
+
+  const genres = ["Action", "Adventure", "Comedy", "Drama", "Fantasy", "Horror", "Mecha", "Music", "Mystery", "Psychological", "Romance", "SciFi", "Slice of Life", "Sports", "Supernatural", "Thriller"]
+
+  const [activeTab, setActiveTab] = useState(1);
+  const [input,setInput] = useState({
+    title: content.title,
+    synopsis: content.synopsis,
+  });
+
+  const [editing,toggleEdit] = useState({
+    title: false,
+    synopsis: false,
+  })
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setInput({
+      ...input,
+      [name]: value,
+    });
   }
 
   return (
-    <div className="container mx-auto">
-      <div className="grid grid-cols-3">
-        <div className="col-span-1 border-r-2 border-base-content/10">
-          <div className="grid grid-cols-2">
-            <div className="col-span-1">
-              <div className="text-2xl font-medium">
-                {content.title}
-              </div>
-              <img src={content.cover_image}/>
-            </div>
-            <div className="col-span-1 text-xs mt-8">
-              {content.synopsis}
-            </div>
+    <div>
+      <div className='flex flex-col w-full'>
+        <div className='flex place-content-center'>
+          <div className="tabs">
+            <a 
+              className={"tab tab-bordered "+(activeTab==1 ? "tab-active":"")}
+              onClick={() => setActiveTab(1)}
+            >
+              Chapters
+            </a> 
+            <a 
+              className={"tab tab-bordered "+(activeTab==2 ? "tab-active":"")}
+              onClick={() => setActiveTab(2)}
+            >
+              Series Details
+            </a> 
           </div>
-
         </div>
-        <div className="col-span-2 ml-5">
-          <div className="card rounded-none static">
-            <div className="flex flex-row items-center justify-between">
-              <p className='text-2xl font-medium'>Chapter List</p>
-              <Link to='/comic-edit'>
-              <div className="btn btn-xs bg-base-content/90 pr-3 border-none">+ Create chapter</div>
-              </Link>
-            </div>
+        <div className='flex place-content-center'>
+          {activeTab==1 ? 
+          <div className='my-8 w-1/2'>
             <div className="card static rounded-none h-full overflow-y-auto">
               {content.chapters.map(chapter => (
                 <ChapterEntry chapter={chapter}/>
               ))}
             </div>
+          </div> : <></>}
+          {activeTab==2 ? 
+          <div className='grid grid-cols-3 w-full'>
+            <div className='col-start-2 col-span-1 flex flex-col my-8 space-y-2'>
+              <div className='flex justify-end space-x-2'>
+                <button className="btn btn-ghost">Undo Changes</button>
+                <button className="btn">Save</button>
+              </div> 
+              <div className='flex place-content-center'>
+                <div class="form-control w-full">
+                  <label class="label">
+                    <span class="label-text">Title</span>
+                  </label>
+                  <input 
+                    type="text" 
+                    placeholder="Title your series" 
+                    className="input input-bordered"
+                    name="title"
+                    value={input.title}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+              <div>
+                <label class="label">
+                  <span class="label-text">Synopsis</span>
+                </label>
+                <textarea 
+                  class="textarea w-full border-2 border-gray-500/30 focus:ring-0 focus:outline-none h-64" 
+                  placeholder="Give your series a synopsis"
+                  value = {input.synopsis}
+                  onChange={(event) => { setInput({synopsis: event.target.value});}}
+                />
+              </div>
+              <div>
+                <label class="label">
+                  <span class="label-text">Cover Image</span>
+                </label>
+                <img 
+                  className='w-full max-w-lg hover:cursor-pointer hover:opacity-80' 
+                  src={content.cover_image}
+                />
+              </div>
+              <div>
+                <label class="label">
+                  <span class="label-text">Genres</span>
+                </label>
+                <div className='flex flex-row flex-wrap'>
+                  {genres.map((genre) => {
+                    let initialState = content.genres.includes(genre)
+                    return <GenreSelector genre={genre} initialState={initialState} contentType={content.content_type}/>
+                  })}
+                </div>
+                
+              </div>
+            </div>
           </div>
+           : <></>}
         </div>
       </div>
     </div>
