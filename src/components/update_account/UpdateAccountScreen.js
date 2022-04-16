@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import DeleteAccountModal from "../update_account/DeleteAccountModal";
-import { UPDATE_USERNAME, UPDATE_PASSWORD, UPDATE_EMAIL, UPDATE_PROFILE_PICTURE} from '../../cache/mutations';
+import { UPDATE_USERNAME, UPDATE_BIO, UPDATE_PASSWORD, UPDATE_EMAIL, UPDATE_PROFILE_PICTURE} from '../../cache/mutations';
 import { useMutation } 	from '@apollo/client';
 import { Transition } from '@headlessui/react'
 
@@ -15,6 +15,7 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
     password: "",
     confirmPassword: "",
     passwordPW: "",
+    bio: "",
   });
 
   const [usernameError, setUsernameError] = useState({status:false,message:""});
@@ -22,6 +23,7 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
   const [passwordError, setPasswordError] = useState({status:false,message:""});
 
   const [UpdateUsername] = useMutation(UPDATE_USERNAME);
+  const [UpdateBio] = useMutation(UPDATE_BIO);
   const [UpdateEmail] = useMutation(UPDATE_EMAIL);
   const [UpdatePassword] = useMutation(UPDATE_PASSWORD);
   const [UpdateProfilePicture] = useMutation(UPDATE_PROFILE_PICTURE);
@@ -52,6 +54,12 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
       setTimeout(() => setUsernameError({status:false,message:""}), 3000);
       return;
     }
+  }
+
+  const handleBioEdit = async () => {
+    console.log(user)
+    await UpdateBio({variables:{newBio: input.bio}});
+    fetchUser();
   }
 
   const handleChangeEmail = async () => {
@@ -208,6 +216,26 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
           />
           <div className="flex justify-end">
             <a class="link no-underline text-forum mt-2" onClick={handleChangeUsername}>Update</a>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex place-content-center">
+        <div className="card w-1/3 mt-8 p-8 shadow">
+          <div className="flex flex-row ">
+            <p className="pr-1">Bio: </p>
+          </div>
+          <textarea
+            type="text"
+            placeholder="Enter bio"
+            class="mt-4 input input-bordered w-full"
+            name="bio"
+            onChange={handleChange}
+          >
+            {user.bio}
+          </textarea>
+          <div className="flex justify-end">
+            <a class="link no-underline text-forum mt-2" onClick={handleBioEdit}>Update</a>
           </div>
         </div>
       </div>
