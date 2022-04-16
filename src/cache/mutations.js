@@ -75,3 +75,9 @@ export const DELETE_ACCOUNT = gql`
 		deleteAccount(password: $password)
 	}
 `;
+
+export const UPDATE_PROFILE_PICTURE = gql`
+	mutation UpdateProfilePicture($url: String!) {
+		updateProfilePicture(url: $url)
+	}
+`;

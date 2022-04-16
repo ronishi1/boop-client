@@ -1,17 +1,12 @@
 import React, { useState } from "react";
 import DeleteAccountModal from "../update_account/DeleteAccountModal";
 import UploadPicture from "../modals/UploadPicture";
-import { UPDATE_USERNAME, UPDATE_PASSWORD, UPDATE_EMAIL } from '../../cache/mutations';
+import { UPDATE_USERNAME, UPDATE_PASSWORD, UPDATE_EMAIL, UPDATE_PROFILE_PICTURE} from '../../cache/mutations';
 import { useMutation } 	from '@apollo/client';
 import { Transition } from '@headlessui/react'
 
 const UpdateAccountScreen = ({fetchUser, user}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=270%3A511
-  const user_data = {
-    username: "the_current_username",
-    email: "currentemail@email.com",
-    profile_picture: "https://wallpapercave.com/wp/wp5338281.jpg",
-  }
   
   const [input, setInput] = useState({
     username: "",
@@ -21,7 +16,7 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
     confirmPassword: "",
     passwordPW: "",
   });
-  const [userPFP, setPFP] = useState(user_data.profile_picture)
+  const [userPFP, setPFP] = useState(user.profile_pic ? user.profile_pic : "https://wallpapercave.com/wp/wp5338281.jpg")
 
   const [usernameError, setUsernameError] = useState({status:false,message:""});
   const [emailError, setEmailError] = useState({status:false,message:""});
@@ -30,6 +25,7 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
   const [UpdateUsername] = useMutation(UPDATE_USERNAME);
   const [UpdateEmail] = useMutation(UPDATE_EMAIL);
   const [UpdatePassword] = useMutation(UPDATE_PASSWORD);
+  const [UpdateProfilePicture] = useMutation(UPDATE_PROFILE_PICTURE);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -108,8 +104,8 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
       return;
     }
   }
-  const updateProfilePicture = (url) => {
-    console.log(url)
+  const updateProfilePicture = async (url) => {
+    await UpdateProfilePicture({variables: {url: url}})
     setPFP(url)
   }
   return user ? (
