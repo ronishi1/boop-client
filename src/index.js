@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
-
 const cache = new InMemoryCache({
 
 	/*
@@ -26,7 +25,7 @@ const cache = new InMemoryCache({
 
 
 // probably should move to .env file
-const BACKEND_LOCATION = 'http://localhost:4000/graphql';
+const BACKEND_LOCATION = process.env.REACT_APP_BACKEND_SERVER + "/graphql";
 
 const client = new ApolloClient({
 	uri: BACKEND_LOCATION,
