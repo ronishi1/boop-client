@@ -4,10 +4,10 @@ import ProfileFavorites from "./ProfileFavorites";
 import ProfilePublished from "./ProfilePublished";
 import { useParams } from 'react-router-dom'
 import { GET_USER_PROFILE } from '../../cache/queries';
-import { UPDATE_BIO, FOLLOW_USER, UNFOLLOW_USER } from '../../cache/mutations';
+import { UPDATE_BIO, FOLLOW_USER, UNFOLLOW_USER,UPDATE_PROFILE_PICTURE} from '../../cache/mutations';
 import { useQuery, useMutation } 	from '@apollo/client';
 
-const ProfileScreen = ({user}) => {
+const ProfileScreen = ({fetchUser,user}) => {
   let profile = {};
   let { username } = useParams();
 
@@ -24,6 +24,7 @@ const ProfileScreen = ({user}) => {
   const [UpdateBio] = useMutation(UPDATE_BIO);
   const [FollowUser] = useMutation(FOLLOW_USER);
   const [UnfollowUser] = useMutation(UNFOLLOW_USER);
+  const [UpdateProfilePicture] = useMutation(UPDATE_PROFILE_PICTURE);
 
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=294%3A2257
   const [editingBio, toggleBioEdit] = useState(false);
@@ -124,22 +125,87 @@ const ProfileScreen = ({user}) => {
     }
   };
 
-  return user && profile ? (
+  const updateProfilePicture = async (url) => {
+    await UpdateProfilePicture({variables: {url: url}})
+    await fetchUser();
+    // setPFP(url)
+  }
+
+  const handleUpload = async(e) => {
+    const file = e.target.files[0]
+
+    var data = new FormData();
+    // data.append('file', e.target.files[0])
+    var reader = new FileReader()
+    // reader.addEventListender("load",)
+    var fileContent = "";
+    reader.readAsDataURL(file)
+    reader.onload = async e => {
+
+      console.log(typeof(e.target.result))
+      fileContent = b64toBlob(e.target.result, file.type)
+      console.log(fileContent)
+      data.append('content', fileContent)
+      console.log(data)
+      data.append('data', e.target.result)
+      fetch('http://localhost:4000/imageUpload', {
+        method: 'post',
+        // headers: {
+        //   'Content-type': 'application/json'
+        // },
+        body: data
+      }).then(
+        response => response.json()
+      ).then(data=> {
+
+        console.log(data)
+        updateProfilePicture(data.url)
+      })
+    }
+
+  }
+
+  const b64toArrayBuffer = (dataURI) => {
+    const byteString = atob(dataURI.split(',')[1]);
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+    return ia;
+  }
+
+  const b64toBlob = (dataURI, mimetype) => {
+      return new Blob([b64toArrayBuffer(dataURI)], {
+          type: mimetype
+      });
+  }
+
+  return profile ? (
     <div className="flex flex-row place-content-center">
       <div className="card w-1/4 shadow">
         <div className="text-center font-bold pt-10 pb-4">
           {profile.username}
         </div>
         {user && profile && profile.username == user.username ? (
-          <img
-            className="mb-10 h-48 object-contain mask mask-circle hover:cursor-pointer hover:opacity-70"
-            title="Edit Profile Picture"
-            src={user_data.profilePicture}
-          />
+          <div>
+            <div className="flex place-content-center">
+            <img
+              className="h-48 object-contain mask mask-circle"
+              src={user ? user.profile_pic : "https://sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png"}
+            />
+            </div>
+            <div className="flex place-content-center mt-5 mb-5">
+              <label for="upload-photo" className="btn bg-forum border-none">
+                Change avatar
+              </label>
+              <input type="file" id="upload-photo" hidden="true" onChange={handleUpload}/>
+            </div>
+          </div>
         ) : (
           <img
-            className="mb-10 h-48 object-contain mask mask-circle"
-            src={user_data.profilePicture}
+            className="h-48 object-contain mask mask-circle"
+            src={profile ? (profile.profile_pic ? profile.profile_pic : "https://sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png") : <></>}
           />
         )}
         <div className="grid grid-cols-2 justify-items-center">

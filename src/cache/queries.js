@@ -6,6 +6,14 @@ export const GET_CURRENT_USER = gql`
 			_id
 			username
 			email
+			profile_pic
+			favorites
+			read_list
+			following
+			followers
+			forum_posts
+			user_content
+			bio
 		}
 	}
 `;

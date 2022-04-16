@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import DeleteAccountModal from "../update_account/DeleteAccountModal";
-import UploadPicture from "../modals/UploadPicture";
 import { UPDATE_USERNAME, UPDATE_PASSWORD, UPDATE_EMAIL, UPDATE_PROFILE_PICTURE} from '../../cache/mutations';
 import { useMutation } 	from '@apollo/client';
 import { Transition } from '@headlessui/react'
 
 const UpdateAccountScreen = ({fetchUser, user}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=270%3A511
-  
+
+  console.log(user);
   const [input, setInput] = useState({
     username: "",
     email: "",
@@ -16,12 +16,11 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
     confirmPassword: "",
     passwordPW: "",
   });
-  const [userPFP, setPFP] = useState(user.profile_pic ? user.profile_pic : "https://wallpapercave.com/wp/wp5338281.jpg")
 
   const [usernameError, setUsernameError] = useState({status:false,message:""});
   const [emailError, setEmailError] = useState({status:false,message:""});
   const [passwordError, setPasswordError] = useState({status:false,message:""});
-  
+
   const [UpdateUsername] = useMutation(UPDATE_USERNAME);
   const [UpdateEmail] = useMutation(UPDATE_EMAIL);
   const [UpdatePassword] = useMutation(UPDATE_PASSWORD);
@@ -93,7 +92,7 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
     }
     try {
       await UpdatePassword({variables: {oldPassword: input.passwordPW, newPassword: input.password}});
-      fetchUser();
+      await fetchUser();
       setInput({password:"",confirmPassword:"",passwordPW:""});
     }
     catch (e) {
@@ -104,24 +103,81 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
       return;
     }
   }
+
   const updateProfilePicture = async (url) => {
     await UpdateProfilePicture({variables: {url: url}})
-    setPFP(url)
+    await fetchUser();
+    // setPFP(url)
   }
+
+  const handleUpload = async(e) => {
+    const file = e.target.files[0]
+
+    var data = new FormData();
+    // data.append('file', e.target.files[0])
+    var reader = new FileReader()
+    // reader.addEventListender("load",)
+    var fileContent = "";
+    reader.readAsDataURL(file)
+    reader.onload = async e => {
+
+      console.log(typeof(e.target.result))
+      fileContent = b64toBlob(e.target.result, file.type)
+      console.log(fileContent)
+      data.append('content', fileContent)
+      console.log(data)
+      data.append('data', e.target.result)
+      fetch('http://localhost:4000/imageUpload', {
+        method: 'post',
+        // headers: {
+        //   'Content-type': 'application/json'
+        // },
+        body: data
+      }).then(
+        response => response.json()
+      ).then(data=> {
+
+        console.log(data)
+        updateProfilePicture(data.url)
+      })
+    }
+
+  }
+
+  const b64toArrayBuffer = (dataURI) => {
+    const byteString = atob(dataURI.split(',')[1]);
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+    return ia;
+  }
+
+  const b64toBlob = (dataURI, mimetype) => {
+      return new Blob([b64toArrayBuffer(dataURI)], {
+          type: mimetype
+      });
+  }
+
   return user ? (
     <div className="flex flex-col place-content-center">
       <div className="flex place-content-center">
         <div className="avatar">
           <div className="mt-20 w-64 rounded-full border-2 border-forum">
-            <label for="upload-picture-modal" class="modal-button hover:cursor-pointer hover:opacity-80" title="Change Profile Picture">
-              <img src={userPFP} />
-            </label>
-            <UploadPicture updateProfilePicture={updateProfilePicture}/>
+            <img src={user ? user.profile_pic : "https://sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png"} />
           </div>
         </div>
       </div>
+      <div className="flex place-content-center mt-5">
+        <label for="upload-photo" className="btn bg-forum border-none">
+          Change avatar
+        </label>
+        <input type="file" id="upload-photo" hidden="true" onChange={handleUpload}/>
+
+      </div>
       <div className="flex place-content-center">
-        <div className="card w-1/3 mt-10 p-8 shadow">
+        <div className="card w-1/3 mt-8 p-8 shadow">
           <Transition
             show={usernameError.status}
             enter="transition-opacity duration-300"
@@ -142,9 +198,9 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
             <p className="pr-1">Username: </p>
             <p className="font-medium">{user.username}</p>
           </div>
-          <input 
-            type="text" 
-            placeholder="Enter new username" 
+          <input
+            type="text"
+            placeholder="Enter new username"
             class="mt-4 input input-bordered w-full"
             name="username"
             value={input.username}
@@ -155,7 +211,7 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
           </div>
         </div>
       </div>
-      
+
       <div className="flex place-content-center">
         <div className="card w-1/3 mt-10 p-8 shadow">
           <Transition
@@ -178,18 +234,18 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
             <p className="pr-1">Email: </p>
             <p className="font-medium">{user.email}</p>
           </div>
-          <input 
-            type="text" 
-            placeholder="Enter new email" 
-            class="mt-4 input input-bordered w-full" 
+          <input
+            type="text"
+            placeholder="Enter new email"
+            class="mt-4 input input-bordered w-full"
             name="email"
             value={input.email}
             onChange={handleChange}
           />
-          <input 
-            type="password" 
-            placeholder="Enter password" 
-            class="mt-4 input input-bordered w-full" 
+          <input
+            type="password"
+            placeholder="Enter password"
+            class="mt-4 input input-bordered w-full"
             name="emailPW"
             value={input.emailPW}
             onChange={handleChange}
@@ -220,26 +276,26 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
           <div className="flex flex-row ">
             <p className="pr-1">Password</p>
           </div>
-          <input 
-            type="password" 
-            placeholder="Enter new password" 
-            class="mt-4 input input-bordered w-full" 
+          <input
+            type="password"
+            placeholder="Enter new password"
+            class="mt-4 input input-bordered w-full"
             name="password"
             value={input.password}
             onChange={handleChange}
           />
-          <input 
-            type="password" 
-            placeholder="Confirm new Password" 
-            class="mt-4 input input-bordered w-full" 
+          <input
+            type="password"
+            placeholder="Confirm new Password"
+            class="mt-4 input input-bordered w-full"
             name="confirmPassword"
             value={input.confirmPassword}
             onChange={handleChange}
           />
-          <input 
-            type="password" 
-            placeholder="Enter old Password" 
-            class="mt-4 input input-bordered w-full" 
+          <input
+            type="password"
+            placeholder="Enter old Password"
+            class="mt-4 input input-bordered w-full"
             name="passwordPW"
             value={input.passwordPW}
             onChange={handleChange}
