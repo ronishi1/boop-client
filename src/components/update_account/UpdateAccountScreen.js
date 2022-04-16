@@ -135,7 +135,7 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
       data.append('content', fileContent)
       console.log(data)
       data.append('data', e.target.result)
-      fetch(`${process.env.REACT_APP_BACKEND_SERVER}/imageUpload`, {
+      fetch(`${process.env.REACT_APP_BACKEND_SERVER}imageUpload`, {
         method: 'post',
         // headers: {
         //   'Content-type': 'application/json'

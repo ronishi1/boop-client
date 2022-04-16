@@ -25,7 +25,7 @@ const cache = new InMemoryCache({
 
 
 // probably should move to .env file
-const BACKEND_LOCATION = process.env.REACT_APP_BACKEND_SERVER + "/graphql";
+const BACKEND_LOCATION = process.env.REACT_APP_BACKEND_SERVER + "graphql";
 
 const client = new ApolloClient({
 	uri: BACKEND_LOCATION,
