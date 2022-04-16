@@ -235,7 +235,9 @@ const ProfileScreen = ({fetchUser,user}) => {
               </a>
             </div>
           </div>)
-          : (<div className="w-full">{profile.bio}</div>)}
+          : (<div className="w-full">
+              {profile.bio ? profile.bio : <p className="text-gray-400">User does not have a bio</p>}
+            </div>)}
           {user && profile && profile.username == user.username && !editingBio ? (
             <div className="flex justify-end">
               <a className="link no-underline text-forum py-4 w-min" onClick={() => toggleBioEdit(!editingBio)}>Edit</a>
