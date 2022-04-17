@@ -67,74 +67,36 @@ const ContentManagementScreen = () => {
 
   return (
     <div>
-      <div className='flex flex-col w-full'>
-        <div className='flex place-content-center'>
-          <div className="tabs">
-            <a 
-              className={"tab tab-bordered "+(activeTab==1 ? "tab-active":"")}
-              onClick={() => setActiveTab(1)}
-            >
-              Chapters
-            </a> 
-            <a 
-              className={"tab tab-bordered "+(activeTab==2 ? "tab-active":"")}
-              onClick={() => setActiveTab(2)}
-            >
-              Series Details
-            </a> 
-          </div>
-        </div>
-        <div className='flex place-content-center'>
-          {activeTab==1 ? 
-          <div className='my-8 w-1/2'>
-            <div className="card static rounded-none h-full overflow-y-auto">
-              {content.chapters.map(chapter => (
-                <ChapterEntry chapter={chapter}/>
-              ))}
-            </div>
-          </div> : <></>}
-          {activeTab==2 ? 
-          <div className='grid grid-cols-3 w-full'>
-            <div className='col-start-2 col-span-1 flex flex-col my-8 space-y-2'>
-              <div className='flex justify-end space-x-2'>
-                <button className="btn btn-ghost">Undo Changes</button>
-                <button className="btn">Save</button>
-              </div> 
-              <div className='flex place-content-center'>
-                <div class="form-control w-full">
-                  <label class="label">
-                    <span class="label-text">Title</span>
-                  </label>
-                  <input 
-                    type="text" 
-                    placeholder="Title your series" 
-                    className="input input-bordered"
-                    name="title"
-                    value={input.title}
-                    onChange={handleChange}
-                  />
-                </div>
-              </div>
-              <div>
+      <div className='grid grid-cols-2 w-full'>
+        <div className='col-span-1 flex flex-col w-full my-8 space-y-2 flex place-content-center'>
+          <div className='flex justify-end space-x-2 w-5/6'>
+              <button className="btn btn-ghost">Undo Changes</button>
+              <button className="btn">Save</button>
+            </div> 
+          <div className='flex place-content-center'>
+            <div className='w-3/4'>
+              <div class="form-control">
                 <label class="label">
-                  <span class="label-text">Synopsis</span>
+                  <span class="label-text">Title</span>
                 </label>
-                <textarea 
-                  class="textarea w-full border-2 border-gray-500/30 focus:ring-0 focus:outline-none h-64" 
-                  placeholder="Give your series a synopsis"
-                  value = {input.synopsis}
-                  onChange={(event) => { setInput({synopsis: event.target.value});}}
+                <input 
+                  type="text" 
+                  placeholder="Title your series" 
+                  className="input input-bordered"
+                  name="title"
+                  value={input.title}
+                  onChange={handleChange}
                 />
               </div>
-              <div>
-                <label class="label">
-                  <span class="label-text">Cover Image</span>
-                </label>
-                <img 
-                  className='w-full max-w-lg hover:cursor-pointer hover:opacity-80' 
-                  src={content.cover_image}
-                />
-              </div>
+              <label class="label">
+                <span class="label-text">Synopsis</span>
+              </label>
+              <textarea 
+                class="textarea w-full border-2 border-gray-500/30 focus:ring-0 focus:outline-none h-64" 
+                placeholder="Give your series a synopsis"
+                value = {input.synopsis}
+                onChange={(event) => { setInput({synopsis: event.target.value});}}
+              />
               <div>
                 <label class="label">
                   <span class="label-text">Genres</span>
@@ -145,11 +107,25 @@ const ContentManagementScreen = () => {
                     return <GenreSelector genre={genre} initialState={initialState} contentType={content.content_type}/>
                   })}
                 </div>
-                
               </div>
-            </div>
+              <div>
+                <label class="label">
+                  <span class="label-text">Cover Image</span>
+                </label>
+                <img 
+                  className='w-full max-w-lg hover:cursor-pointer hover:opacity-80' 
+                  src={content.cover_image}
+                />
+              </div>
+            </div> 
           </div>
-           : <></>}
+        </div>
+        <div className='col-span-1 m-8'>
+          <div className="card static rounded-none h-full overflow-y-auto">
+            {content.chapters.map(chapter => (
+              <ChapterEntry chapter={chapter}/>
+            ))}
+          </div>
         </div>
       </div>
     </div>
