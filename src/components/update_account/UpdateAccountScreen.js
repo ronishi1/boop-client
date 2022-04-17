@@ -3,7 +3,7 @@ import DeleteAccountModal from "../update_account/DeleteAccountModal";
 import { UPDATE_USERNAME, UPDATE_BIO, UPDATE_PASSWORD, UPDATE_EMAIL, UPDATE_PROFILE_PICTURE} from '../../cache/mutations';
 import { useMutation } 	from '@apollo/client';
 import { Transition } from '@headlessui/react'
-import { b64toBlob } from '../../utils/utils.js'
+import { uploadFile } from '../../utils/utils.js'
 const UpdateAccountScreen = ({fetchUser, user}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=270%3A511
 
@@ -115,39 +115,10 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
 
   const handleUpload = async(e) => {
     const file = e.target.files[0]
-
-    var data = new FormData();
-    // data.append('file', e.target.files[0])
-    var reader = new FileReader()
-    // reader.addEventListender("load",)
-    var fileContent = "";
-    reader.readAsDataURL(file)
-    reader.onload = async e => {
-
-      // console.log(typeof(e.target.result))
-      fileContent = b64toBlob(e.target.result, file.type)
-      // console.log(fileContent)
-      data.append('content', fileContent)
-      // console.log(data)
-      data.append('data', e.target.result)
-      // console.log(data)
-      fetch(`${process.env.REACT_APP_BACKEND_SERVER}imageUpload`, {
-        method: 'post',
-        // headers: {
-        //   'Content-type': 'application/json'
-        // },
-        body: data
-      }).then(
-        response => response.json()
-      ).then(async data => {
-
-        console.log(data)
-        // updateProfilePicture(data.url)
-        await UpdateProfilePicture({variables: {url: data.url}})
-        await fetchUser();
-      })
-    }
-
+    const url = await uploadFile(file, updatePFPCallback, fetchUser)
+  }
+  const updatePFPCallback = async (input) => {
+    await UpdateProfilePicture(input)
   }
 
   return user ? (
