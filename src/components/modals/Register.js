@@ -33,27 +33,38 @@ const Register = ({toggleLoginCallback,toggleRegisterCallback,registerCallback,f
       password: "",
       confirm_password: "",
     });
-    if (!(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inputValues.email))) {
+    console.log(inputValues.username.length);
+    if(inputValues.username.length < 5 || inputValues.username.length > 15) {
+      setError({status:true,message:"Username must be between 5 and 15 characters"});
+      setTimeout(() => setError({status:false,message:""}), 3000);
+    }
+    else if (!(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inputValues.email))) {
       setError({status:true,message:"Invalid email format"});
       setTimeout(() => setError({status:false,message:""}), 3000);
       return;
     }
-    if(inputValues.password !== inputValues.confirm_password){
+    else if(inputValues.password.length < 5){
+      setError({status:true,message:"Password must be at least 6 characters"});
+      setTimeout(() => setError({status:false,message:""}), 3000);
+    }
+    else if(inputValues.password !== inputValues.confirm_password){
       setError({status:true,message:"Passwords do not match"})
       setTimeout(() => setError({status:false,message:""}), 3000);
       return;
     }
-    try{
-      const result = await Register({ variables: { ...inputValues } });
-      if(result.data){
-        await fetchUser()
-        toggleRegisterCallback(false);
+    else {
+      try{
+        const result = await Register({ variables: { ...inputValues } });
+        if(result.data){
+          await fetchUser()
+          toggleRegisterCallback(false);
+        }
+      } catch (e) {
+        console.log(e.message);
+        setError({status:true,message:e.message});
+        setTimeout(() => setError({status:false,message:""}), 3000);
+        return;
       }
-    } catch (e) {
-      console.log(e.message);
-      setError({status:true,message:e.message});
-      setTimeout(() => setError({status:false,message:""}), 3000);
-      return;
     }
   }
 
