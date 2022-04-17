@@ -11,7 +11,7 @@ const b64toBlob = (dataURI, mimetype) => {
 }
 
 
-export const uploadFile = async(file, updateFunc, fetchUser) => {
+export const uploadFile = async(file, updateFunc, fetchUser, errorFunc) => {
     var data = new FormData();
     var reader = new FileReader()
     var fileContent = "";
@@ -24,14 +24,17 @@ export const uploadFile = async(file, updateFunc, fetchUser) => {
         // console.log(data)
         data.append('data', e.target.result)
         // console.log(data)
-        fetch(`${process.env.REACT_APP_BACKEND_SERVER}imageUpload`, {
-            method: 'post',
-            body: data
-        }).then(
-            response => response.json()
-        ).then(async data => {
-            await updateFunc({variables:{url:data.url}})
-            await fetchUser()
-        })
+            fetch(`${process.env.REACT_APP_BACKEND_SERVER}imageUpload`, {
+                method: 'post',
+                body: data
+            }).then(
+                response => response.json()
+            ).then(async data => {     
+                await updateFunc({variables:{url:data.url}})
+                await fetchUser()
+            }).catch(error => {
+                errorFunc({status:true, message:"File Exceeds 2MB"})
+                setTimeout(()=> errorFunc({status:false,message:""}), 3000)
+            })
     }
 }

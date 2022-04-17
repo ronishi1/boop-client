@@ -21,6 +21,7 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
   const [usernameError, setUsernameError] = useState({status:false,message:""});
   const [emailError, setEmailError] = useState({status:false,message:""});
   const [passwordError, setPasswordError] = useState({status:false,message:""});
+  const [imageError, setImageError] = useState({status:false,message:""})
 
   const [UpdateUsername] = useMutation(UPDATE_USERNAME);
   const [UpdateBio] = useMutation(UPDATE_BIO);
@@ -114,9 +115,11 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
 
 
   const handleUpload = async(e) => {
-    const file = e.target.files[0]
-    const url = await uploadFile(file, updatePFPCallback, fetchUser)
+    // setImageError({status:true,message:'WHEEE'});
+      const file = e.target.files[0]
+      const url = await uploadFile(file, updatePFPCallback, fetchUser, setImageError)
   }
+  
   const updatePFPCallback = async (input) => {
     await UpdateProfilePicture(input)
   }
@@ -129,6 +132,24 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
             <img src={user ? user.profile_pic : "https://sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png"} />
           </div>
         </div>
+      </div>
+      <div className="flex place-content-center">
+        <Transition
+            show={imageError.status}
+            enter="transition-opacity duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="transition-opacity duration-500"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+          <div class="alert alert-error py-1.5 shadow-lg mt-5">
+            <div>
+              <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              <span>{imageError.message}</span>
+            </div>
+          </div>
+        </Transition>
       </div>
       <div className="flex place-content-center mt-5">
         <label for="upload-photo" className="btn bg-forum border-none">
