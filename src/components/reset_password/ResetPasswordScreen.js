@@ -13,6 +13,7 @@ const ResetPasswordScreen = () => {
       variables: { reset_string: reset_string},
     });
 
+  const [passwordError,setPasswordError] = useState({status:false,message:""});
   const [ResetPassword] = useMutation(RESET_PASSWORD);
   const [submitted,setSubmitted] = useState(false);
   const [inputValues, setInputValues] = useState({
@@ -30,6 +31,16 @@ const ResetPasswordScreen = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if(inputValues.password.length < 6){
+      setPasswordError({status:true,message:"Password must be at least 6 characters"});
+      setTimeout(() => setPasswordError({status:false,message:""}), 3000);
+      return;
+    }
+    if(inputValues.password !== inputValues.confirm_password){
+      setPasswordError({status:true,message:"Passwords do not match"})
+      setTimeout(() => setPasswordError({status:false,message:""}), 3000);
+      return;
+    }
     await ResetPassword({ variables: {reset_string: reset_string, password:inputValues.password } });
     setSubmitted(true);
     setTimeout(() => {
@@ -41,6 +52,22 @@ const ResetPasswordScreen = () => {
     <div className="container mx-auto">
       {data && data.getResetUser ?
         <div className="grid justify-center">
+          <Transition
+              show={passwordError.status}
+              enter="transition-opacity duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="transition-opacity duration-500"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+            <div class="alert alert-error py-1.5 shadow-lg mt-5">
+              <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <span>{passwordError.message}</span>
+              </div>
+            </div>
+          </Transition>
           <div className="text-3xl">
             Reset Password
           </div>
@@ -72,25 +99,6 @@ const ResetPasswordScreen = () => {
               Reset Password
             </button>
           </form>
-          <Transition
-            show={submitted}
-            enter="transition-opacity duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="transition-opacity duration-500"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div class="alert alert-info shadow-lg">
-              <div>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                <span>
-                  <div>Your password has been reset.</div>
-                  <div>You will be redirected back to the home page shortly.</div>
-                </span>
-              </div>
-            </div>
-          </Transition>
         </div>
       :
       <PageNotFound />}

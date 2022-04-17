@@ -22,6 +22,7 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
   const [emailError, setEmailError] = useState({status:false,message:""});
   const [passwordError, setPasswordError] = useState({status:false,message:""});
   const [imageError, setImageError] = useState({status:false,message:""})
+  const [submitted,setSubmitted] = useState(false);
 
   const [UpdateUsername] = useMutation(UPDATE_USERNAME);
   const [UpdateBio] = useMutation(UPDATE_BIO);
@@ -92,6 +93,11 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
       setInput({password:"",confirmPassword:"",passwordPW:""});
       return;
     }
+    if(input.password.length < 6){
+      setPasswordError({status:true,message:"Password must be at least 6 characters"});
+      setTimeout(() => setPasswordError({status:false,message:""}), 3000);
+      return;
+    }
     // check if password and confirmPassword match
     if(input.password != input.confirmPassword){
       setPasswordError({status:true,message:"Passwords do not match"});
@@ -102,7 +108,12 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
     try {
       await UpdatePassword({variables: {oldPassword: input.passwordPW, newPassword: input.password}});
       await fetchUser();
+      setSubmitted(true);
       setInput({password:"",confirmPassword:"",passwordPW:""});
+      setTimeout(() => {
+        setSubmitted(false);
+      }, 3000);
+
     }
     catch (e) {
       // check if password is valid
@@ -119,7 +130,7 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
       const file = e.target.files[0]
       const url = await uploadFile(file, updatePFPCallback, fetchUser, setImageError)
   }
-  
+
   const updatePFPCallback = async (input) => {
     await UpdateProfilePicture(input)
   }
@@ -288,7 +299,7 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
           />
           <input
             type="password"
-            placeholder="Confirm new Password"
+            placeholder="Confirm new password"
             class="mt-4 input input-bordered w-full"
             name="confirmPassword"
             value={input.confirmPassword}
@@ -296,7 +307,7 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
           />
           <input
             type="password"
-            placeholder="Enter old Password"
+            placeholder="Enter old password"
             class="mt-4 input input-bordered w-full"
             name="passwordPW"
             value={input.passwordPW}
@@ -305,6 +316,24 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
           <div className="flex justify-end">
             <a class="link no-underline text-forum mt-2" onClick={handleChangePassword}>Update</a>
           </div>
+          <Transition
+            show={submitted}
+            enter="transition-opacity duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="transition-opacity duration-500"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div class="alert alert-info shadow-lg">
+              <div>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span>
+                  <div>Your password has been updated.</div>
+                </span>
+              </div>
+            </div>
+          </Transition>
         </div>
       </div>
       <div className="flex place-content-center py-16">
