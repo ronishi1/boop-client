@@ -3,7 +3,7 @@ import DeleteAccountModal from "../update_account/DeleteAccountModal";
 import { UPDATE_USERNAME, UPDATE_BIO, UPDATE_PASSWORD, UPDATE_EMAIL, UPDATE_PROFILE_PICTURE} from '../../cache/mutations';
 import { useMutation } 	from '@apollo/client';
 import { Transition } from '@headlessui/react'
-
+import { b64toBlob } from '../../utils/utils.js'
 const UpdateAccountScreen = ({fetchUser, user}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=270%3A511
 
@@ -112,11 +112,6 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
     }
   }
 
-  const updateProfilePicture = async (url) => {
-    await UpdateProfilePicture({variables: {url: url}})
-    await fetchUser();
-    // setPFP(url)
-  }
 
   const handleUpload = async(e) => {
     const file = e.target.files[0]
@@ -129,12 +124,13 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
     reader.readAsDataURL(file)
     reader.onload = async e => {
 
-      console.log(typeof(e.target.result))
+      // console.log(typeof(e.target.result))
       fileContent = b64toBlob(e.target.result, file.type)
-      console.log(fileContent)
+      // console.log(fileContent)
       data.append('content', fileContent)
-      console.log(data)
+      // console.log(data)
       data.append('data', e.target.result)
+      // console.log(data)
       fetch(`${process.env.REACT_APP_BACKEND_SERVER}imageUpload`, {
         method: 'post',
         // headers: {
@@ -143,29 +139,15 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
         body: data
       }).then(
         response => response.json()
-      ).then(data=> {
+      ).then(async data => {
 
         console.log(data)
-        updateProfilePicture(data.url)
+        // updateProfilePicture(data.url)
+        await UpdateProfilePicture({variables: {url: data.url}})
+        await fetchUser();
       })
     }
 
-  }
-
-  const b64toArrayBuffer = (dataURI) => {
-    const byteString = atob(dataURI.split(',')[1]);
-    const ab = new ArrayBuffer(byteString.length);
-    const ia = new Uint8Array(ab);
-    for (let i = 0; i < byteString.length; i++) {
-        ia[i] = byteString.charCodeAt(i);
-    }
-    return ia;
-  }
-
-  const b64toBlob = (dataURI, mimetype) => {
-      return new Blob([b64toArrayBuffer(dataURI)], {
-          type: mimetype
-      });
   }
 
   return user ? (
