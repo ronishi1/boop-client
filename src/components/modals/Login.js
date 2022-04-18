@@ -9,7 +9,7 @@ const Login = ({toggleLoginCallback, toggleRegisterCallback, toggleResetPassword
 
   const [Login] = useMutation(LOGIN);
 
-  const [inputValues, setInputValues] = useState({ username: '', password: '' });
+  const [inputValues, setInputValues] = useState({ usernameOrEmail: '', password: '' });
   const [error,setError] = useState({status:false,message:""});
 
   const handleChange = (event) => {
@@ -23,11 +23,12 @@ const Login = ({toggleLoginCallback, toggleRegisterCallback, toggleResetPassword
   const handleSubmit = async (e) => {
     e.preventDefault();
     try{
+      console.log(inputValues)
       const result = await Login({ variables: { ...inputValues } });
       if(result.data){
         await fetchUser();
         setInputValues({
-          username:'',
+          usernameOrEmail:'',
           password:''
         });
         toggleLoginCallback(false);
@@ -36,7 +37,7 @@ const Login = ({toggleLoginCallback, toggleRegisterCallback, toggleResetPassword
       setError({status:true,message:e.message});
       setTimeout(() => setError({status:false,message:""}), 3000);
       setInputValues({
-        username:'',
+        usernameOrEmail:'',
         password:''
       })
       return;
@@ -100,9 +101,9 @@ const Login = ({toggleLoginCallback, toggleRegisterCallback, toggleResetPassword
           <span class="w-full">
             <input
               type="text"
-              name="username"
-              value={inputValues.username}
-              placeholder="Username"
+              name="usernameOrEmail"
+              value={inputValues.usernameOrEmail}
+              placeholder="Username or Email"
               onChange={handleChange}
               class="input input-bordered w-full focus:outline-none"
             />
