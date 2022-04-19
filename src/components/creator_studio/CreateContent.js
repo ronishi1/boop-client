@@ -117,7 +117,7 @@ const CreateContent = ({toggleCreateCallback}) => {
               Cancel
             </label>
             <button
-              className="btn border-none bg-forum normal-case mr-2"
+              className="btn border-none bg-forum hover:bg-forum/80 normal-case mr-2"
               type="submit"
             >
               Create

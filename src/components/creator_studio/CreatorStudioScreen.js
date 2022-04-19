@@ -21,68 +21,18 @@ const CreatorStudioScreen = () => {
     console.log(contents);
   }
 
-  // let data =[
-  //   {
-  //     title: "Attack on Titan",
-  //     cover_image: "https://static.wikia.nocookie.net/shingekinokyojin/images/d/db/Volume_1_Cover.png",
-  //     content_type: "C",
-  //     published: true
-  //   },
-  //   {
-  //     title: "Berserk",
-  //     cover_image:"https://static.wikia.nocookie.net/berserk/images/2/26/Manga_V1_Cover.png",
-  //     content_type: "S",
-  //     published: true
-  //   },
-  //   {
-  //     title: "One Piece",
-  //     cover_image:"https://images-na.ssl-images-amazon.com/images/I/91NxYvUNf6L.jpg",
-  //     content_type: "C",
-  //     published: false
-  //   },
-  //   {
-  //     title: "Naruto",
-  //     cover_image:"https://images-na.ssl-images-amazon.com/images/I/912xRMMra4L.jpg",
-  //     content_type: "C",
-  //     published: false
-  //   },
-  //   {
-  //     title: "My Hero Academia",
-  //     cover_image:"https://upload.wikimedia.org/wikipedia/en/5/5a/Boku_no_Hero_Academia_Volume_1.png",
-  //     content_type: "S",
-  //     published: true
-  //   },
-  //   {
-  //     title: "Horimiya",
-  //     cover_image: "https://static.wikia.nocookie.net/horimiya/images/6/60/Horimiya_Volume_1.png",
-  //     content_type: "S",
-  //     published: true
-  //   },
-  //   {
-  //     title: "Tokyo Ghoul",
-  //     cover_image:"https://static.wikia.nocookie.net/tokyoghoul/images/6/6a/Volume_01.jpg",
-  //     content_type: "S",
-  //     published: false
-  //   },
-  //   {
-  //     title: "One Punch Man",
-  //     cover_image:"https://images-na.ssl-images-amazon.com/images/I/51dYG1ZNFaL._SX342_SY445_QL70_ML2_.jpg",
-  //     content_type: "S",
-  //     published: true
-  //   }
-  // ]
   return contents ? (
     <div>
       <div>
         <input
           type="checkbox"
-          id="reset-password-modal"
+          id="create-content-modal"
           class="modal-toggle"
           checked={showCreate}
           onClick={() => {setShowCreate(false)}}
         />
 
-        <label for="reset-password-modal" class="modal cursor-pointer">
+      <label for="create-content-modal" className="modal cursor-pointer">
           <label class="modal-box w-4/12 max-w-5xl">
             <CreateContent
               toggleCreateCallback={setShowCreate}/>

@@ -98,3 +98,15 @@ export const CREATE_CONTENT = gql`
 		createContent(contentInput: $contentInput)
 	}
 `;
+
+export const DELETE_CONTENT = gql`
+	mutation DeleteContent($contentID: ID){
+		deleteContent(contentID:$contentID)
+	}
+`
+
+export const PUBLISH_CONTENT = gql`
+	mutation PublishContent($contentID: ID){
+		publishContent(contentID:$contentID)
+	}
+`
