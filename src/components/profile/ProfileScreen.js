@@ -6,6 +6,8 @@ import { useParams } from 'react-router-dom'
 import { GET_USER_PROFILE } from '../../cache/queries';
 import { UPDATE_BIO, FOLLOW_USER, UNFOLLOW_USER,UPDATE_PROFILE_PICTURE} from '../../cache/mutations';
 import { useQuery, useMutation } 	from '@apollo/client';
+import { Transition } from '@headlessui/react'
+import { uploadFile } from '../../utils/utils.js'
 
 const ProfileScreen = ({fetchUser,user}) => {
   let profile = {};
@@ -30,6 +32,7 @@ const ProfileScreen = ({fetchUser,user}) => {
   const [editingBio, toggleBioEdit] = useState(false);
   const [input, setInput] = useState("");
   const [selectedCollection, setSelectedCollection] = useState("Published");
+  const [imageError, setImageError] = useState({status:false,message:""})
 
   const user_data = {
     username: "username_goes_here",
@@ -124,61 +127,14 @@ const ProfileScreen = ({fetchUser,user}) => {
         return;
     }
   };
-
-  const updateProfilePicture = async (url) => {
-    await UpdateProfilePicture({variables: {url: url}})
-    await fetchUser();
-    // setPFP(url)
-  }
-
+  
   const handleUpload = async(e) => {
     const file = e.target.files[0]
-
-    var data = new FormData();
-    // data.append('file', e.target.files[0])
-    var reader = new FileReader()
-    // reader.addEventListender("load",)
-    var fileContent = "";
-    reader.readAsDataURL(file)
-    reader.onload = async e => {
-
-      console.log(typeof(e.target.result))
-      fileContent = b64toBlob(e.target.result, file.type)
-      console.log(fileContent)
-      data.append('content', fileContent)
-      console.log(data)
-      data.append('data', e.target.result)
-      fetch(`${process.env.REACT_APP_BACKEND_SERVER}imageUpload`, {
-        method: 'post',
-        // headers: {
-        //   'Content-type': 'application/json'
-        // },
-        body: data
-      }).then(
-        response => response.json()
-      ).then(data=> {
-
-        console.log(data)
-        updateProfilePicture(data.url)
-      })
-    }
-
+    const url = await uploadFile(file, updatePFPCallback, fetchUser, setImageError)
   }
-
-  const b64toArrayBuffer = (dataURI) => {
-    const byteString = atob(dataURI.split(',')[1]);
-    const ab = new ArrayBuffer(byteString.length);
-    const ia = new Uint8Array(ab);
-    for (let i = 0; i < byteString.length; i++) {
-        ia[i] = byteString.charCodeAt(i);
-    }
-    return ia;
-  }
-
-  const b64toBlob = (dataURI, mimetype) => {
-      return new Blob([b64toArrayBuffer(dataURI)], {
-          type: mimetype
-      });
+  
+  const updatePFPCallback = async (input) => {
+    await UpdateProfilePicture(input)
   }
 
   return profile ? (
@@ -194,6 +150,24 @@ const ProfileScreen = ({fetchUser,user}) => {
               className="h-48 object-contain mask mask-circle"
               src={user ? user.profile_pic : "https://sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png"}
             />
+            </div>
+            <div className="flex place-content-center">
+              <Transition
+                  show={imageError.status}
+                  enter="transition-opacity duration-300"
+                  enterFrom="opacity-0"
+                  enterTo="opacity-100"
+                  leave="transition-opacity duration-500"
+                  leaveFrom="opacity-100"
+                  leaveTo="opacity-0"
+                >
+                <div class="alert alert-error py-1.5 shadow-lg mt-5">
+                  <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <span>{imageError.message}</span>
+                  </div>
+                </div>
+              </Transition>
             </div>
             <div className="flex place-content-center mt-5 mb-5">
               <label for="upload-photo" className="btn bg-forum border-none">
