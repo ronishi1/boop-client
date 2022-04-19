@@ -1,5 +1,5 @@
 import React, {useState, useRef} from 'react';
-import { SAVE_PAGE } from '../../cache/mutations';
+// import { SAVE_PAGE } from '../../cache/mutations';
 import { useQuery, useMutation } 	from '@apollo/client';
 import { render } from 'react-dom';
 import { Stage, Layer, Line, Text } from 'react-konva';
@@ -12,7 +12,7 @@ const ComicEditScreen = () => {
   const [chapterTitle, setChapterTitle] = useState("Big Titan Leans on Wall")
   const [chapter, setChapter] = useState("5")
 
-  const [SavePage] = useMutation(SAVE_PAGE);
+  // const [SavePage] = useMutation(SAVE_PAGE);
 
   const [tool, setTool] = useState('pen');
   const [lines, setLines] = useState([]);
@@ -36,7 +36,7 @@ const ComicEditScreen = () => {
     // console.log(stageRef.current.toJSON())
     // ON SAVE, take the list of lines and their attributes.
     //    Mutate to graphQL and then when important, map the lines
-    //    with their attributes. 
+    //    with their attributes.
     // Exporting to cloudinary should be done through by calling
     //  stageRef.current.toDataURL()
     // console.log(layerRef.current.children)
@@ -103,7 +103,7 @@ const ComicEditScreen = () => {
         <option value="pen">Pen</option>
         <option value="eraser">Eraser</option>
       </select>
-      <div className="flex justify-center"> 
+      <div className="flex justify-center">
         <div className="h-[1650px] w-[1275px] border-2">
           <Stage
             height={1650}
@@ -124,7 +124,7 @@ const ComicEditScreen = () => {
                   },
                 }}
               >
-              
+
               </Html>
               {lines.map((line, i) => (
                 <Line
@@ -147,9 +147,9 @@ const ComicEditScreen = () => {
           <IroColorPicker onColorChange={onColorChange}/>
       </div>
     </div>
-    
-    
+
+
   );
 };
 
-export default ComicEditScreen; 
+export default ComicEditScreen;
