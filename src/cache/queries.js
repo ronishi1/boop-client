@@ -38,3 +38,53 @@ export const GET_USER_PROFILE = gql`
 		}
 	}
 `;
+
+export const GET_CONTENT_INFO = gql`
+	query GetContentInfo($contentID: ID!){
+		getContentInfo(contentID: $contentID){
+			_id
+			series_title
+			author
+			author_username
+			synopsis
+			genres
+			num_chapters
+			chapters
+			views
+			discussion_post
+			current_rating
+			num_of_ratings
+			total_ratings
+			publication_date
+			completed
+			cover_image
+			storyboard
+			content_type
+		}
+	}
+`
+
+export const GET_MY_CONTENT = gql`
+	query GetMyContent {
+		getMyContent {
+			_id
+			series_title
+			author
+			author_username
+			synopsis
+			genres
+			num_chapters
+			chapters
+			views
+			discussion_post
+			current_rating
+			num_of_ratings
+			total_ratings
+			publication_date
+			completed
+			cover_image
+			storyboard
+			content_type
+		}
+	}
+`

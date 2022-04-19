@@ -1,6 +1,6 @@
 import React, { useState } 	from 'react';
 
-const GenreSelector = ({genre, initialState, contentType}) => {
+const GenreSelector = ({genre, initialState, contentType, selectGenreCallback}) => {
   const [select, toggleSelect] = useState(initialState);
 
   let color;
@@ -14,19 +14,21 @@ const GenreSelector = ({genre, initialState, contentType}) => {
     default:
   }
 
+
+
   return (
     <div>
-      {select ? 
-        <div 
+      {select ?
+        <div
           className={'badge border-'+color+' bg-'+color+' text-white hover:cursor-pointer hover:opacity-80'}
-          onClick={() => toggleSelect(!select)}
+          onClick={() => {toggleSelect(!select);selectGenreCallback(genre)}}
         >
           {genre}
-        </div> 
-      : 
-        <div 
+        </div>
+      :
+        <div
           className='badge border-gray-300 bg-white text-gray-300 hover:cursor-pointer hover:opacity-80'
-          onClick={() => toggleSelect(!select)}
+          onClick={() => {toggleSelect(!select);selectGenreCallback(genre)}}
         >
           {genre}
         </div>

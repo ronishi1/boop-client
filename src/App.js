@@ -109,13 +109,13 @@ const App = () => {
         <input
           type="checkbox"
           id="reset-password-modal"
-          class="modal-toggle"
+          className="modal-toggle"
           checked={showResetPassword}
           onClick={() => {toggleResetPasswordCallback(false)}}
         />
 
-        <label for="reset-password-modal" class="modal cursor-pointer">
-          <label class="modal-box w-4/12 max-w-5xl">
+      <label for="reset-password-modal" className="modal cursor-pointer">
+          <label className="modal-box w-4/12 max-w-5xl">
             <ResetPassword
               toggleResetPasswordCallback={toggleResetPasswordCallback}/>
           </label>
@@ -125,12 +125,12 @@ const App = () => {
         <input
           type="checkbox"
           id="login-modal"
-          class="modal-toggle"
+          className="modal-toggle"
           checked={showLogin}
           onClick={() => {toggleLoginCallback(false)}}
         />
-      <label for="login-modal" class="modal cursor-pointer">
-          <label class="modal-box w-5/12 max-w-5xl">
+      <label for="login-modal" className="modal cursor-pointer">
+          <label className="modal-box w-5/12 max-w-5xl">
             <Login
               toggleLoginCallback={toggleLoginCallback}
               toggleRegisterCallback={toggleRegisterCallback}
@@ -144,13 +144,13 @@ const App = () => {
         <input
           type="checkbox"
           id="signup-modal"
-          class="modal-toggle"
+          className="modal-toggle"
           checked={showRegister}
           onClick={() => {toggleRegisterCallback(false)}}
         />
 
-        <label for="signup-modal" class="modal cursor-pointer">
-          <label class="modal-box w-6/12 max-w-5xl">
+      <label for="signup-modal" className="modal cursor-pointer">
+          <label className="modal-box w-6/12 max-w-5xl">
             <Register
               toggleLoginCallback={toggleLoginCallback}
               toggleRegisterCallback={toggleRegisterCallback}
@@ -182,7 +182,7 @@ const App = () => {
         <Route path="/favorites" element={<FavoritesScreen />} />
         <Route path="/read-list" element={<ReadListScreen />} />
         <Route path="/update-account" element={<UpdateAccountScreen fetchUser={refetch} user={user}/>} />
-        <Route path="/content-management" element={<ContentManagementScreen />} />
+        <Route path="/content-management/:id" element={<ContentManagementScreen user={user}/>} />
         <Route path="/reset/:reset_string" element={<ResetPasswordScreen />} />
 
         <Route path="/search" element={<SearchScreen/>} />

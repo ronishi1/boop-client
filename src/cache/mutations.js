@@ -81,3 +81,20 @@ export const UPDATE_PROFILE_PICTURE = gql`
 		updateProfilePicture(url: $url)
 	}
 `;
+
+export const UPDATE_COVER_IMAGE = gql`
+	mutation UpdateCoverImage($contentID: ID, $url: String){
+		updateCoverImage(contentID: $contentID,url:$url)
+	}
+`
+
+export const EDIT_CONTENT = gql`
+	mutation EditContent($contentID: ID, $contentInput: ContentInput){
+		editContent(contentID: $contentID, contentInput: $contentInput)
+	}
+`
+export const CREATE_CONTENT = gql`
+	mutation CreateContent($contentInput: ContentInput) {
+		createContent(contentInput: $contentInput)
+	}
+`;

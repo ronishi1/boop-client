@@ -29,11 +29,11 @@ export const uploadFile = async(file, updateFunc, fetchUser, errorFunc) => {
                 body: data
             }).then(
                 response => response.json()
-            ).then(async data => {     
+            ).then(async data => {
                 await updateFunc({variables:{url:data.url}})
                 await fetchUser()
             }).catch(error => {
-                errorFunc({status:true, message:"File Exceeds 2MB"})
+                errorFunc({status:true, message:"File Size Too Large"})
                 setTimeout(()=> errorFunc({status:false,message:""}), 3000)
             })
     }

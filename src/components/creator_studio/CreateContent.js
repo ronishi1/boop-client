@@ -1,20 +1,36 @@
 import React, { useState } from "react";
 import { useMutation } 		from '@apollo/client';
 import { Transition } from '@headlessui/react'
-
+import { CREATE_CONTENT }	from '../../cache/mutations';
+import { useNavigate } from 'react-router-dom';
 const CreateContent = ({toggleCreateCallback}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=208%3A296
+  let navigate = useNavigate();
 
   const [error,setError] = useState({status:false,message:""});
   const [comicSelected,setComicSelected] = useState(true);
   const [storySelected,setStorySelected] = useState(false);
   const [title,setTitle] = useState("");
 
+  const [CreateContent] = useMutation(CREATE_CONTENT);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(title);
-    console.log(comicSelected);
-    console.log(storySelected);
+    if(title.length < 3){
+      setError({status:true,message:"Series title must be at least 3 characters"});
+      setTimeout(() => {
+        setError({status:false,message:''});
+        setTitle("");
+      },3000)
+    }
+    if(comicSelected){
+      let result = await CreateContent({variables: {contentInput: {series_title:title,content_type:"C",synopsis:''}}});
+      navigate(`/content-management/${result.data.createContent}`);
+    }
+    else {
+      let result = await CreateContent({variables: {contentInput: {series_title:title,content_type:"S"}}});
+      navigate(`/content-management/${result.data.createContent}`);
+    }
   }
 
   return (
@@ -65,7 +81,7 @@ const CreateContent = ({toggleCreateCallback}) => {
             <input
               type="text"
               name="title"
-              placeholder="Title"
+              placeholder="Series Title"
               class="input input-bordered w-full focus:outline-none"
               value={title}
               onChange={(e) => {setTitle(e.target.value)}}
