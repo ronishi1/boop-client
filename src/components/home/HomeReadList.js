@@ -29,7 +29,7 @@ const HomeReadList = () => {
   return (
     <div>
       <div className="ml-10 text-2xl">My Read List</div>
-      <div className="flex flex-row space-x-3 overflow-x-scroll ml-10">
+      <div className="flex flex-row space-x-3 overflow-x-auto ml-10">
         {data.map((content) => (
           <ContentCard
             title={content.title}
