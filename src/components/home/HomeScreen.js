@@ -18,7 +18,7 @@ const HomeScreen = ({auth}) => {
         <div className="h-64">
           <HomeTopRated />
         </div>
-        <div className="h-64 overflow-x-scroll">
+        <div className="h-64 overflow-x-auto">
           <HomeRecentlyReleased />
         </div>
       </div>
