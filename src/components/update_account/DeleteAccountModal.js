@@ -61,8 +61,8 @@ const DeleteAccountModal = ({fetchUser}) => {
         onClick={handleChecked}
       />
 
-      <label for="account-delete-modal" class="modal cursor-pointer">
-        <label class="modal-box w-1/4  h-1/4 ">
+      <label for="account-delete-modal" className="modal cursor-pointer">
+        <label class="modal-box">
           <form class="w-full h-full" onSubmit={handleDeleteAccount}>
             <div class="grid items-center  space-y-4 p-2">
               <div class="w-full flex flex-row justify-between">
