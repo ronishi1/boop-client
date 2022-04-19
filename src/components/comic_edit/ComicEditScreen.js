@@ -21,7 +21,9 @@ const ComicEditScreen = () => {
     isDrawing.current = true;
     const pos = e.target.getStage().getPointerPosition();
     setLines([...lines, { tool, points: [pos.x, pos.y], stroke: stroke }]);
-    console.log(lines);
+    // console.log(lines);
+    // console.log(JSON.stringify(lines).length)
+    // console.log(stageRef.current.width)
     // console.log(stageRef.current.toJSON())
     // ON SAVE, take the list of lines and their attributes.
     //    Mutate to graphQL and then when important, map the lines
@@ -29,7 +31,7 @@ const ComicEditScreen = () => {
     // Exporting to cloudinary should be done through by calling
     //  stageRef.current.toDataURL()
     // console.log(layerRef.current.children)
-    // console.log(stageRef.current.toDataURL())
+    console.log(stageRef.current.toDataURL())
   };
 
   const handleMouseMove = (e) => {
@@ -55,10 +57,16 @@ const ComicEditScreen = () => {
   const onColorChange = (color) => {
     // setStroke(color)
     setStroke(color)
-    console.log(stroke)
+    // console.log(stroke)
     // console.log(JSON.stringify(color.color.hexstring));
   }
 
+  const handleSave = () => {
+    console.log("handlign sAve")
+  }
+  const handleNewPage = () => {
+    console.log("handling new page")
+  }
   return (
     <div>
       <div className="ml-4 mb-4">
@@ -69,7 +77,8 @@ const ComicEditScreen = () => {
           Chapter {chapter} : <strong>{chapterTitle}</strong>
         </div>
         <div>
-          <div className="btn cursor-pointer mr-4 mb-4">Save</div>
+          <div className="btn cursor-pointer mr-4 mb-4" onClick={handleSave}>Save</div>
+          <div className="btn cursor-pointer mr-4 mb-4" onClick={handleNewPage}>Add Page</div>
         </div>
       </div>
       <select
@@ -81,50 +90,49 @@ const ComicEditScreen = () => {
         <option value="pen">Pen</option>
         <option value="eraser">Eraser</option>
       </select>
-      <Stage
-        width={window.innerWidth}
-        height={window.innerHeight}
-        onMouseDown={handleMouseDown}
-        onMousemove={handleMouseMove}
-        onMouseup={handleMouseUp}
-        ref = {stageRef}
-      >
-      
-        <Layer ref = {layerRef}>
-        <Html
-            divProps={{
-              style: {
-                position: 'inline',
-                top: 10,
-                left: 10,
-                zIndex: 1
-              },
-            }}
+      <div className="flex justify-center"> 
+        <div className="h-[1650px] w-[1275px] border-2">
+          <Stage
+            height={1650}
+            width={1275}
+            onMouseDown={handleMouseDown}
+            onMousemove={handleMouseMove}
+            onMouseup={handleMouseUp}
+            ref = {stageRef}
           >
-            <Draggable handle="strong">
-            <div>
-            <strong><div>DRAG ME</div></strong>
-              <div>
-                <IroColorPicker onColorChange={onColorChange}/>
-              </div>
-            </div>
-            </Draggable>
-          </Html>
-          {lines.map((line, i) => (
-            <Line
-              key={i}
-              points={line.points}
-              stroke={line.stroke}
-              strokeWidth={5}
-              tension={0.5}
-              lineCap="round"
-              globalCompositeOperation={
-                line.tool === 'eraser' ? 'destination-out' : 'source-over'
-              }
-            />
-          ))}
-        </Layer>
-      </Stage>
+            <Layer ref = {layerRef}>
+            <Html
+                divProps={{
+                  style: {
+                    position: 'inline',
+                    top: 10,
+                    left: 10,
+                    zIndex: 1
+                  },
+                }}
+              >
+              
+              </Html>
+              {lines.map((line, i) => (
+                <Line
+                  key={i}
+                  points={line.points}
+                  stroke={line.stroke}
+                  strokeWidth={5}
+                  tension={0.5}
+                  lineCap="round"
+                  globalCompositeOperation={
+                    line.tool === 'eraser' ? 'destination-out' : 'source-over'
+                  }
+                />
+              ))}
+            </Layer>
+          </Stage>
+        </div>
+      </div>
+      <div className="flex">
+          <IroColorPicker onColorChange={onColorChange}/>
+      </div>
     </div>
     
     
