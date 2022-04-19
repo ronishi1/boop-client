@@ -25,6 +25,7 @@ const CreateContent = ({toggleCreateCallback}) => {
     }
     if(comicSelected){
       let result = await CreateContent({variables: {contentInput: {series_title:title,content_type:"C",synopsis:''}}});
+      console.log(result.data.createContent);
       navigate(`/content-management/${result.data.createContent}`);
     }
     else {

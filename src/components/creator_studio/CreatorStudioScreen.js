@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import WorkCard from './WorkCard';
 import WorkListEntry from './WorkListEntry';
 import CreateContent from './CreateContent';
@@ -11,6 +11,9 @@ const CreatorStudioScreen = () => {
 
   const { loading, error, data, refetch } = useQuery(GET_MY_CONTENT);
 
+  useEffect(() => {
+    refetch();
+  })
   if(loading) { console.log(loading, 'loading'); }
   if(error) { console.log(error, 'error'); }
   if(data) {
