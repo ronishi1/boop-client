@@ -66,23 +66,27 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
 
   const handleChangeEmail = async () => {
     // handle if email is actually invalid
+
     if (!(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.email))) {
       setEmailError({status:true,message:"Invalid email format"});
       setTimeout(() => setEmailError({status:false,message:""}), 3000);
-      return;
-    }
-    try{
-      await UpdateEmail({variables: {newEmail: input.email, password: input.emailPW}});
       setInput({email:"",emailPW:""});
-      fetchUser();
-    }
-    catch (e) {
-      // handle taken email/invalid pw
-      setEmailError({status:true,message:e.message});
-      setTimeout(() => setEmailError({status:false,message:""}), 3000);
-      setInput({emailPW:""});
       return;
     }
+    else
+      try{
+        await UpdateEmail({variables: {newEmail: input.email, password: input.emailPW}});
+        setEmailError({status:false,message:""})
+        setInput({email:"",emailPW:""});
+        fetchUser();
+      }
+      catch (e) {
+        // handle taken email/invalid pw
+        setEmailError({status:true,message:e.message});
+        setTimeout(() => setEmailError({status:false,message:""}), 3000);
+        setInput({email:"",emailPW:""});
+        return;
+      }
   }
 
   const handleChangePassword = async () => {
