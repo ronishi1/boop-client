@@ -1,5 +1,5 @@
 import React 	from 'react';
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const DetailedContentCard = ({title,cover,genres,synopsis,type}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=211%3A556
@@ -17,13 +17,16 @@ const DetailedContentCard = ({title,cover,genres,synopsis,type}) => {
     default:
   }
 
+  let navigate = useNavigate();
+  const handleClick = () => {
+    navigate("/info")
+  }
+
   return (
-    <div className="flex flex-row">
+    <div className="flex flex-row hover:cursor-pointer" onClick={handleClick}>
       <img className="object-cover w-40 h-60 rounded" src={cover}/>
       <div className="ml-2 min-h-60 max-h-60 min-w-96 max-w-96">
-        <Link to="/info">
-          <div className={"text-lg font-medium"}>{title}</div>
-        </Link>
+        <div className={"text-lg font-medium"}>{title}</div>
         <div className="-mt-1.5">
           {contentBadge}
           {genres.map((genre) => (
