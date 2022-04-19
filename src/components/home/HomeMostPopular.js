@@ -113,7 +113,7 @@ const HomeMostPopular = () => {
         leaveFrom="hidden"
         leaveTo="hidden"
       >
-        <div className="flex flex-row overflow-x-scroll space-x-2">
+        <div className="flex flex-row overflow-x-auto space-x-2">
           <div className="mt-[6.5rem]">
             <div className="btn btn-circle btn-sm" onClick={() => {setSlide({first:true,second:false,third:false})}}>
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={2}>
@@ -142,7 +142,7 @@ const HomeMostPopular = () => {
         leaveFrom="hidden"
         leaveTo="hidden"
       >
-        <div className="flex flex-row overflow-x-scroll space-x-2 mr-10">
+        <div className="flex flex-row overflow-x-auto space-x-2 mr-10">
           <div className="mt-[6.5rem]">
             <div className="btn btn-circle btn-sm" onClick={() => {setSlide({first:false,second:true,third:false})}}>
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={2}>
