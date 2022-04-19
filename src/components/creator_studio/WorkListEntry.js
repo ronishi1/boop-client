@@ -10,13 +10,14 @@ const WorkCard = ({contentID,seriesTitle,contentType,published}) => {
   else {
     badge = <div className="badge text-xs border-none bg-story mr-1">Story</div>
   }
+
   return (
     <Link to={`/content-management/${contentID}`}>
-      <div className="flex flex-row items-center justify-between cursor-pointer p-2 mr-5 border-base-content-10 border-b-2">
-        <div className="text-sm mr-1">
+      <div className="flex flex-row items-center justify-between cursor-pointer p-2 mr-5 border-base-content-10 border-b-2 hover:opacity-70">
+        <div className="text-sm mr-1 truncate">
           {seriesTitle}
         </div>
-        <div className="">
+        <div className="flex flex-row">
           {badge}
           {published ?
             <div className="badge text-xs border-none bg-forum">Published</div>

@@ -170,7 +170,7 @@ const App = () => {
         <Route path="/browse" element={<BrowseScreen />} />
         <Route path="/info" element={<ContentInfoScreen />} />
         <Route path="/view" element={<ContentViewScreen />} />
-        <Route path="/studio" element={<CreatorStudioScreen />} />
+        <Route path="/studio" element={<CreatorStudioScreen user={user}/>} />
         <Route path="/forum-create" element={<ForumCreateScreen />} />
         <Route path="/forum-edit" element={<ForumEditScreen />} />
         <Route path="/forum-home" element={<ForumHomeScreen />} />
