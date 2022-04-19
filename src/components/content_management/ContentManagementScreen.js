@@ -77,7 +77,7 @@ const ContentManagementScreen = ({user}) => {
       setSubmitted(false);
     },3000)
   }
-  const genres = ["Action", "Adventure", "Comedy", "Drama", "Fantasy", "Horror", "Mecha", "Music", "Mystery", "Psychological", "Romance", "SciFi", "Slice of Life", "Sports", "Supernatural", "Thriller"];
+  const genres = ["Action", "Adventure", "Comedy", "Drama", "Fantasy", "Horror", "Mecha", "Music", "Mystery", "Psychological", "Romance", "SciFi", "Sports", "Supernatural", "Thriller"];
 
   return (Object.keys(content).length !== 0) ? (
     <div class="container mx-auto">
