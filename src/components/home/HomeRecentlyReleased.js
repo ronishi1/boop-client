@@ -1,9 +1,12 @@
 import React 	from 'react';
 import ContentCard from '../common/ContentCard';
+import { GET_RECENT_CONTENT } from '../../cache/queries'
+import { useQuery } from '@apollo/client';
+
 const HomeRecentlyReleased= () => {
   // USES SMALL CONTENT CARDS
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=211%3A353
-  const data = [
+  const temp = [
     {
       title: "Attack on Titan",
       cover_image: "https://static.wikia.nocookie.net/shingekinokyojin/images/d/db/Volume_1_Cover.png"
@@ -81,11 +84,18 @@ const HomeRecentlyReleased= () => {
       cover_image:"https://upload.wikimedia.org/wikipedia/en/5/51/Vinland_Saga_volume_01_cover.jpg"
     },
   ]
+
+  const { data, loading, refetch } = useQuery(GET_RECENT_CONTENT);
+  if(loading){
+    return <div></div>
+  }
+  const recentContent = data.getRecentContent;
+
   return (
     <div>
       <p className="text-2xl ml-10">Recently Released</p>
-      <div className="flex flex-row space-x-3 overflow-x-scroll ml-10">
-        {data.map((content) => (
+      <div className="flex flex-row space-x-3 overflow-x-auto ml-10">
+        {recentContent.map((content) => (
           <ContentCard title={content.title} cover={content.cover_image} size="S"/>
         ))}
       </div>

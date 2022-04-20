@@ -62,7 +62,7 @@ export const GET_CONTENT_INFO = gql`
 			content_type
 		}
 	}
-`
+`;
 
 export const GET_MY_CONTENT = gql`
 	query GetMyContent {
@@ -87,4 +87,79 @@ export const GET_MY_CONTENT = gql`
 			content_type
 		}
 	}
-`
+`;
+
+export const GET_POPULAR_CONTENT = gql`
+	query GetPopularContent {
+		getPopularContent {
+			_id
+			series_title
+			author
+			author_username
+			synopsis
+			genres
+			num_chapters
+			chapters
+			views
+			discussion_post
+			current_rating
+			num_of_ratings
+			total_ratings
+			publication_date
+			completed
+			cover_image
+			storyboard
+			content_type
+		}
+	}
+`;
+
+export const GET_TOP_RATED_CONTENT = gql`
+	query GetTopRatedContent {
+		getTopRatedContent {
+			_id
+			series_title
+			author
+			author_username
+			synopsis
+			genres
+			num_chapters
+			chapters
+			views
+			discussion_post
+			current_rating
+			num_of_ratings
+			total_ratings
+			publication_date
+			completed
+			cover_image
+			storyboard
+			content_type
+		}
+	}
+`;
+
+export const GET_RECENT_CONTENT = gql`
+	query GetRecentContent {
+		getRecentContent {
+			_id
+			series_title
+			author
+			author_username
+			synopsis
+			genres
+			num_chapters
+			chapters
+			views
+			discussion_post
+			current_rating
+			num_of_ratings
+			total_ratings
+			publication_date
+			completed
+			cover_image
+			storyboard
+			content_type
+		}
+	}
+`;
