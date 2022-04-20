@@ -164,3 +164,9 @@ export const REMOVE_CONTENT_FROM_FAVORITES = gql`
 		removeContentFromFavorites(contentID: $contentID)
 	}
 `;
+
+export const DELETE_CHAPTER = gql`
+	mutation DeleteChapter($chapterID: ID) {
+		deleteChapter(chapterID: $chapterID)
+	}
+`

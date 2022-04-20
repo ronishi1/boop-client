@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom'
 import { useLazyQuery, useMutation } 		from '@apollo/client';
 import { GET_CONTENT_INFO } from '../../cache/queries';
 import { uploadFile } from '../../utils/utils.js'
-import { UPDATE_COVER_IMAGE, EDIT_CONTENT, DELETE_CONTENT, PUBLISH_CONTENT} from '../../cache/mutations';
+import { UPDATE_COVER_IMAGE, EDIT_CONTENT, DELETE_CONTENT, PUBLISH_CONTENT, DELETE_CHAPTER} from '../../cache/mutations';
 import { Transition } from '@headlessui/react'
 import { useNavigate } from 'react-router-dom';
 const ContentManagementScreen = ({user}) => {
@@ -20,7 +20,10 @@ const ContentManagementScreen = ({user}) => {
   const [EditContent] = useMutation(EDIT_CONTENT);
   const [DeleteContent] = useMutation(DELETE_CONTENT);
   const [PublishContent] = useMutation(PUBLISH_CONTENT);
+  const [DeleteChapter] = useMutation(DELETE_CHAPTER);
 
+  // Used to manually force a refetch/rerender after deletion
+  const [deleteTrigger,setDeleteTrigger] = useState(0);
 
   const [imageError, setImageError] = useState({status:false,message:""});
   const [titleError, setTitleError] = useState({status:false,message:""});
@@ -45,7 +48,8 @@ const ContentManagementScreen = ({user}) => {
       setContent(result.data.getContentInfo);
     }
     fetchData();
-  },[]);
+    setDeleteTrigger(0);
+  },[deleteTrigger]);
 
   const selectGenreCallback = (genre) => {
     let temp = content.genres;
@@ -73,10 +77,15 @@ const ContentManagementScreen = ({user}) => {
   }
 
   const deleteChapterCallback = (chapterID) => {
-
+    console.log(chapterID);
+    setShowDeleteChapter(true);
+    setToDeleteChapter(chapterID);
   }
-  const handleDeleteChapter = async() => {
 
+  const handleDeleteChapter = async() => {
+    await DeleteChapter({variables:{chapterID:toDeleteChapter}});
+    setShowDeleteChapter(false);
+    setDeleteTrigger(1);
   }
 
   const handlePublish = async()  => {
@@ -477,7 +486,7 @@ const ContentManagementScreen = ({user}) => {
 
                 <div className="card static rounded-none h-full overflow-y-auto mt-2">
                   {content.chapters.map(chapter => (
-                    <ChapterEntry chapterID={chapter} contentType={content.content_type}/>
+                    <ChapterEntry chapterID={chapter} contentType={content.content_type} deleteChapterCallback={deleteChapterCallback}/>
                   ))}
                 </div>
               </div>
