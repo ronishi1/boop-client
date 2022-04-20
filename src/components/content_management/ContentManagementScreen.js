@@ -2,6 +2,7 @@ import React, { useState,useEffect } 	from 'react';
 import ChapterEntry from './ChapterEntry'
 import GenreSelector from './GenreSelector';
 import Unauthorized from '../unauthorized/Unauthorized'
+import CreateChapter from './CreateChapter'
 import {Link} from 'react-router-dom'
 import { useParams } from 'react-router-dom'
 import { useLazyQuery, useMutation } 		from '@apollo/client';
@@ -20,11 +21,13 @@ const ContentManagementScreen = ({user}) => {
   const [DeleteContent] = useMutation(DELETE_CONTENT);
   const [PublishContent] = useMutation(PUBLISH_CONTENT);
 
+
   const [imageError, setImageError] = useState({status:false,message:""});
   const [titleError, setTitleError] = useState({status:false,message:""});
   const [content,setContent] = useState({});
   const [submitted,setSubmitted] = useState(false);
   const [showDelete,setShowDelete] = useState(false);
+  const [showCreateChapter,setShowCreateChapter] = useState(false);
   const [showPublishConfirm,setShowPublishConfirm] = useState(false);
 
   const handleChange = (event) => {
@@ -103,6 +106,22 @@ const ContentManagementScreen = ({user}) => {
       console.log(published);
       return (
         <div className="-mt-5">
+          <div>
+            <input
+              type="checkbox"
+              id="create-chapter-modal"
+              class="modal-toggle"
+              checked={showCreateChapter}
+              onClick={() => {setShowCreateChapter(false)}}
+            />
+
+          <label for="create-chapter-modal" className="modal cursor-pointer">
+              <label class="modal-box w-4/12 max-w-5xl">
+                <CreateChapter
+                  toggleCreateChapterCallback={setShowCreateChapter} contentID={content._id}/>
+              </label>
+            </label>
+          </div>
           <div>
             <input
               type="checkbox"
@@ -388,12 +407,16 @@ const ContentManagementScreen = ({user}) => {
                 </div>
               </div>
               <div className='col-span-1 m-8'>
-                <div className="text-2xl">
-                  Chapter List
+                <div className="flex flex-row justify-between">
+                  <div className="text-2xl">
+                    Chapter List
+                  </div>
+                  <div className="btn btn-sm mr-7 bg-base-content/90 pr-3 border-none" onClick={() => {setShowCreateChapter(true)}}>+ Create</div>
                 </div>
+
                 <div className="card static rounded-none h-full overflow-y-auto">
                   {content.chapters.map(chapter => (
-                    <ChapterEntry chapter={chapter}/>
+                    <ChapterEntry chapterID={chapter}/>
                   ))}
                 </div>
               </div>

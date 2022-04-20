@@ -163,3 +163,13 @@ export const GET_RECENT_CONTENT = gql`
 		}
 	}
 `;
+
+export const GET_CONTENT_CHAPTER = gql`
+	query GetContentChapter($chapterID: ID) {
+		getContentChapter(chapterID:$chapterID) {
+			_id
+			chapter_title
+			series_id
+		}
+	}
+`

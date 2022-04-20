@@ -192,7 +192,7 @@ const App = () => {
         <Route path="/dev" element={<Dev />} />
 
         <Route path="/story-edit" element={<StoryEditScreen />} />
-        <Route path="/comic-edit" element={<ComicEditScreen />} />
+        <Route path="/comic-edit/:id" element={<ComicEditScreen />} />
 
         <Route
           path="/deletestory"

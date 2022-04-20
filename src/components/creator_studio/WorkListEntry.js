@@ -1,7 +1,7 @@
 import React 	from 'react';
 import { Link } from "react-router-dom";
 
-const WorkCard = ({contentID,seriesTitle,contentType,published}) => {
+const WorkListEntry = ({contentID,seriesTitle,contentType,published}) => {
   // Work card is each individual document on the google drive esque page
   let badge;
   if(contentType == "C"){
@@ -30,4 +30,4 @@ const WorkCard = ({contentID,seriesTitle,contentType,published}) => {
   );
 }
 
-export default WorkCard;
+export default WorkListEntry;

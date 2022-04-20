@@ -110,3 +110,9 @@ export const PUBLISH_CONTENT = gql`
 		publishContent(contentID:$contentID)
 	}
 `
+
+export const CREATE_CHAPTER = gql`
+	mutation CreateChapter($contentID:ID, $chapterTitle: String) {
+		createChapter(contentID: $contentID, chapterTitle: $chapterTitle)
+	}
+`
