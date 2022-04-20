@@ -211,3 +211,16 @@ export const GET_USER_CONTENT_INFO = gql`
 		}
 	}
 `;
+
+export const GET_READ_LIST = gql`
+	query GetReadList($userID: ID) {
+		getReadList(userID: $userID) {
+			_id
+			series_title
+			num_chapters
+			current_rating
+			publication_date
+			cover_image
+		}
+	}
+`;

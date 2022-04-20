@@ -166,7 +166,7 @@ const App = () => {
           hideSidebarCallback={hideSidebarCallback}/>
          : <></>}
       <Routes>
-        <Route path="/" element={<HomeScreen auth={auth}/>} />
+        <Route path="/" element={<HomeScreen auth={auth} user={user}/>} />
         <Route path="/browse" element={<BrowseScreen />} />
         <Route path="/info/:id" element={<ContentInfoScreen auth={auth}/>} />
         <Route path="/view" element={<ContentViewScreen />} />
