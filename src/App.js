@@ -191,7 +191,7 @@ const App = () => {
 
         <Route path="/dev" element={<Dev />} />
 
-        <Route path="/story-edit" element={<StoryEditScreen />} />
+        <Route path="/story-edit/:id" element={<StoryEditScreen />} />
         <Route path="/comic-edit/:id" element={<ComicEditScreen />} />
 
         <Route

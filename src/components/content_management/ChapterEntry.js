@@ -2,7 +2,7 @@ import React 	from 'react';
 import {Link} from 'react-router-dom';
 import { GET_CONTENT_CHAPTER } from '../../cache/queries';
 import {useQuery} from '@apollo/client'
-const ChapterEntry = ({chapterID}) => {
+const ChapterEntry = ({chapterID,contentType}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=311%3A3160
   let chapter = {}
   const { loading, error, data, refetch } = useQuery(GET_CONTENT_CHAPTER, {
@@ -12,8 +12,6 @@ const ChapterEntry = ({chapterID}) => {
   if(loading) { console.log(loading, 'loading'); }
   if(error) { console.log(error, 'error'); }
   if(data) {
-    console.log(data);
-    console.log(chapterID);
     chapter = data.getContentChapter;
   }
 
@@ -22,7 +20,12 @@ const ChapterEntry = ({chapterID}) => {
     link = "/view/" + chapterID
   }
   else {
-    link = "/comic-edit/" + chapterID
+    if(contentType == "C"){
+      link = "/comic-edit/" + chapterID
+    }
+    else {
+      link = "/story-edit/" + chapterID
+    }
   }
   return Object.keys(chapter).length !== 0 ? (
     <Link to={link}>

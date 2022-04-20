@@ -22,8 +22,6 @@ const CreateChapter = ({toggleCreateChapterCallback,contentID}) => {
         setTitle("");
       },3000)
     }
-    console.log(contentID);
-    console.log(title);
     let result = await CreateChapter({variables: {contentID: contentID, chapterTitle: title}});
     navigate(`/comic-edit/${result.data.createChapter}`);
   }

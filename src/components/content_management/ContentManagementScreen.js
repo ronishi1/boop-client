@@ -103,7 +103,6 @@ const ContentManagementScreen = ({user}) => {
       if(temp.getTime() != temp2.getTime()){
         published = true;
       }
-      console.log(published);
       return (
         <div className="-mt-5">
           <div>
@@ -416,7 +415,7 @@ const ContentManagementScreen = ({user}) => {
 
                 <div className="card static rounded-none h-full overflow-y-auto">
                   {content.chapters.map(chapter => (
-                    <ChapterEntry chapterID={chapter}/>
+                    <ChapterEntry chapterID={chapter} contentType={content.content_type}/>
                   ))}
                 </div>
               </div>
