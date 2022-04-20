@@ -112,7 +112,25 @@ export const PUBLISH_CONTENT = gql`
 `
 
 export const CREATE_CHAPTER = gql`
-	mutation CreateChapter($contentID:ID, $chapterTitle: String) {
-		createChapter(contentID: $contentID, chapterTitle: $chapterTitle)
+	mutation CreateChapter($contentID: ID, $chapterTitle: String, $seriesTitle: String) {
+		createChapter(contentID: $contentID, chapterTitle: $chapterTitle, seriesTitle: $seriesTitle)
+	}
+`
+
+export const ADD_PAGE = gql`
+	mutation AddPage($chapterID: ID) {
+		addPage(chapterID: $chapterID)
+	}
+`
+
+export const SAVE_PAGE = gql`
+	mutation SavePage($chapterID: ID, $pageNumber: Int, $url: String) {
+		savePage(chapterID: $chapterID, pageNumber: $pageNumber, url: $url)
+	}
+`
+
+export const DELETE_PAGE = gql`
+	mutation DeletePage($chapterID: ID, $pageNumber: Int) {
+		deletePage(chapterID: $chapterID, pageNumber: $pageNumber)
 	}
 `

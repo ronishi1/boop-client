@@ -4,7 +4,7 @@ import { Transition } from '@headlessui/react'
 import { CREATE_CHAPTER }	from '../../cache/mutations';
 import { useNavigate } from 'react-router-dom';
 
-const CreateChapter = ({toggleCreateChapterCallback,contentID}) => {
+const CreateChapter = ({toggleCreateChapterCallback,contentID,series_title}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=208%3A296
   let navigate = useNavigate();
 
@@ -22,7 +22,7 @@ const CreateChapter = ({toggleCreateChapterCallback,contentID}) => {
         setTitle("");
       },3000)
     }
-    let result = await CreateChapter({variables: {contentID: contentID, chapterTitle: title}});
+    let result = await CreateChapter({variables: {contentID: contentID, chapterTitle: title, seriesTitle: series_title}});
     navigate(`/comic-edit/${result.data.createChapter}`);
   }
 

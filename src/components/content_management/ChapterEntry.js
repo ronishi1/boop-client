@@ -27,6 +27,7 @@ const ChapterEntry = ({chapterID,contentType}) => {
       link = "/story-edit/" + chapterID
     }
   }
+
   return Object.keys(chapter).length !== 0 ? (
     <Link to={link}>
       <div className="flex flex-row justify-between border-b-2 border-base-content/10 hover:cursor-pointer hover:bg-gray-400/25">
