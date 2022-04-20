@@ -81,6 +81,7 @@ const ComicEditScreen = () => {
       pixelRatio:1
     })
     backgroundRef.current.hide()
+    console.log(dataURL)
     // const chapterID = "625e65b4e8f235e9ab4f37a9"
     // const PageInput = {
     //   _id: ""
@@ -156,7 +157,7 @@ const ComicEditScreen = () => {
                   style: {
                     position: 'inline',
                     top: 10,
-                    left: 0,
+                    left: 10,
                     zIndex: 1
                   },
                 }}
