@@ -368,7 +368,7 @@ const ContentManagementScreen = ({user}) => {
                       <div className="text-md">{content.synopsis}</div>
                       :
                       <textarea
-                        class="textarea w-full border-2 border-gray-500/30 focus:ring-0 focus:outline-none h-64"
+                        className="textarea w-full leading-normal border-2 border-gray-500/30 focus:ring-0 focus:outline-none h-64"
                         placeholder="Give your series a synopsis"
                         value = {content.synopsis}
                         onChange={(e) => {setContent({...content,synopsis:e.target.value})}}
