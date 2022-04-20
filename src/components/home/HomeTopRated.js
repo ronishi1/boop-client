@@ -1,4 +1,4 @@
-import React, { useState } 	from 'react';
+import React, { useState,useEffect } 	from 'react';
 import DetailedContentCard from './DetailedContentCard';
 import { Transition } from '@headlessui/react'
 import { GET_TOP_RATED_CONTENT } from '../../cache/queries'
@@ -11,16 +11,21 @@ const HomeTopRated = () => {
   const [slide,setSlide] = useState(0);
 
   const { data, loading, refetch } = useQuery(GET_TOP_RATED_CONTENT);
+
+  useEffect(() => {
+    refetch();
+  },[])
+
   if(loading){
     return <div></div>
   }
   const topRatedContent = data.getTopRatedContent;
-  
+
   const maxContent = 3;
   let splitContent = [];
   // split content into arrays of length=maxContent
   for (let i = 0; i < topRatedContent.length; i += maxContent){
-    splitContent.push(topRatedContent.slice(i, i + maxContent)); 
+    splitContent.push(topRatedContent.slice(i, i + maxContent));
   }
 
   return (

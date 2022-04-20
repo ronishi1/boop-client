@@ -1,4 +1,4 @@
-import React 	from 'react';
+import React, {useEffect} 	from 'react';
 import ContentCard from '../common/ContentCard';
 import { GET_RECENT_CONTENT } from '../../cache/queries'
 import { useQuery } from '@apollo/client';
@@ -86,6 +86,11 @@ const HomeRecentlyReleased= () => {
   ]
 
   const { data, loading, refetch } = useQuery(GET_RECENT_CONTENT);
+
+  useEffect(() => {
+    refetch();
+  },[])
+
   if(loading){
     return <div></div>
   }

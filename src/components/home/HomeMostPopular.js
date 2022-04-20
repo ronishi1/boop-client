@@ -1,4 +1,4 @@
-import React, { useState }	from 'react';
+import React, { useState,useEffect }	from 'react';
 import DetailedContentCard from './DetailedContentCard';
 import { Transition } from '@headlessui/react'
 import { GET_POPULAR_CONTENT } from '../../cache/queries'
@@ -6,21 +6,28 @@ import { useQuery } from '@apollo/client';
 
 const HomeMostPopular = () => {
   // USES DETAILED CONTENT CARD
-  // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=211%3A556  
+  // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=211%3A556
 
   const [slide,setSlide] = useState(0);
 
+
   const { data, loading, refetch } = useQuery(GET_POPULAR_CONTENT);
+
+  useEffect(() => {
+    refetch();
+  },[])
+  
   if(loading){
     return <div></div>
   }
+
   const popularContent = data.getPopularContent;
 
   const maxContent = 3;
   let splitContent = [];
   // split content into arrays of length=maxContent
   for (let i = 0; i < popularContent.length; i += maxContent){
-    splitContent.push(popularContent.slice(i, i + maxContent)); 
+    splitContent.push(popularContent.slice(i, i + maxContent));
   }
 
   return (
