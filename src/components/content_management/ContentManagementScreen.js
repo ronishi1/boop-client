@@ -27,6 +27,8 @@ const ContentManagementScreen = ({user}) => {
   const [content,setContent] = useState({});
   const [submitted,setSubmitted] = useState(false);
   const [showDelete,setShowDelete] = useState(false);
+  const [showDeleteChapter,setShowDeleteChapter] = useState(false);
+  const [toDeleteChapter,setToDeleteChapter] = useState("");
   const [showCreateChapter,setShowCreateChapter] = useState(false);
   const [showPublishConfirm,setShowPublishConfirm] = useState(false);
 
@@ -68,6 +70,13 @@ const ContentManagementScreen = ({user}) => {
   const handleDelete = async() => {
     await DeleteContent({variables:{contentID:id}});
     navigate("/studio");
+  }
+
+  const deleteChapterCallback = (chapterID) => {
+
+  }
+  const handleDeleteChapter = async() => {
+
   }
 
   const handlePublish = async()  => {
@@ -220,6 +229,59 @@ const ContentManagementScreen = ({user}) => {
                       <div
                         className="btn bg-red-400 border-none hover:bg-red-500 normal-case mr-2"
                         onClick={() => {handleDelete()}}
+                        >
+                        Delete
+                      </div>
+                    </span>
+                  </div>
+                </div>
+              </label>
+            </label>
+          </div>
+          <div>
+            <input
+              type="checkbox"
+              id="delete-chapter-modal"
+              class="modal-toggle"
+              checked={showDeleteChapter}
+              onChange={() => {setShowDeleteChapter(false)}}
+              />
+
+            <label for="delete-chapter-modal" class="modal cursor-pointer">
+              <label class="modal-box w-4/12 max-w-5xl">
+                <div>
+                  <div class="grid items-center space-y-4 p-4 mr-8 ml-8">
+                    <div class="w-full flex flex-row justify-between">
+                      <div class="text-left text-xl font-medium">
+                        Are you sure you want to delete this work?
+                      </div>
+                      <div className="cursor-pointer" onClick={() => {setShowDeleteChapter(false)}}>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-6 w-6"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="grey"
+                          strokeWidth={2}
+                          >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M6 18L18 6M6 6l12 12"
+                            />
+                        </svg>
+                      </div>
+                    </div>
+                    <span class="w-full flex flex-row justify-between items-center">
+                      <label
+                        className="text-zinc-400 text-sm ml-2 cursor-pointer"
+                        onClick={() => {setShowDeleteChapter(false)}}
+                        >
+                        Cancel
+                      </label>
+                      <div
+                        className="btn bg-red-400 border-none hover:bg-red-500 normal-case mr-2"
+                        onClick={() => {handleDeleteChapter()}}
                         >
                         Delete
                       </div>
