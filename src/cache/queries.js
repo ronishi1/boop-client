@@ -174,4 +174,40 @@ export const GET_CONTENT_CHAPTER = gql`
 			page_images
 		}
 	}
+`;
+
+export const GET_CHAPTERS = gql`
+	query GetChapters($chapterIDs: [ID] ) {
+		getChapters(chapterIDs: $chapterIDs ) {
+			_id
+			chapter_title
+			publication_date
+		}
+	}
+`;
+
+export const GET_POST_BASIC = gql`
+	query GetPost($postId: ID) {
+		getPost(postId: $postId){
+			_id
+			title
+			author
+			author_name
+			timestamp
+		}
+	}
 `
+
+export const GET_USER_CONTENT_INFO = gql`
+	query GetUserContentInfo {
+		getCurrentUser {
+			favorites
+			read_list
+			rated_content{
+				content_ID
+    			rating
+			}
+			following
+		}
+	}
+`;

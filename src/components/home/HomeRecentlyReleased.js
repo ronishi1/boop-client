@@ -101,7 +101,7 @@ const HomeRecentlyReleased= () => {
       <p className="text-2xl ml-10">Recently Released</p>
       <div className="flex flex-row space-x-3 overflow-x-auto ml-10">
         {recentContent.map((content) => (
-          <ContentCard title={content.series_title} cover={content.cover_image} size="S"/>
+          <ContentCard id={content._id} title={content.series_title} cover={content.cover_image} size="S"/>
         ))}
       </div>
     </div>

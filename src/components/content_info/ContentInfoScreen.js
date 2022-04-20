@@ -2,93 +2,114 @@ import React, { useState } from "react";
 import ChapterTable from "./ChapterTable";
 import DiscussionPost from "./DiscussionPost";
 import PopularPost from "./PopularPost";
-import { Link} from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { GET_CONTENT_INFO, GET_USER_CONTENT_INFO } from '../../cache/queries'
+import {RATE_CONTENT, ADD_CONTENT_TO_READ_LIST, ADD_CONTENT_TO_FAVORITES,
+  REMOVE_CONTENT_FROM_READ_LIST, REMOVE_CONTENT_FROM_FAVORITES, FOLLOW_USER, UNFOLLOW_USER} from '../../cache/mutations'
+import { useMutation, useQuery } from '@apollo/client';
 
-const ContentInfoScreen = () => {
+const ContentInfoScreen = ({auth}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=311%3A1266
-  const [favorited, toggleFavorite] = useState(false);
-  const [bookmarked, toggleBookmark] = useState(false);
   const [followed, toggleFollow] = useState(false);
-  const [rating, setRating] = useState(0);
-  const link = "localhost:3000/";
-  const id = "";
-
+  let { id } = useParams();
   const ratings = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  const data = {
-    title: "Kaguya-sama Love Is War",
-    author: "Aka Akasaka",
-    current_rating: 8.8,
-    cover_image:
-      "https://d28hgpri8am2if.cloudfront.net/book_images/onix/cvr9781974706631/kaguya-sama-love-is-war-vol-10-9781974706631_hr.jpg",
-    content_type: "C",
-    synopsis:
-      "Considered a genius due to having the highest grades in the country, Miyuki Shirogane leads the prestigious Shuchiin Academy's student council as its president, working alongside the beautiful and wealthy vice president Kaguya Shinomiya. The two are often regarded as the perfect couple by students despite them not being in any sort of romantic relationship. However, the truth is that after spending so much time together, the two have developed feelings for one another; unfortunately, neither is willing to confess, as doing so would be a sign of weakness. With their pride as elite students on the line, Miyuki and Kaguya embark on a quest to do whatever is necessary to get a confession out of the other. Through their daily antics, the battle of love begins!",
-    views: 1000,
-    favorites: 100,
-    chapter_count: 10,
-    completion_status: true,
-    genres: ["Comedy", "Romance"],
-    chapters: [
-      {
-        title: "Chapter Title",
-        publication_date: new Date(2018, 11, 24),
-      },
-    ],
-    forumPosts: [
-      {
-        title: "Discussion Post",
-        cover_image:
-          "https://d28hgpri8am2if.cloudfront.net/book_images/onix/cvr9781974706631/kaguya-sama-love-is-war-vol-10-9781974706631_hr.jpg",
-        author: "AutoMod",
-        publication_date: new Date(2022, 3, 20, 0, 24),
-      },
-      {
-        title: "Most Popular Post",
-        cover_image:
-          "https://www.manga-sanctuary.com/v10_good/public/img/objet/origin/322709.jpg",
-        author: "User1",
-        publication_date: new Date(2022, 3, 24, 14, 11),
-      },
-    ],
-  };
+  
+  const { data:userData, loading: userLoading, error: userError, refetch: fetchUser } = useQuery(GET_USER_CONTENT_INFO);
+  const { data, loading, error, refetch } = useQuery(GET_CONTENT_INFO, {
+    variables: { contentID: id },
+  });
+  let user = userData ? userData.getCurrentUser: null;
+  const [RateContent] = useMutation(RATE_CONTENT);
+  const [AddContentToFavorites] = useMutation(ADD_CONTENT_TO_FAVORITES);
+  const [RemoveContentFromFavorites] = useMutation(REMOVE_CONTENT_FROM_FAVORITES);
+  const [AddContentToReadList] = useMutation(ADD_CONTENT_TO_READ_LIST);
+  const [RemoveContentFromReadList] = useMutation(REMOVE_CONTENT_FROM_READ_LIST);
+  const [FollowUser] = useMutation(FOLLOW_USER);
+  const [UnfollowUser] = useMutation(UNFOLLOW_USER);
+
+  if(loading || userLoading){
+    return <></>;
+  }
+  
+  if(error || userError){
+    return <div>error</div>;
+  }
+
+  let content = data.getContentInfo;
+  if(!content) {
+    return <div>could not find content</div>
+  }
+
+  let contentColor = "";
+  switch(content.content_type) {
+    case "C":
+      contentColor = "comic"
+      break;
+    case "S":
+      contentColor = "story"
+      break;
+    default:
+  } 
 
   const handleFavorite = async () => {
-    toggleFavorite(!favorited);
+    if(user.favorites.includes(id)){
+      await RemoveContentFromFavorites({variables: {
+        contentID: id
+      }})
+    }
+    else{
+      await AddContentToFavorites({variables: {
+        contentID: id
+      }});
+    }
+    fetchUser();
   };
 
   const handleBookmark = async () => {
-    toggleBookmark(!bookmarked);
+    if(user.read_list.includes(id)){
+      await RemoveContentFromReadList({variables: {
+        contentID: id
+      }})
+    }
+    else {
+      await AddContentToReadList({variables: {
+        contentID: id
+      }});
+    }
+    fetchUser();
   };
 
   const handleFollow = async () => {
-    toggleFollow(!followed);
+    if(user.following.includes(content.author)){
+      await UnfollowUser({variables: {
+        followID: content.author
+      }});
+    }
+    else {
+      await FollowUser({variables: {
+        followID: content.author
+      }});
+    }
+    fetchUser();
   };
 
   const handleRate = async (rating) => {
-    setRating(rating);
+    await RateContent({ variables: {
+      contentID: id,
+      rating: rating
+    }});
+    fetchUser();
+    refetch();
   };
   // sharing just copies link to clipboard
   const handleShare = async () => {
-    await navigator.clipboard.writeText(link + "info/" + id);
-  };
-
-  const duplicateChapters = () => {
-    let duplicatedChapters = [];
-    for (let i = 0; i < 20; i++) {
-      duplicatedChapters.push(data.chapters[0]);
-    }
-    return duplicatedChapters;
-  };
-
-  const getContentColoredText = (text) => {
-    switch (data.content_type) {
-      case "C":
-        return <p class="text-comic text-2xl">{text}</p>;
-      case "S":
-        return <p class="text-story text-2xl">{text}</p>;
-      default:
-        return;
-    }
+    let temp = document.createElement('input'),
+    text = window.location.href;
+    document.body.appendChild(temp);
+    temp.value = text;
+    temp.select();
+    await navigator.clipboard.writeText(temp.value);
+    document.body.removeChild(temp);
   };
 
   return (
@@ -101,7 +122,7 @@ const ContentInfoScreen = () => {
           className="card-title row-start-1 row-end-2 col-span-full p-5 border-b-2
           align-center"
         >
-          {getContentColoredText(data.title)}
+          <p class={"text-2xl text-"+contentColor}>{content.series_title}</p>
         </div>
         <div
           className="card-body row-start-2 row-end-4 col-start-1 col-end-3 border-r-2
@@ -109,15 +130,15 @@ const ContentInfoScreen = () => {
         >
           <figure className="h-full">
             <img
-              className="h-full object-contain"
-              src={data.cover_image}
+              className="h-56 w-40 object-cover"
+              src={content.cover_image}
               alt="cover art"
             />
-            <div className="self-start pt-1">
+            {auth && user ? <div className="self-start pt-1">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="cursor-pointer h-7 w-7 hover:opacity-70"
-                fill={favorited ? "currentColor" : "none"}
+                fill={user.favorites && user.favorites.includes(id) ? "currentColor" : "none"}
                 viewBox="0 0 24 24"
                 stroke="currentColor"
                 stroke-width="2"
@@ -132,7 +153,7 @@ const ContentInfoScreen = () => {
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="cursor-pointer h-7 w-7 hover:opacity-70"
-                fill={bookmarked ? "currentColor" : "none"}
+                fill={user.read_list && user.read_list.includes(id) ? "currentColor" : "none"}
                 viewBox="0 0 24 24"
                 stroke="currentColor"
                 stroke-width="2"
@@ -159,7 +180,7 @@ const ContentInfoScreen = () => {
                   d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
                 />
               </svg>
-            </div>
+            </div> : <></>}
           </figure>
         </div>
         <div
@@ -168,33 +189,31 @@ const ContentInfoScreen = () => {
         >
           {/* Either start from beginning or continue */}
           <button
-            className={`${
-              data.content_type == "C"
-                ? "bg-comic "
-                : "bg-story"
-            } w-full text-white font-bold border border-comic hover:opacity-70 py-2 px-2 mr-4 rounded`}
+            className={"w-full text-white font-bold border border-comic hover:opacity-70 py-2 px-2 mr-4 rounded bg-"+contentColor}
           >
             Read
           </button>
           <div className="card-body rounded-none max-h-48 overflow-y-auto">
-            <p className="text-xs">{data.synopsis}</p>
+            <p className="text-xs">{content.synopsis}</p>
           </div>
           <div className="card-body">
-            <p className="text-xs">Views: {data.views}</p>
-            <p className="text-xs">Favorites: {data.favorites}</p>
-            <p className="text-xs">Chapters: {data.chapter_count}</p>
+            <p className="text-xs">Views: {content.views}</p>
+            {/* <p className="text-xs">Favorites: {content.favorites}</p> */}
+            <p className="text-xs">Chapters: {content.num_chapters}</p>
             <p className="text-xs">
               Completion Status:{" "}
-              {data.completion_status ? "Complete" : "Incomplete"}
+              {content.completion_status ? "Complete" : "Incomplete"}
             </p>
-            <p className="text-xs">Genres: {data.genres.toString()}</p>
+            <div className="text-xs flex flex-wrap space-x-1">Genres: {content.genres.map((genre) => {
+              return <div>{genre}</div>
+            })}</div>
           </div>
         </div>
         <div className="card-body row-start-2 row-end-3 col-start-3 col-end-5 border-b-2 flex-row items-center">
-          <svg
+          {auth && user ? <svg
             xmlns="http://www.w3.org/2000/svg"
             className="cursor-pointer h-6 w-6 hover:opacity-70"
-            fill={followed ? "currentColor" : "none"}
+            fill={user.following && user.following.includes(content.author) ? "currentColor" : "none"}
             viewBox="0 0 24 24"
             stroke="currentColor"
             stroke-width="2"
@@ -205,51 +224,52 @@ const ContentInfoScreen = () => {
               stroke-linejoin="round"
               d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
             />
-          </svg>
-          <Link className="text-link"to={`/profile/${data.author}`}>
-            Author: {data.author}
+          </svg> : <></>}
+          <Link className="text-link"to={`/profile/${content.author_username}`}>
+            Author: {content.author_username}
           </Link>
         </div>
-        <div className="card-body row-start-2 row-end-3 col-start-5 col-end-7 border-b-2 flex-col items-center justify-end">
-          Rating: {data.current_rating}/10
-          <div class="dropdown">
-            <label
-              tabindex="0"
-              className="select select-bordered h-8 min-h-0 w-28"
-            >
-              {rating == 0 ? "Rate" : rating}
-            </label>
-            <ul
-              tabindex="0"
-              class="dropdown-content absolute z-10 mt-2 border-solid border-2 menu bg-base-100 w-28 rounded-box overflow-auto max-h-88"
-            >
-              {ratings.map((rating) => {
-                return (
-                  <li>
-                    <a
-                      className="text-sm py-1.5 h-8 hover:bg-gray-400/25"
-                      onClick={() => {
-                        handleRate(rating);
-                      }}
-                    >
-                      {rating}
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
+        <div className="card-body row-start-2 row-end-3 col-start-5 col-end-7 border-b-2 flex-row items-center justify-center">
+          <div className="flex flex-col">
+            Rating: {content.current_rating}/10
+            {auth && user ? <div class={"dropdown"}>
+              <label
+                tabIndex="0"
+                className="select select-bordered h-8 min-h-0 w-28"
+              >
+                {user.rated_content && user.rated_content.find(c => c.content_ID ===id) ? user.rated_content.find(c => c.content_ID ===id).rating : "Rate" }
+              </label>
+              <ul
+                tabIndex="0"
+                class="dropdown-content absolute z-10 mt-2 border-solid border-2 menu bg-base-100 w-28 rounded-box overflow-auto max-h-88"
+              >
+                {ratings.map((rating) => {
+                  return (
+                    <li>
+                      <a
+                        className="text-sm py-1.5 h-8 hover:bg-gray-400/25"
+                        onClick={() => {
+                          handleRate(rating);
+                        }}
+                      >
+                        {rating}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div> : <></>}
           </div>
         </div>
         <div className="card-body row-start-3 row-end-6 col-start-3 col-end-7">
-          {/* DUPLICATE CHAPTERS TESTING PURPOSES ONLY */}
-          <ChapterTable chapters={duplicateChapters()} />
+          <ChapterTable chapterIds={content.chapters} />
         </div>
         <div className="card-body row-start-6 row-end-7 col-start-3 col-end-5 border-t-2 p-4">
-          <DiscussionPost post={data.forumPosts[0]} />
+          <DiscussionPost post={content.discussion_post} coverImage={content.cover_image}/>
         </div>
-        <div className="card-body row-start-6 row-end-7 col-start-5 col-end-7 border-t-2 p-4">
-          <PopularPost post={data.forumPosts[1]} />
-        </div>
+        {/* <div className="card-body row-start-6 row-end-7 col-start-5 col-end-7 border-t-2 p-4">
+          <PopularPost post={content.discussion_post} />
+        </div> */}
       </div>
     </div>
   );

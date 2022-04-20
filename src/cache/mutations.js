@@ -134,3 +134,33 @@ export const DELETE_PAGE = gql`
 		deletePage(chapterID: $chapterID, pageNumber: $pageNumber)
 	}
 `
+
+export const RATE_CONTENT = gql`
+	mutation RateContent($contentID: ID, $rating: Int) {
+		rateContent(contentID: $contentID, rating: $rating)
+	}
+`;
+
+export const ADD_CONTENT_TO_READ_LIST = gql`
+	mutation AddContentToReadList($contentID: ID) {
+		addContentToReadList(contentID: $contentID)
+	}
+`;
+
+export const ADD_CONTENT_TO_FAVORITES = gql`
+	mutation AddContentToFavorites($contentID: ID) {
+		addContentToFavorites(contentID: $contentID)
+	}
+`;
+
+export const REMOVE_CONTENT_FROM_READ_LIST = gql`
+	mutation RemoveContentFromReadList($contentID: ID) {
+		removeContentFromReadList(contentID: $contentID)
+	}
+`;
+
+export const REMOVE_CONTENT_FROM_FAVORITES = gql`
+	mutation RemoveContentFromFavorites($contentID: ID) {
+		removeContentFromFavorites(contentID: $contentID)
+	}
+`;

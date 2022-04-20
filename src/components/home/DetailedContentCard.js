@@ -1,7 +1,7 @@
 import React 	from 'react';
 import { useNavigate } from "react-router-dom";
 
-const DetailedContentCard = ({title,cover,genres,synopsis,type}) => {
+const DetailedContentCard = ({id,title,cover,genres,synopsis,type}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=211%3A556
   let contentColor = "";
   let contentBadge = <></>;
@@ -19,7 +19,7 @@ const DetailedContentCard = ({title,cover,genres,synopsis,type}) => {
 
   let navigate = useNavigate();
   const handleClick = () => {
-    navigate("/info")
+    navigate("/info/"+id)
   }
 
   return (

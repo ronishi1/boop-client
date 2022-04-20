@@ -52,7 +52,7 @@ const HomeMostPopular = () => {
               </div>
             </div>
             {contentChunk.map((content) => (
-              <DetailedContentCard title={content.series_title} cover={content.cover_image} genres={content.genres} synopsis={content.synopsis} type={content.content_type}/>
+              <DetailedContentCard id={content._id} title={content.series_title} cover={content.cover_image} genres={content.genres} synopsis={content.synopsis} type={content.content_type}/>
             ))}
             <div className="mt-[6.5rem]">
               <div className={"btn btn-circle btn-sm "+(slide == splitContent.length-1 ? "invisible" : "")} onClick={() => {setSlide(slide+1)}}>

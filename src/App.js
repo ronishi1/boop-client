@@ -168,7 +168,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<HomeScreen auth={auth}/>} />
         <Route path="/browse" element={<BrowseScreen />} />
-        <Route path="/info" element={<ContentInfoScreen />} />
+        <Route path="/info/:id" element={<ContentInfoScreen auth={auth}/>} />
         <Route path="/view" element={<ContentViewScreen />} />
         <Route path="/studio" element={<CreatorStudioScreen user={user}/>} />
         <Route path="/forum-create" element={<ForumCreateScreen />} />
