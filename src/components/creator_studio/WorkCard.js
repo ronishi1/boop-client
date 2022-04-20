@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 
 const WorkCard = ({contentID,seriesTitle,cover,contentType}) => {
   // Work card is each individual document on the google drive esque page
-  console.log(seriesTitle);
   let badge;
   if(contentType == "C"){
     badge = <div className="badge text-xs border-none bg-comic mx-auto">Comic</div>;

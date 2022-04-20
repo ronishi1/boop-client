@@ -410,10 +410,10 @@ const ContentManagementScreen = ({user}) => {
                   <div className="text-2xl">
                     Chapter List
                   </div>
-                  <div className="btn btn-sm mr-7 bg-base-content/90 pr-3 border-none" onClick={() => {setShowCreateChapter(true)}}>+ Create</div>
+                  <div className="btn btn-sm bg-base-content/90 pr-3 border-none" onClick={() => {setShowCreateChapter(true)}}>+ Create</div>
                 </div>
 
-                <div className="card static rounded-none h-full overflow-y-auto">
+                <div className="card static rounded-none h-full overflow-y-auto mt-2">
                   {content.chapters.map(chapter => (
                     <ChapterEntry chapterID={chapter} contentType={content.content_type}/>
                   ))}
