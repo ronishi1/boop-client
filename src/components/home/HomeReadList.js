@@ -15,7 +15,7 @@ const HomeReadList = ({user}) => {
   if(loading){
     return <div></div>
   }
-
+  refetch();
   const readList = data.getReadList;
 
   return (
