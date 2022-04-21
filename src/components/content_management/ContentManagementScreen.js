@@ -46,8 +46,11 @@ const ContentManagementScreen = ({user}) => {
     async function fetchData() {
       let result = await GetContentInfo({variables: {contentID:id}});
       setContent(result.data.getContentInfo);
+      console.log("USE EFFECT TRIGGERED");
+
     }
     fetchData();
+    console.log("USE EFFECT TRIGGERED");
     setDeleteTrigger(0);
   },[deleteTrigger]);
 
@@ -63,7 +66,8 @@ const ContentManagementScreen = ({user}) => {
 
   const refetchCallback = async() => {
     let result = await GetContentInfo({variables: {contentID:id}});
-    setContent(result.data.getContentInfo);
+    let image = result.data.getContentInfo.cover_image
+    setContent({...content,cover_image:image});
   }
 
   const handleUpload = async(e) => {
