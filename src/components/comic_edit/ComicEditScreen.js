@@ -148,7 +148,10 @@ const ComicEditScreen = () => {
     setLines([])
     setPage(pageNum)
   }
-
+  // const handleColor = () => {
+  //   console.log("enter")
+  //   setStroke('#000000')
+  // }
   const URLImage = ({ url }) => {
     const [image, status] = useImage(url, "Anonymous");
     
@@ -210,6 +213,9 @@ const ComicEditScreen = () => {
       <select
         value={tool}
         onChange={(e) => {
+          if (e.target.value === 'eraser') {
+            setStroke('#FFFFFF')
+          }
           setTool(e.target.value);
         }}
       >
@@ -264,7 +270,7 @@ const ComicEditScreen = () => {
                   tension={0.5}
                   lineCap="round"
                   globalCompositeOperation={
-                    line.tool === 'eraser' ? 'destination-out' : 'source-over'
+                    line.tool === 'eraser' ? 'source-over' : 'source-over'
                   }
                 />
               ))}
