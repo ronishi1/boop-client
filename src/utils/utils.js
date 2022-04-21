@@ -1,4 +1,4 @@
-const b64toBlob = (dataURI, mimetype) => {
+export const b64toBlob = (dataURI, mimetype) => {
     const byteString = atob(dataURI.split(',')[1]);
     const ab = new ArrayBuffer(byteString.length);
     const ia = new Uint8Array(ab);
@@ -26,7 +26,7 @@ export const uploadFile = async(file, updateFunc, fetchUser, errorFunc) => {
         // console.log(data)
         data.append('data', e.target.result)
         console.log("blob?")
-        // console.log(e.target.result)
+        console.log(e.target.result)
         // console.log(data)
             fetch(`${process.env.REACT_APP_BACKEND_SERVER}imageUpload`, {
                 method: 'post',
@@ -43,28 +43,3 @@ export const uploadFile = async(file, updateFunc, fetchUser, errorFunc) => {
     }
 }
 
-export const uploadPage = async(base64, updateFunc, fetch, errorFunc) => {
-
-    var data = new FormData()
-    let converted = ""
-    var reader = new FileReader(base64)
-    reader.onload = async e => {
-        converted = b64toBlob(e, "image/png")
-        data.append('content', converted)
-        data.append('data', base64)
-        fetch(`${process.env.REACT_APP_BACKEND_SERVER}imageUpload`, {
-        method: 'post',
-        body: data
-        }).then(
-            response => response.json()
-        ).then(async data => {
-            console.log(data)
-            // await updateFunc({variables:{url:data.url}})
-            // await fetch()
-        }).catch(error => {
-            errorFunc({status:true, message:"File Size Too Large"})
-            setTimeout(()=> errorFunc({status:false,message:""}), 3000)
-        })
-    }
-    
-}

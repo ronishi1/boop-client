@@ -5,7 +5,7 @@ import { Stage, Layer, Line, Text, Image} from 'react-konva';
 import { Html } from 'react-konva-utils';
 import IroColorPicker from "./IroColorPicker"
 import useImage from 'use-image'
-import { uploadPage } from '../../utils/utils.js'
+import { b64toBlob } from '../../utils/utils.js'
 
 import { GET_CONTENT_CHAPTER } from '../../cache/queries';
 import { ADD_PAGE, SAVE_PAGE, DELETE_PAGE } from '../../cache/mutations'
@@ -20,8 +20,9 @@ const ComicEditScreen = () => {
   // const [currentChapter, setCurrent] = useState(1)
   const [currentPage, setPage] = useState(1)
   const [chapter, setChapter] = useState({})
+  const [pageBackground, setBackground] = useState("")
+  const [pageDropdown, setDropdown] = useState([])
   // might not even use the error
-  const [imageError, setImageError] = useState({status:false,message:""})
 
   const [SavePage] = useMutation(SAVE_PAGE);
   const [DeletePage] = useMutation(DELETE_PAGE);
@@ -36,12 +37,22 @@ const ComicEditScreen = () => {
   const layerRef = useRef(null);
   const backgroundRef = useRef(null);
 
+  async function fetchData() {
+        let result = await GetContentChapter({variables: {chapterID:id}});
+        setChapter(result.data.getContentChapter);
+        let chapter = result.data.getContentChapter
+        const background = chapter.page_images[currentPage-1]
+        if (background !== undefined && background !== "Unsaved URL") {
+          setBackground(chapter.page_images[currentPage-1])
+        }
+        let dropdown = []
+        for (var i = 0; i < chapter.num_pages; i++) {
+          dropdown.push(i+1)
+        }
+        setDropdown(dropdown)
+        // console.log(pageBackground)
+  }
   useEffect(() => {
-    async function fetchData() {
-      let result = await GetContentChapter({variables: {chapterID:id}});
-      console.log(result)
-      setChapter(result.data.getContentChapter);
-    }
     fetchData();
   },[]);
   
@@ -50,17 +61,6 @@ const ComicEditScreen = () => {
     const pos = e.target.getStage().getPointerPosition();
     setLines([...lines, { tool, points: [pos.x, pos.y], stroke: stroke }]);
     // console.log(lines);
-    const stringified = encodeURIComponent(JSON.stringify(lines))
-    // console.log(stringified)
-    // console.log(JSON.parse(decodeURIComponent("%5B%7B%22tool%22%3A%22pen%22%2C%22points%22%3A%5B456.5%2C326%5D%2C%22stroke%22%3A%22%23df4b26%22%7D%2C%7B%22tool%22%3A%22pen%22%2C%22points%22%3A%5B576.5%2C294%5D%2C%22stroke%22%3A%22%23df4b26%22%7D%2C%7B%22tool%22%3A%22pen%22%2C%22points%22%3A%5B425.5%2C348%5D%2C%22stroke%22%3A%22%23df4b26%22%7D%2C%7B%22tool%22%3A%22pen%22%2C%22points%22%3A%5B647.5%2C301%5D%2C%22stroke%22%3A%22%23df4b26%22%7D%5D")))
-    // console.log(lines)
-    // ON SAVE, take the list of lines and their attributes.
-    //    Mutate to graphQL and then when important, map the lines
-    //    with their attributes.
-    // Exporting to cloudinary should be done through by calling
-    //  stageRef.current.toDataURL()
-    // console.log(layerRef.current.children)
-    // console.log(stageRef.current.toDataURL())
   };
 
   const handleMouseMove = (e) => {
@@ -81,46 +81,69 @@ const ComicEditScreen = () => {
 
   const handleMouseUp = () => {
     isDrawing.current = false;
-    // console.log(stageRef.current.toDataURL())
   };
 
   const onColorChange = (color) => {
-    // setStroke(color)
     setStroke(color)
-    // console.log(stroke)
-    // console.log(JSON.stringify(color.color.hexstring));
   }
-
-  const refetchCallback = async() => {
-    let result = await GetContentChapter({variables: {chapterID:id}});
-    setChapter(result.data.getContentChapter);
-  }
-
   const handleSave = async () => {
-    backgroundRef.current.show()
+    if (backgroundRef.current !== null) {
+      backgroundRef.current.show()
+    }
     const dataURL = stageRef.current.toDataURL({
       mimeType: "image/png",
       quality: 0,
       pixelRatio:1
     })
-    backgroundRef.current.hide()
-    const url = await uploadPage(dataURL, savePageCallback, refetchCallback, setImageError)
-  }
-  
-  const savePageCallback = async (input) => {
-    input.variables.chapterID = chapter._id;
-    input.variables.pageNumber = currentPage;
-    await SavePage(input)
+   if (backgroundRef.current !== null) {
+      backgroundRef.current.hide()
+    }
+
+    var data = new FormData();
+    let converted = b64toBlob(dataURL, "image/png")
+    data.append('content', converted)
+    data.append('data', dataURL)
+    fetch(`${process.env.REACT_APP_BACKEND_SERVER}imageUpload`, {
+        method: 'post',
+        body: data
+    }).then(
+        response => response.json()
+    ).then(async data => {
+        console.log(data)
+        await SavePage({variables:{chapterID:chapter._id, pageNumber:currentPage, url:data.url}})
+        let result = await GetContentChapter({variables: {chapterID:id}});
+        setChapter(result.data.getContentChapter);
+        setBackground(data.url)
+    })
   }
 
-  const handleNewPage = () => {
-    console.log("handling new page")
+  const handleAddPage = async () => {
+    await AddPage({variables: {chapterID: chapter._id}})
+    let addedPage = pageDropdown
+    addedPage.push(pageDropdown[-1] + 1)
+    setDropdown(addedPage)
+    fetchData()
+  }
+  const handleDeletePage = async () => {
+    console.log("handling deleting page")
+    await DeletePage({variables: {chapterID: chapter._id, pageNumber: currentPage}})
+    if (currentPage > 1) {
+      setPage(currentPage - 1)
+    }
+    let deletedPage = pageDropdown
+    deletedPage.pop()
+    setDropdown(deletedPage)
+    setLines([])
+    fetchData()
+  }
+  const handleSelectPage = (pageNum) => {
+    setLines([])
+    setPage(pageNum)
   }
 
   const URLImage = ({ url }) => {
     const [image, status] = useImage(url, "Anonymous");
     
-    // img.crossOrigin = 'Anonymous';
     return (
       <Image
         image={image}
@@ -128,11 +151,9 @@ const ComicEditScreen = () => {
         y={0}
         visible={false}
         ref={backgroundRef}
-        // I will use offset to set origin to the center of the image
       />
     );
   };
-
   return (
     <div>
       <div className="ml-4 mb-4">
@@ -141,11 +162,41 @@ const ComicEditScreen = () => {
       <div className="flex flex-row justify-between">
         <div className="ml-4 mb-4">
           Chapter Title : <strong>{chapter.chapter_title}</strong>
+         
+          <div class="dropdown">
+            <label
+              tabindex="0"
+              className="select select-bordered h-8 min-h-0 w-28"
+            >
+              Page: {currentPage}
+            </label>
+            <ul
+              tabindex="0"
+              class="dropdown-content absolute z-10 mt-2 border-solid border-2 menu bg-base-100 w-28 rounded-box overflow-auto max-h-88"
+            >
+              {pageDropdown.map((page, i) => {
+                return (
+                  <li key={i}>
+                    <a
+                      
+                      className="text-sm py-1.5 h-8 hover:bg-gray-400/25"
+                      onClick={() => {
+                        handleSelectPage(i + 1);
+                      }}
+                    >
+                      {i+1}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         </div>
         
         <div>
           <div className="btn cursor-pointer mr-4 mb-4" onClick={handleSave}>Save</div>
-          <div className="btn cursor-pointer mr-4 mb-4" onClick={handleNewPage}>Add Page</div>
+          <div className="btn cursor-pointer mr-4 mb-4" onClick={handleAddPage}>Add Page</div>
+          <div className="btn cursor-pointer mr-4 mb-4" onClick={handleDeletePage}>Delete Page</div>
         </div>
       </div>
       <select
@@ -159,15 +210,19 @@ const ComicEditScreen = () => {
       </select>
       <div className="flex justify-center relative">
         <div className="h-[1650px] w-[1275px] border-2">
+        {chapter.page_images !== undefined ? 
           <div className="relative">
             {
-              chapter.page_images !== undefined && chapter.page_images[currentPage-1] !== "Unsaved URL"
+              chapter.page_images[currentPage-1] === undefined  || chapter.page_images[currentPage-1] === "Unsaved URL" 
               ?
-              <img src={chapter.page_images[currentPage-1]} />
-              :
               <div></div>
+              :
+              <img src={chapter.page_images[currentPage-1]} alt="Background image" />
             }
           </div>
+          :
+          <div className="relative"></div>
+          }
           <div class="absolute top-0">
           <Stage
             height={1650}
@@ -180,13 +235,12 @@ const ComicEditScreen = () => {
             
             <Layer ref = {layerRef}>
               {chapter.page_images !== undefined  && chapter.page_images[currentPage-1] !== "Unsaved URL"  ? <URLImage url={chapter.page_images[currentPage-1]}/>  : null}
-            {/* <img src="https://res.cloudinary.com/dnfazdhwm/image/upload/v1650425530/ewsdnix5uo5jipsivtsr.png"/> */}
             <Html
                 divProps={{
                   style: {
                     position: 'inline',
-                    top: 10,
-                    left: 10,
+                    top: 0,
+                    left: 0,
                     zIndex: 1
                   },
                 }}
