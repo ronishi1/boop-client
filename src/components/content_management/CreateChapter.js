@@ -21,6 +21,7 @@ const CreateChapter = ({toggleCreateChapterCallback,contentID,series_title}) => 
         setError({status:false,message:''});
         setTitle("");
       },3000)
+      return;
     }
     let result = await CreateChapter({variables: {contentID: contentID, chapterTitle: title, seriesTitle: series_title}});
     navigate(`/comic-edit/${result.data.createChapter}`);
