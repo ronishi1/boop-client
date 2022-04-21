@@ -3,6 +3,7 @@ import WorkCard from './WorkCard';
 import WorkListEntry from './WorkListEntry';
 import CreateContent from './CreateContent';
 import Unauthorized from '../unauthorized/Unauthorized';
+import Loading from '../loading/Loading';
 import { GET_MY_CONTENT } from '../../cache/queries';
 import { DELETE_CONTENT } from '../../cache/mutations';
 
@@ -37,6 +38,9 @@ const CreatorStudioScreen = ({user}) => {
     await DeleteContent({variables:{contentID:toDelete}});
     refetch();
     setShowDelete(false);
+  }
+  if(loading){
+    return <Loading />
   }
   if(user){
     return contents ? (
@@ -185,7 +189,7 @@ const CreatorStudioScreen = ({user}) => {
       <div className="container mx-auto">
         <Unauthorized message="You must be logged in to view this page." />
       </div>
-      )
+    )
   }
 };
 

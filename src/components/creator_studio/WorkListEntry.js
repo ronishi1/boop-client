@@ -13,9 +13,9 @@ const WorkListEntry = ({contentID,seriesTitle,contentType,published,deleteConten
   }
 
   return (
-    <div className="flex flex-row items-center justify-between p-2 mr-5 border-base-content-10 border-b-2 hover:cursor-default hover:bg-zinc-200">
+    <div className="flex flex-row items-center text-zinc-500 justify-between p-2 mr-5 border-base-content-10 border-b-2 hover:cursor-default hover:bg-zinc-200">
       <Link to={`/content-management/${contentID}`}>
-        <div className="text-sm mr-1 truncate hover:cursor-pointer hover:opacity-70">
+        <div className="text-sm mr-1 truncate hover:cursor-pointer hover:text-zinc-700">
           {seriesTitle}
         </div>
       </Link>

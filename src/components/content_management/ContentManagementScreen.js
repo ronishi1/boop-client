@@ -11,6 +11,8 @@ import { uploadFile } from '../../utils/utils.js'
 import { UPDATE_COVER_IMAGE, EDIT_CONTENT, DELETE_CONTENT, PUBLISH_CONTENT, DELETE_CHAPTER} from '../../cache/mutations';
 import { Transition } from '@headlessui/react'
 import { useNavigate } from 'react-router-dom';
+import Loading from '../loading/Loading';
+
 const ContentManagementScreen = ({user}) => {
   let { id } = useParams();
   let navigate = useNavigate();
@@ -518,9 +520,7 @@ const ContentManagementScreen = ({user}) => {
     }
     else {
       return (
-        <div>
-          Loading...
-        </div>
+        <Loading />
       )
     }
   }
