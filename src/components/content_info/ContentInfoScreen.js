@@ -36,8 +36,8 @@ const ContentInfoScreen = ({auth}) => {
   }
 
   let content = data.getContentInfo;
-  if(!content) {
-    return <div>could not find content</div>
+  if(!content || (new Date(content.publication_date).getTime() == (new Date(0)).getTime())) {
+    return <div className="flex place-content-center">Could not find content</div>
   }
 
   let contentColor = "";
