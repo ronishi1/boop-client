@@ -118,7 +118,6 @@ const ContentManagementScreen = ({user}) => {
       setSubmitted(false);
     },3000)
   }
-  console.log(user._id)
   const genres = ["Action", "Adventure", "Comedy", "Drama", "Fantasy", "Horror", "Mecha", "Music", "Mystery", "Psychological", "Romance", "SciFi", "Sports", "Supernatural", "Thriller"];
   if(user && Object.keys(content).length !== 0){
     if(user._id == content.author){
