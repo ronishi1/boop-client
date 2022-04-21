@@ -161,7 +161,7 @@ const App = () => {
       </div>
       {showSidebar ?
         <SideBar
-          auth={auth}
+          user={user}
           showSidebar={showSidebar}
           hideSidebarCallback={hideSidebarCallback}/>
          : <></>}
@@ -179,8 +179,8 @@ const App = () => {
         <Route path="/topic" element={<ForumTopicScreen />} />
         <Route path="/landing" element={<LandingScreen />} />
         <Route path="/profile/:username" element={<ProfileScreen user={user} fetchUser={refetch}/>} />
-        <Route path="/favorites" element={<FavoritesScreen />} />
-        <Route path="/read-list" element={<ReadListScreen />} />
+        <Route path="/favorites/:username" element={<FavoritesScreen />} />
+        <Route path="/read-list/:username" element={<ReadListScreen />} />
         <Route path="/update-account" element={<UpdateAccountScreen fetchUser={refetch} user={user}/>} />
         <Route path="/content-management/:id" element={<ContentManagementScreen user={user}/>} />
         <Route path="/reset/:reset_string" element={<ResetPasswordScreen />} />

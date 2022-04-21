@@ -8,7 +8,7 @@ const HomeReadList = ({user}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=276%3A760
   const { data, loading, refetch } = useQuery(GET_READ_LIST, {
     variables: {
-      userID: user._id
+      username: user.username
     }
   });
 

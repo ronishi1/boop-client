@@ -213,14 +213,29 @@ export const GET_USER_CONTENT_INFO = gql`
 `;
 
 export const GET_READ_LIST = gql`
-	query GetReadList($userID: ID) {
-		getReadList(userID: $userID) {
+	query GetReadList($username: String) {
+		getReadList(username: $username) {
 			_id
 			series_title
 			num_chapters
 			current_rating
 			publication_date
 			cover_image
+			content_type
+		}
+	}
+`;
+
+export const GET_FAVORITES = gql`
+	query GetFavorites($username: String) {
+		getFavorites(username: $username) {
+			_id
+			series_title
+			num_chapters
+			current_rating
+			publication_date
+			cover_image
+			content_type
 		}
 	}
 `;
