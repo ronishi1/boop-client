@@ -112,6 +112,7 @@ const ContentManagementScreen = ({user}) => {
       setSubmitted(false);
     },3000)
   }
+  console.log(user._id)
   const genres = ["Action", "Adventure", "Comedy", "Drama", "Fantasy", "Horror", "Mecha", "Music", "Mystery", "Psychological", "Romance", "SciFi", "Sports", "Supernatural", "Thriller"];
   if(user && Object.keys(content).length !== 0){
     if(user._id == content.author){
@@ -135,7 +136,7 @@ const ContentManagementScreen = ({user}) => {
           <label for="create-chapter-modal" className="modal cursor-pointer">
               <label class="modal-box w-4/12 max-w-5xl">
                 <CreateChapter
-                  toggleCreateChapterCallback={setShowCreateChapter} contentID={content._id} series_title={content.series_title}/>
+                  toggleCreateChapterCallback={setShowCreateChapter} contentID={content._id} series_title={content.series_title} authorID={content.author}/>
               </label>
             </label>
           </div>

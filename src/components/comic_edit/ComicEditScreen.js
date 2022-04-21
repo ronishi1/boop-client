@@ -125,16 +125,24 @@ const ComicEditScreen = () => {
     fetchData()
   }
   const handleDeletePage = async () => {
-    console.log("handling deleting page")
     await DeletePage({variables: {chapterID: chapter._id, pageNumber: currentPage}})
     if (currentPage > 1) {
       setPage(currentPage - 1)
     }
+    console.log(pageDropdown)
     let deletedPage = pageDropdown
     deletedPage.pop()
-    setDropdown(deletedPage)
+    if(deletedPage.length === 0) {
+      await AddPage({variables: {chapterID: chapter._id}})
+      deletedPage.push(1)
+      await fetchData()
+    } 
+    else {
+      console.log(deletedPage.length)
+      setDropdown(deletedPage)
+      await fetchData()
+    }
     setLines([])
-    fetchData()
   }
   const handleSelectPage = (pageNum) => {
     setLines([])
