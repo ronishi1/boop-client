@@ -15,9 +15,6 @@ const BrowseRecent = () => {
   },[])
 
   let contents = [];
-  if(loading){
-    return <Loading />
-  }
   if(data){
     contents = data.getRecentContent;
   }

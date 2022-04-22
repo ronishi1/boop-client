@@ -14,9 +14,6 @@ const BrowsePopular = () => {
   },[])
 
   let contents = [];
-  if(loading){
-    return <Loading />
-  }
   if(data){
     contents = data.getPopularContent;
   }

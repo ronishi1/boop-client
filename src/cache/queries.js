@@ -258,3 +258,17 @@ export const GET_FAVORITES = gql`
 		}
 	}
 `;
+
+export const GET_FILTERED_CONTENT = gql`
+	query GetFilteredContent($genres: [String], $releaseYears:[Int], $rating: Int, $contentTypes:[String]){
+		getFilteredContent(genres:$genres, releaseYears: $releaseYears, rating: $rating, contentTypes: $contentTypes){
+			_id
+			series_title
+			num_chapters
+			current_rating
+			publication_date
+			cover_image
+			content_type
+		}
+	}
+`

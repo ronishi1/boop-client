@@ -1,5 +1,6 @@
 import React 	from 'react';
 import { useNavigate } from "react-router-dom";
+import { Transition } from '@headlessui/react'
 
 const DetailedContentCard = ({id,title,cover,genres,synopsis,type}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=211%3A556
@@ -28,6 +29,16 @@ const DetailedContentCard = ({id,title,cover,genres,synopsis,type}) => {
   // }
 
   return (
+    <Transition
+      appear={true}
+      show={true}
+      enter="transition-opacity duration-500"
+      enterFrom="opacity-0"
+      enterTo="opacity-100"
+      leave="transition-opacity duration-0"
+      leaveFrom="hidden"
+      leaveTo="hidden"
+    >
     <div className="flex flex-row hover:cursor-pointer w-[34rem]" onClick={handleClick}>
       <img className="object-cover w-40 h-60 rounded" src={cover}/>
       <div className="ml-2 min-h-60 max-h-60 min-w-96 max-w-96">
@@ -45,6 +56,7 @@ const DetailedContentCard = ({id,title,cover,genres,synopsis,type}) => {
         </div>
       </div>
     </div>
+  </Transition>
         );
 }
 
