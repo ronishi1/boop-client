@@ -84,6 +84,9 @@ const ComicEditScreen = ({tps}) => {
   },[]);
 
   const handleClick = (e) => {
+    if(tool === 'dropper'){
+      setColor(e.target.attrs.stroke);
+    }
     // create circle of stroke width at coordinates if using pen/eraser
     // allow for selection of text objects for scaling if using text
   }
@@ -278,7 +281,7 @@ const ComicEditScreen = ({tps}) => {
               onMouseDown={handleMouseDown}
               onMousemove={handleMouseMove}
               onMouseup={handleMouseUp}
-              onClick={handleClick}
+              onClick={(e) => handleClick(e)}
               ref = {stageRef}
             > 
               <Layer 
@@ -318,7 +321,6 @@ const ComicEditScreen = ({tps}) => {
                     y={text.points[1]}
                     fontSize={text.fontSize}
                     fill={text.fill}
-                    onClick={handleClick}
                     onDblClick={() => handleDoubleClick(i)}
                     draggable={tool==="text"}
                     onDragEnd={(e) => handleDragEnd(i,e)}
