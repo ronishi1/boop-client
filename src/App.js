@@ -169,7 +169,7 @@ const App = () => {
         <Route path="/" element={<HomeScreen auth={auth} user={user}/>} />
         <Route path="/browse" element={<BrowseScreen />} />
         <Route path="/info/:id" element={<ContentInfoScreen auth={auth}/>} />
-        <Route path="/view" element={<ContentViewScreen />} />
+        <Route path="/view/:id" element={<ContentViewScreen />} />
         <Route path="/studio" element={<CreatorStudioScreen user={user}/>} />
         <Route path="/forum-create" element={<ForumCreateScreen />} />
         <Route path="/forum-edit" element={<ForumEditScreen />} />

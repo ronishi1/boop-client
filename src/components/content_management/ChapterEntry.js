@@ -16,7 +16,9 @@ const ChapterEntry = ({chapterID,contentType,deleteChapterCallback}) => {
   }
 
   let link;
-  if(chapter.publication_date){
+  let publicationDate = new Date(chapter.publication_date)
+  let unix = new Date(null)
+  if(publicationDate.getTime() !== unix.getTime()){
     link = "/view/" + chapterID
   }
   else {
@@ -27,7 +29,6 @@ const ChapterEntry = ({chapterID,contentType,deleteChapterCallback}) => {
       link = "/story-edit/" + chapterID
     }
   }
-
   return Object.keys(chapter).length !== 0 ? (
     <div className="flex flex-row justify-between items-center border-b-2 border-base-content/10 hover:cursor-default hover:bg-zinc-200">
       <Link to={link}>
@@ -36,10 +37,10 @@ const ChapterEntry = ({chapterID,contentType,deleteChapterCallback}) => {
         </div>
       </Link>
       <div className="flex flex-row items-center space-x-1 mb-1">
-        {chapter.publication_date ?
+        {publicationDate.getTime() !== unix.getTime() ?
           <div className="flex flex-row space-x-2 items-center">
-            <p className="text-right pr-4">{chapter.publication_date.getMonth()+"/"
-              +chapter.publication_date.getDay()+"/"+chapter.publication_date.getFullYear()}</p>
+            <p className="text-right pr-4">{publicationDate.getMonth()+"/"
+              +publicationDate.getDay()+"/"+publicationDate.getFullYear()}</p>
             <div className="badge text-xs border-none bg-forum">Published</div>
           </div>
           :

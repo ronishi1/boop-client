@@ -3,9 +3,9 @@ import {Link} from 'react-router-dom'
 const ChapterTableEntry = ({chapter}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=311%3A3160
   let date = new Date(chapter.publication_date);
-
+  console.log(chapter)
   return (
-    <Link to="/view">
+    <Link to={`/view/${chapter._id}`} >
       <div className={"flex flex-row hover:cursor-pointer hover:bg-gray-400/25"}>
         <p>{chapter.chapter_title}</p>
         <p className="text-right pr-4">{date.getMonth()+"/"

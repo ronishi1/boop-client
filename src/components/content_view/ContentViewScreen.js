@@ -1,28 +1,52 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import { useParams, Link} from 'react-router-dom';
+import { GET_CHAPTER_VIEW } from '../../cache/queries';
+import { useNavigate } from 'react-router-dom';
+import { useLazyQuery } from '@apollo/client';
 
 const ContentViewScreen = () => {
+  let navigate = useNavigate();
+
+  const { id } = useParams();
+  // const { loading, error, data, refetch } = useQuery(GET_CHAPTER_VIEW, {
+  //   variables: { chapterID:id },
+  // });
+  const [GetChapterView, { loading, error, data, refetch }] = useLazyQuery(GET_CHAPTER_VIEW);
+  const [chapter, setChapter] = useState({})
+  const [chapterTitles, setChapterTitles] = useState([])
+  const [chapterIds, setChapterIds] = useState([])
+  const [currentChapter, setCurrentChapter] = useState("")
+  async function fetchData() {
+    let result = await GetChapterView({variables: {chapterID:id}});
+    
+    setChapter(result.data.getChapterView.chapter);
+    setChapterTitles(result.data.getChapterView.chapter_titles)
+    setChapterIds(result.data.getChapterView.chapter_ids)
+    setCurrentChapter(result.data.getChapterView.chapter.chapter_title)
+    // console.log(pageBackground)
+  }
+
+  useEffect(() => {
+    fetchData();
+  },[]);
+  // const { loading, error, data, refetch } = useQuery(GET_CHAPTER_VIEW, {variables:{chapterID: id}});
   // Conditionally render ComicViewScreen or StoryViewScreen depending on what the content pulled was
   const [seriesTitle, setSeriesTitle] = useState("One Punch Man")
   const [chapterTitle, setChapterTitle] = useState("The Return of the S Tier Hero")
-  const [chapter, setChapter] = useState("1")
-  const [page, setPage] = useState("19")
+  const [currentPage, setPage] = useState(1)
   const [contentType, setContent] = useState("S")
-
-  const changeContent = () => {
-    if (contentType == "S") {
-      setContent("C")
-    } 
-    else {
-      setContent("S")
-    }
+  // console.log(chapter)
+  // console.log(chapterTitles)
+  // console.log(chapterIds)
+  const handleChapter = (objectId, chapterTitle) => {
+    // console.log(objectId);
+    navigate(`/view/${objectId}`);
+    // fetchData();
   }
-
+  console.log(chapter)
   return (
     <div>
-    <div className="btn ml-10 cursor-pointer" onClick={changeContent}>
-      Change Content Type (For Display Purposes)
-    </div>
-      {contentType=="S"? 
+      {chapter.content_type === "S"? 
         <div>
         <div className="flex flex-row justify-between">
           <div className="ml-4">
@@ -30,7 +54,7 @@ const ContentViewScreen = () => {
           </div>
           
           <div className="dropdown mr-4">
-            <label tabindex="0" class="select select-bordered h-8 min-h-0 w-100">Chapter {chapter}: {chapterTitle}</label>
+            <label tabindex="0" class="select select-bordered h-8 min-h-0 w-100">Chapter: {chapter.chapter_title}</label>
             <ul tabindex="0" class="dropdown-content absolute z-10 mt-2 border-solid border-2 menu bg-base-100 w-52 rounded-box overflow-hidden max-h-80">
               
             </ul>
@@ -66,18 +90,29 @@ const ContentViewScreen = () => {
       <div>
         <div className="flex flex-row justify-between">
           <div className="ml-4">
-            Series Title: <strong>{seriesTitle}</strong>
+            Series Title: <strong>{chapter.series_title}</strong>
           </div>
           
             <div className="dropdown">
-              <label tabindex="0" class="select select-bordered h-8 min-h-0 w-100">Chapter {chapter}: {chapterTitle}</label>
+              <label tabindex="0" class="select select-bordered h-8 min-h-0 w-100">Chapter : {currentChapter}</label>
               <ul tabindex="0" class="dropdown-content absolute z-10 mt-2 border-solid border-2 menu bg-base-100 w-52 rounded-box overflow-hidden max-h-80">
-                
+                {chapterTitles.map((chapterTitle, i) => {
+                  return (
+                    <li key={i}>
+                      <a
+                        // onClick={() => handleChapter(chapterIds[i], chapterTitle)}
+                        className="text-sm py-1.5 h-8 hover:bg-gray-400/25"
+                      >
+                          {chapterTitle}
+                      </a>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
 
             <div className="dropdown mr-4">
-              <label tabindex="0" class="select select-bordered h-8 min-h-0 w-100">Page {page}</label>
+              <label tabindex="0" class="select select-bordered h-8 min-h-0 w-100">Page {currentPage}</label>
               <ul tabindex="0" class="dropdown-content absolute z-10 mt-2 border-solid border-2 menu bg-base-100 w-24 rounded-box overflow-hidden max-h-80">
           
               </ul>

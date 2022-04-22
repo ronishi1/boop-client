@@ -172,6 +172,7 @@ export const GET_CONTENT_CHAPTER = gql`
 			chapter_title
 			num_pages
 			page_images
+			publication_date
 		}
 	}
 `;
@@ -185,6 +186,24 @@ export const GET_CHAPTERS = gql`
 		}
 	}
 `;
+
+export const GET_CHAPTER_VIEW = gql`
+	query GetChapterView($chapterID: ID) {
+		getChapterView(chapterID: $chapterID) {
+			chapter {
+				_id
+				series_id
+				series_title
+				chapter_title
+				num_pages
+				page_images
+				publication_date
+			}
+			chapter_titles
+			chapter_ids
+		}
+	}
+`
 
 export const GET_POST_BASIC = gql`
 	query GetPost($postId: ID) {

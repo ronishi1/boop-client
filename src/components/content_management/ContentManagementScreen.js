@@ -141,7 +141,7 @@ const ContentManagementScreen = ({user}) => {
           <label for="create-chapter-modal" className="modal cursor-pointer">
               <label class="modal-box w-4/12 max-w-5xl">
                 <CreateChapter
-                  toggleCreateChapterCallback={setShowCreateChapter} contentID={content._id} series_title={content.series_title} authorID={content.author}/>
+                  toggleCreateChapterCallback={setShowCreateChapter} contentID={content._id} series_title={content.series_title} authorID={content.author} content_type={content.content_type}/>
               </label>
             </label>
           </div>

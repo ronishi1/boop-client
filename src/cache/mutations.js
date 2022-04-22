@@ -112,8 +112,8 @@ export const PUBLISH_CONTENT = gql`
 `
 
 export const CREATE_CHAPTER = gql`
-	mutation CreateChapter($contentID: ID, $chapterTitle: String, $seriesTitle: String, $authorID: ID) {
-		createChapter(contentID: $contentID, chapterTitle: $chapterTitle, seriesTitle: $seriesTitle, authorID: $authorID)
+	mutation CreateChapter($contentID: ID, $chapterTitle: String, $seriesTitle: String, $authorID: ID, $contentType: String) {
+		createChapter(contentID: $contentID, chapterTitle: $chapterTitle, seriesTitle: $seriesTitle, authorID: $authorID, contentType: $contentType)
 	}
 `
 
