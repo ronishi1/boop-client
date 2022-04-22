@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const ComicTopToolbar = ({currentPage, pages, handleUndo, handleRedo, handleSelectPage, handleSave, handleAddPage, handleDeletePage}) => {
+const ComicTopToolbar = ({currentPage, pages, handleUndo, handleRedo, tps, handleSelectPage, handleSave, handleAddPage, handleDeletePage}) => {
   
   return (
     <div className='p-4' style={{boxShadow: "0 1px 0 0 rgb(0 0 0 / 0.1)"}}>
@@ -34,8 +34,8 @@ const ComicTopToolbar = ({currentPage, pages, handleUndo, handleRedo, handleSele
             </ul>
           </div>
           <div className="btn cursor-pointer" onClick={handleAddPage}>Add Page</div>
-          <div className="btn cursor-pointer" onClick={handleUndo}>Undo</div>
-          <div className="btn cursor-pointer" onClick={handleRedo}>Redo</div>
+          <div className={"btn cursor-pointer "} onClick={handleUndo}>Undo</div>
+          <div className={"btn cursor-pointer "} onClick={handleRedo}>Redo</div>
         </div>
         
         <div className='space-x-4'>

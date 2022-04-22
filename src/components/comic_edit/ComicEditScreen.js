@@ -5,7 +5,7 @@ import { Stage, Layer, Line, Text, Image} from 'react-konva';
 import { Html } from 'react-konva-utils';
 import IroColorPicker from "./IroColorPicker"
 import useImage from 'use-image'
-import { b64toBlob } from '../../utils/utils.js'
+import { b64toBlob, comicEditTransaction } from '../../utils/utils.js'
 
 import { GET_CONTENT_CHAPTER } from '../../cache/queries';
 import { ADD_PAGE, SAVE_PAGE, DELETE_PAGE, PUBLISH_CHAPTER } from '../../cache/mutations'
@@ -15,9 +15,10 @@ import ComicLeftToolbar from './ComicLeftToolbar';
 import ComicRightToolbar from './ComicRightToolbar';
 
 import { useNavigate } from "react-router-dom";
+import { cloneDeep } from '@apollo/client/utilities';
 
 
-const ComicEditScreen = () => {
+const ComicEditScreen = ({tps}) => {
   let { id } = useParams();
   let navigate = useNavigate();
 
@@ -36,17 +37,14 @@ const ComicEditScreen = () => {
   const [PublishChapter] = useMutation(PUBLISH_CHAPTER);
 
   // attempt to set up undo/redo
-  const [pointer, setPointer] = useState(0);
-
   const handleUndo = () => {
-    if(pointer > 0) setPointer(pointer-1);
+    tps.undoTransaction();
   }
 
   const handleRedo = () => {
-    if(pointer < lines.length) setPointer(pointer+1);
+    tps.redoTransaction();
   }
   // attempt to set up undo/redo
-
    
   const [tool, setTool] = useState('pen');
   const [lines, setLines] = useState([]);
@@ -61,6 +59,10 @@ const ComicEditScreen = () => {
   const stageRef = useRef(null);
   const layerRef = useRef(null);
   const backgroundRef = useRef(null);
+
+  useEffect(() => {
+    tps.clearStack();
+  },[]);
 
   async function fetchData() {
     let result = await GetContentChapter({variables: {chapterID:id}});
@@ -82,7 +84,8 @@ const ComicEditScreen = () => {
   },[]);
 
   const handleClick = (e) => {
-    // allow for selection of text objects for scaling
+    // create circle of stroke width at coordinates if using pen/eraser
+    // allow for selection of text objects for scaling if using text
   }
 
   const handleDoubleClick = (i) => {
@@ -93,24 +96,33 @@ const ComicEditScreen = () => {
     }
   }
 
-  const handleDragEnd = (e) => {
-    if(tool === 'text'){}
+  const handleDragEnd = (index,e) => {
+    if(tool === 'text'){
+      const pos = [
+        e.target.x(),
+        e.target.y()
+      ];
+      let prev = cloneDeep(text)
+      let newText = [...text];
+      newText[index].points = pos;
+      setText(newText);
+      tps.addTransaction(new comicEditTransaction('transform', prev, newText, setText));
+    }
+  }
+
+  const handleAddText = (newText) => {
+    let prev = [...text];
+    let next = [...text,newText];
+    setText([...text,newText]);
+    tps.addTransaction(new comicEditTransaction(tool,prev,next,setText));
   }
   
   const handleMouseDown = (e) => {
     if(tool == 'eraser' || tool == 'pen'){
-      setPointer(pointer+1);
       isDrawing.current = true;
       const pos = e.target.getStage().getPointerPosition();
-      if(pointer < lines.length){ 
-        let newLines = lines.slice(0,pointer);
-        newLines.push({ tool, points: [pos.x, pos.y], stroke: color, strokeWidth: stroke.width, opacity: stroke.opacity })
-        setLines(newLines)
-      }
-      else
       setLines([...lines, { tool, points: [pos.x, pos.y], stroke: color, strokeWidth: stroke.width, opacity: stroke.opacity }]);
     }
-    
     // console.log(lines);
   };
 
@@ -131,7 +143,13 @@ const ComicEditScreen = () => {
   };
 
   const handleMouseUp = () => {
-    isDrawing.current = false;
+    if(tool === 'pen' || tool === 'eraser'){
+      isDrawing.current = false;
+      let prev = [...lines];
+      prev.pop();
+      let next = [...lines]
+      tps.addTransaction(new comicEditTransaction(tool, prev, next, setLines));
+    }
   };
 
   const handleSave = async () => {
@@ -234,7 +252,7 @@ const ComicEditScreen = () => {
         </div>
         
       </div>
-      <ComicTopToolbar currentPage={currentPage} pages={pageDropdown} handleUndo={handleUndo} handleRedo={handleRedo}
+      <ComicTopToolbar currentPage={currentPage} pages={pageDropdown} handleUndo={handleUndo} handleRedo={handleRedo} tps={tps}
         handleSelectPage={handleSelectPage} handleSave={handleSave} handleAddPage={handleAddPage} handleDeletePage={handleDeletePage}/>
       <div className='flex flex-row justify-between'>
         <ComicLeftToolbar tool={tool} setTool={setTool}/>
@@ -279,7 +297,7 @@ const ComicEditScreen = () => {
                 >
 
                 </Html>
-                {lines.slice(0,pointer).map((line, i) => (
+                {lines.map((line, i) => (
                   <Line
                     key={i}
                     points={line.points}
@@ -302,8 +320,8 @@ const ComicEditScreen = () => {
                     fill={color}
                     onClick={handleClick}
                     onDblClick={() => handleDoubleClick(i)}
-                    draggable
-                    onDragEnd={(e) => handleDragEnd(i,e.target)}
+                    draggable={tool==="text"}
+                    onDragEnd={(e) => handleDragEnd(i,e)}
                   />
                 ))
                 : <></>}
@@ -312,7 +330,7 @@ const ComicEditScreen = () => {
             </div>
           </div>
         </div>
-        <ComicRightToolbar tool={tool} stroke={stroke} text={text} setText={setText} setStroke={setStroke} color={color} setColor={setColor}/>
+        <ComicRightToolbar tool={tool} stroke={stroke} text={text} setText={setText} setStroke={setStroke} color={color} setColor={setColor} handleAddText={handleAddText}/>
       </div>
     </div>
 

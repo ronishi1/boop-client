@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import IroColorPicker from './IroColorPicker';
 
-const ComicRightToolbar = ({tool, stroke, setStroke, color, setColor, text, setText}) => {
+const ComicRightToolbar = ({tool, stroke, setStroke, color, setColor, text, setText, handleAddText}) => {
   const [textInput, setTextInput] = useState("Type here");
   const [fontSize, setFontSize] = useState(12);
   
@@ -10,7 +10,7 @@ const ComicRightToolbar = ({tool, stroke, setStroke, color, setColor, text, setT
   }
 
   const handleCreateText = () => {
-    setText([...text,{text:textInput, points:[0,0], fill:color, fontSize:fontSize}])
+    handleAddText({text:textInput, points:[0,0], fill:color, fontSize:fontSize})
   }
 
   return (

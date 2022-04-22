@@ -45,6 +45,7 @@ import BoardEditModal from "./components/storyboardModals/BoardEditModal";
 
 import { useMutation, useQuery } 		from '@apollo/client';
 import { GET_CURRENT_USER } 				from './cache/queries';
+import { scuffedjsTPS } from "./utils/utils";
 
 const App = () => {
   let user = null;
@@ -56,6 +57,7 @@ const App = () => {
     if(getCurrentUser !== null) { user = getCurrentUser; }
   }
   const auth = user === null ? false : true;
+  let tps = new scuffedjsTPS();
 
   // Might be replacing this into a constant variable later when we incorporate the get_current_user query
   // const [auth,setAuth] = useState(false);
@@ -192,7 +194,7 @@ const App = () => {
         <Route path="/dev" element={<Dev />} />
 
         <Route path="/story-edit/:id" element={<StoryEditScreen />} />
-        <Route path="/comic-edit/:id" element={<ComicEditScreen />} />
+        <Route path="/comic-edit/:id" element={<ComicEditScreen tps={tps}/>} />
 
         <Route
           path="/deletestory"
