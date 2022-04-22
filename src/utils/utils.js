@@ -62,8 +62,8 @@ export class scuffedjsTPS {
         }
         // set maximum number of undoable actions
         if(this.transactions.length >= this.MAX_UNDO){
-            console.log("clip")
-            this.transactions = this.transactions.slice(-1);
+            // console.log("cut transactions")
+            this.transactions = this.transactions.slice(-(this.MAX_UNDO-1));
             this.ptr = this.MAX_UNDO-2;
         }
         this.transactions.push(transaction);
