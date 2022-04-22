@@ -5,7 +5,7 @@ const ComicLeftToolbar = ({tool, setTool}) => {
     <div className='p-4 space-y-2 grid grid-cols-1 auto-rows-max' style={{boxShadow: "1px 1px 0 0 rgb(0 0 0 / 0.1)"}}>
       <div 
         className={'tooltip tooltip-right p-2 hover:cursor-pointer hover:bg-gray-200 rounded '+(tool=="pen" ? "bg-gray-300" : "")}
-        data-tip="Pen"
+        data-tip="Pen (p)"
         onClick={() => setTool("pen")}
       >
         <svg 
@@ -22,7 +22,7 @@ const ComicLeftToolbar = ({tool, setTool}) => {
 
       <div 
         className={'tooltip tooltip-right p-2 hover:cursor-pointer hover:bg-gray-200 rounded '+(tool=="eraser" ? "bg-gray-300" : "")}
-        data-tip="Eraser"
+        data-tip="Eraser (e)"
         onClick={() => setTool("eraser")}
       >
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -32,14 +32,14 @@ const ComicLeftToolbar = ({tool, setTool}) => {
 
       <div 
         className={'tooltip tooltip-right p-2 text-center hover:cursor-pointer hover:bg-gray-200 rounded '+(tool=="text" ? "bg-gray-300" : "")}
-        data-tip="Text"
+        data-tip="Text (t)"
         onClick={() => setTool("text")}
       >
         T
       </div>
       <div 
         className={'tooltip tooltip-right p-2 hover:cursor-pointer hover:bg-gray-200 rounded '+(tool=="dropper" ? "bg-gray-300" : "")}
-        data-tip="Eyedropper"
+        data-tip="Eyedropper (d)"
         onClick={() => setTool("dropper")}
       >
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

@@ -37,6 +37,35 @@ const ComicEditScreen = ({tps}) => {
   const [PublishChapter] = useMutation(PUBLISH_CHAPTER);
 
   // attempt to set up undo/redo
+  useEffect(() => {
+		const keyboardShortcut = (e) => {
+			if(e.ctrlKey && e.key==='z'){
+          handleUndo();
+      }
+			if(e.ctrlKey && e.key==='y'){
+				handleRedo();
+			}
+      switch(e.key) {
+        case "p":
+          setTool("pen");
+          break;
+        case "e":
+          setTool("eraser")
+          break;
+        case "t":
+          setTool("text")
+          break;
+        case "d":
+          setTool("dropper")
+          break;
+        default:
+      }
+		}
+
+		window.addEventListener("keydown", keyboardShortcut);
+		return () => window.removeEventListener("keydown", keyboardShortcut);
+	});
+
   const handleUndo = () => {
     tps.undoTransaction();
   }
