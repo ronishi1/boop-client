@@ -22,16 +22,23 @@ const DetailedContentCard = ({id,title,cover,genres,synopsis,type}) => {
     navigate("/info/"+id)
   }
 
+  // let shownGenres = genres;
+  // if(shownGenres.length > 2){
+  //   shownGenres = shownGenres.slice(0,2);
+  // }
+
   return (
-    <div className="flex flex-row hover:cursor-pointer" onClick={handleClick}>
+    <div className="flex flex-row hover:cursor-pointer w-[34rem]" onClick={handleClick}>
       <img className="object-cover w-40 h-60 rounded" src={cover}/>
       <div className="ml-2 min-h-60 max-h-60 min-w-96 max-w-96">
         <div className={"text-lg font-medium"}>{title}</div>
         <div className="-mt-1.5">
           {contentBadge}
-          {genres.map((genre) => (
-            <div className={"badge text-xs border-none mr-1 bg-"+contentColor}>{genre}</div>
-          ))}
+          {genres.map((genre,index) => {
+            if(index < 2){
+              return <div className={"badge text-xs border-none mr-1 bg-"+contentColor}>{genre}</div>
+            }
+          })}
         </div>
         <div className="text-sm line-clamp-9">
           {synopsis}

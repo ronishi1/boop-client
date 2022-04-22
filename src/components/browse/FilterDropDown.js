@@ -37,18 +37,48 @@ const FilterDropDown = ({title,options,selectCallback,deselectCallback,selected}
         <ul tabindex="0" class="dropdown-content absolute z-10 mt-2 border-solid border-2 menu bg-base-100 w-52 rounded-box overflow-scroll max-h-80">
           {options.map((option) => {
             if(selected.includes(option)){
-              return(
-                <li>
-                  <a className="flex justify-between py-1.5 h-8 text-sm hover:bg-gray-400/25" onClick={() => {deselectOption(option)}}>
-                    <div>{option}</div>
-                    <div>
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 stroke-white fill-comic stroke-[.15px]" viewBox="0 0 20 20" >
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                      </svg>
-                    </div>
-                  </a>
-                </li>
-              )
+              if(option == "Comic"){
+                return(
+                  <li>
+                    <a className="flex justify-between py-1.5 h-8 text-sm hover:bg-gray-400/25" onClick={() => {deselectOption(option)}}>
+                      <div>{option}</div>
+                      <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 stroke-white fill-comic stroke-[.15px]" viewBox="0 0 20 20" >
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                    </a>
+                  </li>
+                )
+              }
+              if(option == "Story"){
+                return(
+                  <li>
+                    <a className="flex justify-between py-1.5 h-8 text-sm hover:bg-gray-400/25" onClick={() => {deselectOption(option)}}>
+                      <div>{option}</div>
+                      <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 stroke-white fill-story stroke-[.15px]" viewBox="0 0 20 20" >
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                    </a>
+                  </li>
+                )
+              }
+              else {
+                return(
+                  <li>
+                    <a className="flex justify-between py-1.5 h-8 text-sm hover:bg-gray-400/25" onClick={() => {deselectOption(option)}}>
+                      <div>{option}</div>
+                      <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 stroke-white fill-forum stroke-[.15px]" viewBox="0 0 20 20" >
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                    </a>
+                  </li>
+                )
+              }
             }
             else {
               return <li><a className="text-sm py-1.5 h-8 hover:bg-gray-400/25" onClick={() => {selectOption(option)}}>{option}</a></li>
