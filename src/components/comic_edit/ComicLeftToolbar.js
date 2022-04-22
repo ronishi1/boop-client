@@ -1,11 +1,11 @@
 import React from 'react';
 
-const ComicLeftToolbar = ({tool, setTool}) => {
-  
+const ComicLeftToolbar = ({tool, setTool}) => {  
   return (
-    <div className='p-4 space-y-2 justify-center content-start' style={{boxShadow: "1px 1px 0 0 rgb(0 0 0 / 0.1)"}}>
+    <div className='p-4 space-y-2 grid grid-cols-1 auto-rows-max' style={{boxShadow: "1px 1px 0 0 rgb(0 0 0 / 0.1)"}}>
       <div 
-        className={'p-2 hover:cursor-pointer hover:bg-gray-200 rounded '+(tool=="pen" ? "bg-gray-300" : "")}
+        className={'tooltip tooltip-right p-2 hover:cursor-pointer hover:bg-gray-200 rounded '+(tool=="pen" ? "bg-gray-300" : "")}
+        data-tip="Pen (p)"
         onClick={() => setTool("pen")}
       >
         <svg 
@@ -21,7 +21,8 @@ const ComicLeftToolbar = ({tool, setTool}) => {
       </div>
 
       <div 
-        className={'p-2 hover:cursor-pointer hover:bg-gray-200 rounded '+(tool=="eraser" ? "bg-gray-300" : "")}
+        className={'tooltip tooltip-right p-2 hover:cursor-pointer hover:bg-gray-200 rounded '+(tool=="eraser" ? "bg-gray-300" : "")}
+        data-tip="Eraser (e)"
         onClick={() => setTool("eraser")}
       >
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -30,10 +31,21 @@ const ComicLeftToolbar = ({tool, setTool}) => {
       </div>
 
       <div 
-        className={'p-2 text-center hover:cursor-pointer hover:bg-gray-200 rounded '+(tool=="text" ? "bg-gray-300" : "")}
+        className={'tooltip tooltip-right p-2 text-center hover:cursor-pointer hover:bg-gray-200 rounded '+(tool=="text" ? "bg-gray-300" : "")}
+        data-tip="Text (t)"
         onClick={() => setTool("text")}
       >
         T
+      </div>
+      <div 
+        className={'tooltip tooltip-right p-2 hover:cursor-pointer hover:bg-gray-200 rounded '+(tool=="dropper" ? "bg-gray-300" : "")}
+        data-tip="Eyedropper (d)"
+        onClick={() => setTool("dropper")}
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+        </svg>
       </div>
       
     </div>

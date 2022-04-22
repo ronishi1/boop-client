@@ -35,16 +35,6 @@ const ComicEditScreen = ({tps}) => {
   const [DeletePage] = useMutation(DELETE_PAGE);
   const [AddPage] = useMutation(ADD_PAGE);
   const [PublishChapter] = useMutation(PUBLISH_CHAPTER);
-
-  // attempt to set up undo/redo
-  const handleUndo = () => {
-    tps.undoTransaction();
-  }
-
-  const handleRedo = () => {
-    tps.redoTransaction();
-  }
-  // attempt to set up undo/redo
    
   const [tool, setTool] = useState('pen');
   const [lines, setLines] = useState([]);
@@ -54,7 +44,9 @@ const ComicEditScreen = ({tps}) => {
   const [stroke, setStroke] = useState({
     width: 5,
     opacity: 1,
-  })
+  });
+  const [isTyping, toggleTyping] = useState(false);
+
   const isDrawing =  useRef(false);
   const stageRef = useRef(null);
   const layerRef = useRef(null);
@@ -63,6 +55,46 @@ const ComicEditScreen = ({tps}) => {
   useEffect(() => {
     tps.clearStack();
   },[]);
+
+  // attempt to set up undo/redo
+  useEffect(() => {
+		const keyboardShortcut = (e) => {
+			if(e.ctrlKey && e.key==='z'){
+          handleUndo();
+      }
+			if(e.ctrlKey && e.key==='y'){
+				handleRedo();
+			}
+      if(isTyping) return;
+      switch(e.key) {
+        case "p":
+          setTool("pen");
+          break;
+        case "e":
+          setTool("eraser")
+          break;
+        case "t":
+          setTool("text")
+          break;
+        case "d":
+          setTool("dropper")
+          break;
+        default:
+      }
+		}
+
+		window.addEventListener("keydown", keyboardShortcut);
+		return () => window.removeEventListener("keydown", keyboardShortcut);
+	});
+
+  const handleUndo = () => {
+    tps.undoTransaction();
+  }
+
+  const handleRedo = () => {
+    tps.redoTransaction();
+  }
+  // attempt to set up undo/redo
 
   async function fetchData() {
     let result = await GetContentChapter({variables: {chapterID:id}});
@@ -84,15 +116,20 @@ const ComicEditScreen = ({tps}) => {
   },[]);
 
   const handleClick = (e) => {
+    if(tool === 'dropper'){
+      setColor(e.target.attrs.stroke);
+    }
     // create circle of stroke width at coordinates if using pen/eraser
     // allow for selection of text objects for scaling if using text
   }
 
   const handleDoubleClick = (i) => {
     if(tool === 'text') {
+      let prev = [...text];
       let newText = [...text];
       newText.pop(i);
       setText(newText);
+      tps.addTransaction(new comicEditTransaction('deleteText',prev,newText,setText));
     }
   }
 
@@ -278,7 +315,7 @@ const ComicEditScreen = ({tps}) => {
               onMouseDown={handleMouseDown}
               onMousemove={handleMouseMove}
               onMouseup={handleMouseUp}
-              onClick={handleClick}
+              onClick={(e) => handleClick(e)}
               ref = {stageRef}
             > 
               <Layer 
@@ -317,8 +354,7 @@ const ComicEditScreen = ({tps}) => {
                     x={text.points[0]}
                     y={text.points[1]}
                     fontSize={text.fontSize}
-                    fill={color}
-                    onClick={handleClick}
+                    fill={text.fill}
                     onDblClick={() => handleDoubleClick(i)}
                     draggable={tool==="text"}
                     onDragEnd={(e) => handleDragEnd(i,e)}
@@ -330,7 +366,8 @@ const ComicEditScreen = ({tps}) => {
             </div>
           </div>
         </div>
-        <ComicRightToolbar tool={tool} stroke={stroke} text={text} setText={setText} setStroke={setStroke} color={color} setColor={setColor} handleAddText={handleAddText}/>
+        <ComicRightToolbar tool={tool} stroke={stroke} text={text} setText={setText} setStroke={setStroke} color={color} setColor={setColor} 
+          handleAddText={handleAddText} toggleTyping={toggleTyping}/>
       </div>
     </div>
 

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import IroColorPicker from './IroColorPicker';
 
-const ComicRightToolbar = ({tool, stroke, setStroke, color, setColor, text, setText, handleAddText}) => {
-  const [textInput, setTextInput] = useState("Type here");
+const ComicRightToolbar = ({tool, stroke, setStroke, color, setColor, handleAddText, isTyping, toggleTyping}) => {
+  const [textInput, setTextInput] = useState("");
   const [fontSize, setFontSize] = useState(12);
+  const toolsUsingColorWheel = ['pen','text','dropper']
   
   function onColorChange(color) {
     setColor(color);
@@ -14,12 +15,12 @@ const ComicRightToolbar = ({tool, stroke, setStroke, color, setColor, text, setT
   }
 
   return (
-    <div className='w-1/6 p-4' style={{boxShadow: "-1px 0px 0px 0px rgb(0 0 0 / 0.1)"}}>
+    <div className='w-1/6 min-w-max p-4' style={{boxShadow: "-1px 0px 0px 0px rgb(0 0 0 / 0.1)"}}>
       <div className='space-y-4 grid grid-cols-1 justify-items-center'>
-        {tool === 'pen' || tool === 'text' ? 
+        {toolsUsingColorWheel.includes(tool) ? 
         <div className='grid grid-cols-1 justify-items-center'>
           <label className='text-center'>Color Picker</label>
-          <IroColorPicker width={180} wheelLightness={false} onColorChange={onColorChange}/>
+          <IroColorPicker width={180} wheelLightness={false} color={color} onColorChange={onColorChange}/>
         </div>: <></>}
         {tool === 'pen' || tool === 'eraser' ? 
         <div className='grid grid-cols-1 justify-items-center'>
@@ -51,8 +52,11 @@ const ComicRightToolbar = ({tool, stroke, setStroke, color, setColor, text, setT
           <label className='text-center'>Text</label>
           <textarea 
             className="textarea textarea-bordered p-2" 
+            placeholder='Type here...'
             value={textInput}
             onChange={(e) => setTextInput(e.target.value)}
+            onFocus={() => toggleTyping(true)}
+            onBlur={() => toggleTyping(false)}
           />
           <div className='btn' onClick={handleCreateText}>Submit</div>
           <label className='text-center pt-4'>Font Size</label>

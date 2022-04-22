@@ -62,14 +62,14 @@ export class scuffedjsTPS {
         }
         // set maximum number of undoable actions
         if(this.transactions.length >= this.MAX_UNDO){
-            console.log("clip")
-            this.transactions = this.transactions.slice(-1);
+            // console.log("cut transactions")
+            this.transactions = this.transactions.slice(-(this.MAX_UNDO-1));
             this.ptr = this.MAX_UNDO-2;
         }
         this.transactions.push(transaction);
         this.ptr++;
-        console.log(this.transactions);
-        console.log(this.ptr);
+        // console.log(this.transactions);
+        // console.log(this.ptr);
     }
 
     // returns boolean value if the pointer can be moved backward
@@ -88,8 +88,8 @@ export class scuffedjsTPS {
             this.transactions[this.ptr].undoTransaction();
             this.ptr--;
         };
-        console.log(this.transactions)
-        console.log(this.ptr);
+        // console.log(this.transactions)
+        // console.log(this.ptr);
     }
 
     redoTransaction() {
@@ -97,8 +97,8 @@ export class scuffedjsTPS {
             this.ptr++;
             this.transactions[this.ptr].doTransaction();
         };
-        console.log(this.transactions)
-        console.log(this.ptr);
+        // console.log(this.transactions)
+        // console.log(this.ptr);
     }
 
     clearStack() {
@@ -120,7 +120,7 @@ export class comicEditTransaction extends scuffedjsTPS_Transaction {
         this.prev = prev;
         this.data = data;
         this.stateFunc = stateFunc;
-        console.log("jstps data",data)
+        // console.log("jstps data",data)
 	}
     doTransaction() {
         this.stateFunc(this.data);
