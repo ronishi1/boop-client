@@ -15,6 +15,7 @@ const ContentViewScreen = () => {
   const [chapter, setChapter] = useState({})
   const [chapterTitles, setChapterTitles] = useState([])
   const [chapterIds, setChapterIds] = useState([])
+  const [currentPage, setCurrentPage] = useState(1)
   const [currentChapter, setCurrentChapter] = useState("")
   async function fetchData() {
     let result = await GetChapterView({variables: {chapterID:id}});
@@ -33,16 +34,23 @@ const ContentViewScreen = () => {
   // Conditionally render ComicViewScreen or StoryViewScreen depending on what the content pulled was
   const [seriesTitle, setSeriesTitle] = useState("One Punch Man")
   const [chapterTitle, setChapterTitle] = useState("The Return of the S Tier Hero")
-  const [currentPage, setPage] = useState(1)
   const [contentType, setContent] = useState("S")
   // console.log(chapter)
   // console.log(chapterTitles)
   // console.log(chapterIds)
   const handleChapter = (objectId, chapterTitle) => {
     // console.log(objectId);
-    navigate(`/view/${objectId}`);
-    // fetchData();
+    
+    // setCurrentPage(1)
+    // navigate(`/view/${objectId}`);
+
+    fetchData();
   }
+
+  const handlePage = (page) => {
+    setCurrentPage(page)
+  }
+  console.log(currentPage)
   console.log(chapter)
   return (
     <div>
@@ -98,14 +106,16 @@ const ContentViewScreen = () => {
               <ul tabindex="0" class="dropdown-content absolute z-10 mt-2 border-solid border-2 menu bg-base-100 w-52 rounded-box overflow-hidden max-h-80">
                 {chapterTitles.map((chapterTitle, i) => {
                   return (
+                    <Link to={`/view/${chapterIds[i]}`}>
                     <li key={i}>
                       <a
-                        // onClick={() => handleChapter(chapterIds[i], chapterTitle)}
+                        onClick={() => handleChapter(chapterIds[i], chapterTitle)}
                         className="text-sm py-1.5 h-8 hover:bg-gray-400/25"
                       >
                           {chapterTitle}
                       </a>
                     </li>
+                    </Link>
                   );
                 })}
               </ul>
@@ -119,7 +129,12 @@ const ContentViewScreen = () => {
             </div>
           </div>
         <div className="flex justify-center">
-          <img className="h-full object-contain" src={"https://cdn.vox-cdn.com/thumbor/y49-A95zQIn5aIgRYQPX1rftB2Q=/0x0:600x887/1720x0/filters:focal(0x0:600x887):format(webp):no_upscale()/cdn.vox-cdn.com/uploads/chorus_asset/file/6439857/20130109.0.png"}/>
+        {
+          chapter.page_images !== undefined && currentPage > 0 ? 
+          <img className="h-full object-contain" src={chapter.page_images[currentPage-1]}/>
+          : 
+          <div>whee</div>
+        }
 
         </div>
       </div>
