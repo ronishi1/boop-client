@@ -169,4 +169,10 @@ export const DELETE_CHAPTER = gql`
 	mutation DeleteChapter($chapterID: ID) {
 		deleteChapter(chapterID: $chapterID)
 	}
-`
+`;
+
+export const PUBLISH_CHAPTER = gql`
+	mutation PublishChapter($chapterID: ID) {
+		publishChapter(chapterID: $chapterID)
+	}
+`;

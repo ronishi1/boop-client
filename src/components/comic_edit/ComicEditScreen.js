@@ -8,12 +8,18 @@ import useImage from 'use-image'
 import { b64toBlob } from '../../utils/utils.js'
 
 import { GET_CONTENT_CHAPTER } from '../../cache/queries';
-import { ADD_PAGE, SAVE_PAGE, DELETE_PAGE } from '../../cache/mutations'
+import { ADD_PAGE, SAVE_PAGE, DELETE_PAGE, PUBLISH_CHAPTER } from '../../cache/mutations'
 import { useLazyQuery, useMutation } 	from '@apollo/client';
+import ComicTopToolbar from './ComicTopToolbar';
+import ComicLeftToolbar from './ComicLeftToolbar';
+import ComicRightToolbar from './ComicRightToolbar';
+
+import { useNavigate } from "react-router-dom";
 
 
 const ComicEditScreen = () => {
   let { id } = useParams();
+  let navigate = useNavigate();
 
   const [GetContentChapter, { loading, error, data, refetch }] = useLazyQuery(GET_CONTENT_CHAPTER);
 
@@ -27,39 +33,84 @@ const ComicEditScreen = () => {
   const [SavePage] = useMutation(SAVE_PAGE);
   const [DeletePage] = useMutation(DELETE_PAGE);
   const [AddPage] = useMutation(ADD_PAGE);
+  const [PublishChapter] = useMutation(PUBLISH_CHAPTER);
+
+  // attempt to set up undo/redo
+  const [pointer, setPointer] = useState(0);
+
+  const handleUndo = () => {
+    if(pointer > 0) setPointer(pointer-1);
+  }
+
+  const handleRedo = () => {
+    if(pointer < lines.length) setPointer(pointer+1);
+  }
+  // attempt to set up undo/redo
 
    
   const [tool, setTool] = useState('pen');
   const [lines, setLines] = useState([]);
-  const [stroke, setStroke] = useState('#df4b26')
+  const [text, setText] = useState([]);
+
+  const [color, setColor] = useState('#df4b26')
+  const [stroke, setStroke] = useState({
+    width: 5,
+    opacity: 1,
+  })
   const isDrawing =  useRef(false);
   const stageRef = useRef(null);
   const layerRef = useRef(null);
   const backgroundRef = useRef(null);
 
   async function fetchData() {
-        let result = await GetContentChapter({variables: {chapterID:id}});
-        setChapter(result.data.getContentChapter);
-        let chapter = result.data.getContentChapter
-        const background = chapter.page_images[currentPage-1]
-        if (background !== undefined && background !== "Unsaved URL") {
-          setBackground(chapter.page_images[currentPage-1])
-        }
-        let dropdown = []
-        for (var i = 0; i < chapter.num_pages; i++) {
-          dropdown.push(i+1)
-        }
-        setDropdown(dropdown)
-        // console.log(pageBackground)
+    let result = await GetContentChapter({variables: {chapterID:id}});
+    setChapter(result.data.getContentChapter);
+    let chapter = result.data.getContentChapter
+    const background = chapter.page_images[currentPage-1]
+    if (background !== undefined && background !== "Unsaved URL") {
+      setBackground(chapter.page_images[currentPage-1])
+    }
+    let dropdown = []
+    for (var i = 0; i < chapter.num_pages; i++) {
+      dropdown.push(i+1)
+    }
+    setDropdown(dropdown)
+    // console.log(pageBackground)
   }
   useEffect(() => {
     fetchData();
   },[]);
+
+  const handleClick = (e) => {
+    // allow for selection of text objects for scaling
+  }
+
+  const handleDoubleClick = (i) => {
+    if(tool === 'text') {
+      let newText = [...text];
+      newText.pop(i);
+      setText(newText);
+    }
+  }
+
+  const handleDragEnd = (e) => {
+    if(tool === 'text'){}
+  }
   
   const handleMouseDown = (e) => {
-    isDrawing.current = true;
-    const pos = e.target.getStage().getPointerPosition();
-    setLines([...lines, { tool, points: [pos.x, pos.y], stroke: stroke }]);
+    if(tool == 'eraser' || tool == 'pen'){
+      setPointer(pointer+1);
+      isDrawing.current = true;
+      const pos = e.target.getStage().getPointerPosition();
+      if(pointer < lines.length){ 
+        let newLines = lines.slice(0,pointer);
+        newLines.push({ tool, points: [pos.x, pos.y], stroke: color, strokeWidth: stroke.width, opacity: stroke.opacity })
+        setLines(newLines)
+      }
+      else
+      setLines([...lines, { tool, points: [pos.x, pos.y], stroke: color, strokeWidth: stroke.width, opacity: stroke.opacity }]);
+    }
+    
     // console.log(lines);
   };
 
@@ -83,9 +134,6 @@ const ComicEditScreen = () => {
     isDrawing.current = false;
   };
 
-  const onColorChange = (color) => {
-    setStroke(color)
-  }
   const handleSave = async () => {
     if (backgroundRef.current !== null) {
       backgroundRef.current.show()
@@ -95,9 +143,10 @@ const ComicEditScreen = () => {
       quality: 0,
       pixelRatio:1
     })
-   if (backgroundRef.current !== null) {
+    if (backgroundRef.current !== null) {
       backgroundRef.current.hide()
     }
+    
 
     var data = new FormData();
     let converted = b64toBlob(dataURL, "image/png")
@@ -114,7 +163,14 @@ const ComicEditScreen = () => {
         let result = await GetContentChapter({variables: {chapterID:id}});
         setChapter(result.data.getContentChapter);
         setBackground(data.url)
-    })
+        console.log(result.data.getContentChapter, data.url)
+    });
+  }
+
+  const handlePublish = async () => {
+    await PublishChapter({variables:{chapterID: chapter._id}});
+    refetch();
+    navigate("/studio");
   }
 
   const handleAddPage = async () => {
@@ -165,125 +221,98 @@ const ComicEditScreen = () => {
       />
     );
   };
+
   return (
     <div>
-      <div className="ml-4 mb-4">
-            Series Title: <strong>{chapter.series_title}</strong>
-      </div>
-      <div className="flex flex-row justify-between">
-        <div className="ml-4 mb-4">
-          Chapter Title : <strong>{chapter.chapter_title}</strong>
-         
-          <div class="dropdown">
-            <label
-              tabindex="0"
-              className="select select-bordered h-8 min-h-0 w-28"
-            >
-              Page: {currentPage}
-            </label>
-            <ul
-              tabindex="0"
-              class="dropdown-content absolute z-10 mt-2 border-solid border-2 menu bg-base-100 w-28 rounded-box overflow-auto max-h-88"
-            >
-              {pageDropdown.map((page, i) => {
-                return (
-                  <li key={i}>
-                    <a
-                      
-                      className="text-sm py-1.5 h-8 hover:bg-gray-400/25"
-                      onClick={() => {
-                        handleSelectPage(i + 1);
-                      }}
-                    >
-                      {i+1}
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
+      <div className="px-8 pb-4" style={{boxShadow: "0 1px 1px 0 rgb(0 0 0 / 0.1)"}}>
+        <div className="flex flex-row justify-between">
+          <div className='flex flex-col'>
+            <p className='text-xs'>Series Title: <strong>{chapter.series_title}</strong></p>
+            <p className='text-lg'>Chapter Title : <strong>{chapter.chapter_title}</strong></p> 
           </div>
+          <div className="btn" onClick={handlePublish}>Publish</div>
         </div>
         
-        <div>
-          <div className="btn cursor-pointer mr-4 mb-4" onClick={handleSave}>Save</div>
-          <div className="btn cursor-pointer mr-4 mb-4" onClick={handleAddPage}>Add Page</div>
-          <div className="btn cursor-pointer mr-4 mb-4" onClick={handleDeletePage}>Delete Page</div>
-        </div>
       </div>
-      <select
-        value={tool}
-        onChange={(e) => {
-          if (e.target.value === 'eraser') {
-            setStroke('#FFFFFF')
-          }
-          setTool(e.target.value);
-        }}
-      >
-        <option value="pen">Pen</option>
-        <option value="eraser">Eraser</option>
-      </select>
-      <div className="flex justify-center relative">
-        <div className="h-[1650px] w-[1275px] border-2">
-        {chapter.page_images !== undefined ? 
-          <div className="relative">
-            {
-              chapter.page_images[currentPage-1] === undefined  || chapter.page_images[currentPage-1] === "Unsaved URL" 
-              ?
-              <div></div>
-              :
-              <img src={chapter.page_images[currentPage-1]} alt="Background image" />
+      <ComicTopToolbar currentPage={currentPage} pages={pageDropdown} handleUndo={handleUndo} handleRedo={handleRedo}
+        handleSelectPage={handleSelectPage} handleSave={handleSave} handleAddPage={handleAddPage} handleDeletePage={handleDeletePage}/>
+      <div className='flex flex-row justify-between'>
+        <ComicLeftToolbar tool={tool} setTool={setTool}/>
+        <div className="flex w-5/6 justify-center relative overflow-hidden">
+          <div className="h-[1650px] w-[1275px] border-2">
+          {chapter.page_images !== undefined ? 
+            <div className="relative">
+              {
+                chapter.page_images[currentPage-1] === undefined  || chapter.page_images[currentPage-1] === "Unsaved URL" 
+                ?
+                <div></div>
+                :
+                <img src={chapter.page_images[currentPage-1]} alt="Background image" />
+              }
+            </div>
+            :
+            <div className="relative"></div>
             }
-          </div>
-          :
-          <div className="relative"></div>
-          }
-          <div class="absolute top-0">
-          <Stage
-            height={1650}
-            width={1275}
-            onMouseDown={handleMouseDown}
-            onMousemove={handleMouseMove}
-            onMouseup={handleMouseUp}
-            ref = {stageRef}
-          >
-            
-            <Layer ref = {layerRef}>
-              {chapter.page_images !== undefined  && chapter.page_images[currentPage-1] !== "Unsaved URL"  ? <URLImage url={chapter.page_images[currentPage-1]}/>  : null}
-            <Html
-                divProps={{
-                  style: {
-                    position: 'inline',
-                    top: 0,
-                    left: 0,
-                    zIndex: 1
-                  },
-                }}
+            <div class="absolute top-0">
+            <Stage
+              height={1650}
+              width={1275}
+              onMouseDown={handleMouseDown}
+              onMousemove={handleMouseMove}
+              onMouseup={handleMouseUp}
+              onClick={handleClick}
+              ref = {stageRef}
+            > 
+              <Layer 
+                ref = {layerRef}
               >
+                {chapter.page_images !== undefined  && chapter.page_images[currentPage-1] !== "Unsaved URL"  ? <URLImage url={chapter.page_images[currentPage-1]}/>  : null}
+              <Html
+                  divProps={{
+                    style: {
+                      position: 'inline',
+                      top: 0,
+                      left: 0,
+                      zIndex: 1
+                    },
+                  }}
+                >
 
-              </Html>
-              {lines.map((line, i) => (
-                <Line
-                  key={i}
-                  points={line.points}
-                  stroke={line.stroke}
-                  strokeWidth={5}
-                  tension={0.5}
-                  lineCap="round"
-                  globalCompositeOperation={
-                    line.tool === 'eraser' ? 'source-over' : 'source-over'
-                  }
-                />
-              ))}
-              
-              
-            </Layer>
-            
-          </Stage>
+                </Html>
+                {lines.slice(0,pointer).map((line, i) => (
+                  <Line
+                    key={i}
+                    points={line.points}
+                    stroke={line.stroke}
+                    strokeWidth={line.strokeWidth}
+                    tension={0.5}
+                    lineCap="round"
+                    globalCompositeOperation={
+                      line.tool === 'eraser' ? 'destination-out' : 'source-over'
+                    }
+                    opacity={line.opacity}
+                  />
+                ))}
+                {text.length > 0 ? text.map((text, i) => (
+                  <Text
+                    text={text.text}
+                    x={text.points[0]}
+                    y={text.points[1]}
+                    fontSize={text.fontSize}
+                    fill={color}
+                    onClick={handleClick}
+                    onDblClick={() => handleDoubleClick(i)}
+                    draggable
+                    onDragEnd={(e) => handleDragEnd(i,e.target)}
+                  />
+                ))
+                : <></>}
+              </Layer>
+            </Stage>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="flex">
-          <IroColorPicker onColorChange={onColorChange}/>
+        <ComicRightToolbar tool={tool} stroke={stroke} text={text} setText={setText} setStroke={setStroke} color={color} setColor={setColor}/>
       </div>
     </div>
 
