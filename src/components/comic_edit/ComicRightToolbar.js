@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import IroColorPicker from './IroColorPicker';
 
-const ComicRightToolbar = ({tool, stroke, setStroke, color, setColor, text, setText, handleAddText}) => {
+const ComicRightToolbar = ({tool, stroke, setStroke, color, setColor, handleAddText, isTyping, toggleTyping}) => {
   const [textInput, setTextInput] = useState("");
   const [fontSize, setFontSize] = useState(12);
   const toolsUsingColorWheel = ['pen','text','dropper']
@@ -55,6 +55,8 @@ const ComicRightToolbar = ({tool, stroke, setStroke, color, setColor, text, setT
             placeholder='Type here...'
             value={textInput}
             onChange={(e) => setTextInput(e.target.value)}
+            onFocus={() => toggleTyping(true)}
+            onBlur={() => toggleTyping(false)}
           />
           <div className='btn' onClick={handleCreateText}>Submit</div>
           <label className='text-center pt-4'>Font Size</label>

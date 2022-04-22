@@ -35,6 +35,26 @@ const ComicEditScreen = ({tps}) => {
   const [DeletePage] = useMutation(DELETE_PAGE);
   const [AddPage] = useMutation(ADD_PAGE);
   const [PublishChapter] = useMutation(PUBLISH_CHAPTER);
+   
+  const [tool, setTool] = useState('pen');
+  const [lines, setLines] = useState([]);
+  const [text, setText] = useState([]);
+
+  const [color, setColor] = useState('#df4b26')
+  const [stroke, setStroke] = useState({
+    width: 5,
+    opacity: 1,
+  });
+  const [isTyping, toggleTyping] = useState(false);
+
+  const isDrawing =  useRef(false);
+  const stageRef = useRef(null);
+  const layerRef = useRef(null);
+  const backgroundRef = useRef(null);
+
+  useEffect(() => {
+    tps.clearStack();
+  },[]);
 
   // attempt to set up undo/redo
   useEffect(() => {
@@ -45,6 +65,7 @@ const ComicEditScreen = ({tps}) => {
 			if(e.ctrlKey && e.key==='y'){
 				handleRedo();
 			}
+      if(isTyping) return;
       switch(e.key) {
         case "p":
           setTool("pen");
@@ -74,24 +95,6 @@ const ComicEditScreen = ({tps}) => {
     tps.redoTransaction();
   }
   // attempt to set up undo/redo
-   
-  const [tool, setTool] = useState('pen');
-  const [lines, setLines] = useState([]);
-  const [text, setText] = useState([]);
-
-  const [color, setColor] = useState('#df4b26')
-  const [stroke, setStroke] = useState({
-    width: 5,
-    opacity: 1,
-  })
-  const isDrawing =  useRef(false);
-  const stageRef = useRef(null);
-  const layerRef = useRef(null);
-  const backgroundRef = useRef(null);
-
-  useEffect(() => {
-    tps.clearStack();
-  },[]);
 
   async function fetchData() {
     let result = await GetContentChapter({variables: {chapterID:id}});
@@ -361,7 +364,8 @@ const ComicEditScreen = ({tps}) => {
             </div>
           </div>
         </div>
-        <ComicRightToolbar tool={tool} stroke={stroke} text={text} setText={setText} setStroke={setStroke} color={color} setColor={setColor} handleAddText={handleAddText}/>
+        <ComicRightToolbar tool={tool} stroke={stroke} text={text} setText={setText} setStroke={setStroke} color={color} setColor={setColor} 
+          handleAddText={handleAddText} toggleTyping={toggleTyping}/>
       </div>
     </div>
 
