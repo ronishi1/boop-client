@@ -317,7 +317,7 @@ const ComicEditScreen = ({tps}) => {
                     x={text.points[0]}
                     y={text.points[1]}
                     fontSize={text.fontSize}
-                    fill={color}
+                    fill={text.fill}
                     onClick={handleClick}
                     onDblClick={() => handleDoubleClick(i)}
                     draggable={tool==="text"}
