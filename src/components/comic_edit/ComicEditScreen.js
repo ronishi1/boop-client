@@ -125,9 +125,11 @@ const ComicEditScreen = ({tps}) => {
 
   const handleDoubleClick = (i) => {
     if(tool === 'text') {
+      let prev = [...text];
       let newText = [...text];
       newText.pop(i);
       setText(newText);
+      tps.addTransaction(new comicEditTransaction('deleteText',prev,newText,setText));
     }
   }
 
