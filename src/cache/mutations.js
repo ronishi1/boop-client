@@ -124,8 +124,8 @@ export const ADD_PAGE = gql`
 `
 
 export const SAVE_PAGE = gql`
-	mutation SavePage($chapterID: ID, $pageNumber: Int, $url: String) {
-		savePage(chapterID: $chapterID, pageNumber: $pageNumber, url: $url)
+	mutation SavePage($chapterID: ID, $pageNumber: Int, $url: String, $pageJSON: String) {
+		savePage(chapterID: $chapterID, pageNumber: $pageNumber, url: $url, pageJSON: $pageJSON)
 	}
 `
 

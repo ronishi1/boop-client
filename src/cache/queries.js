@@ -172,6 +172,7 @@ export const GET_CONTENT_CHAPTER = gql`
 			chapter_title
 			num_pages
 			page_images
+			page_JSONS
 			publication_date
 		}
 	}

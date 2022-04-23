@@ -3,7 +3,6 @@ import { render } from 'react-dom';
 import { useParams } from 'react-router-dom'
 import { Stage, Layer, Line, Text, Image} from 'react-konva';
 import { Html } from 'react-konva-utils';
-import IroColorPicker from "./IroColorPicker"
 import useImage from 'use-image'
 import { b64toBlob, comicEditTransaction } from '../../utils/utils.js'
 
@@ -104,10 +103,13 @@ const ComicEditScreen = ({tps}) => {
     let result = await GetContentChapter({variables: {chapterID:id}});
     setChapter(result.data.getContentChapter);
     let chapter = result.data.getContentChapter
-    const background = chapter.page_images[currentPage-1]
-    if (background !== undefined && background !== "Unsaved URL") {
-      setBackground(chapter.page_images[currentPage-1])
-    }
+    let data = JSON.parse(decodeURI(chapter.page_JSONS[currentPage-1]));
+    setLines(data.lines);
+    setText(data.text);
+    // const background = chapter.page_images[currentPage-1]
+    // if (background !== undefined && background !== "Unsaved URL") {
+    //   setBackground(chapter.page_images[currentPage-1])
+    // }
     let dropdown = []
     for (var i = 0; i < chapter.num_pages; i++) {
       dropdown.push(i+1)
@@ -233,11 +235,13 @@ const ComicEditScreen = ({tps}) => {
         response => response.json()
     ).then(async data => {
         console.log(data)
-        await SavePage({variables:{chapterID:chapter._id, pageNumber:currentPage, url:data.url}})
-        // let result = await GetContentChapter({variables: {chapterID:id}});
-        // setChapter(result.data.getContentChapter);
-        // setBackground(data.url)
-        // console.log(result.data.getContentChapter, data.url)
+        console.log(encodeURI(JSON.stringify({lines:lines, text:text})));
+        await SavePage({variables:{chapterID:chapter._id, pageNumber:currentPage, url:data.url, pageJSON: encodeURI(JSON.stringify({lines:lines, text:text})) }});
+        console.log("saved!");
+        let result = await GetContentChapter({variables: {chapterID:id}});
+        setChapter(result.data.getContentChapter);
+        setBackground(data.url)
+        console.log(result.data.getContentChapter, data.url)
     });
   }
 
@@ -262,6 +266,8 @@ const ComicEditScreen = ({tps}) => {
     console.log(pageDropdown)
     let deletedPage = pageDropdown
     deletedPage.pop()
+    setLines(JSON.parse(decodeURI(chapter.page_JSONS[currentPage])).lines);
+    console.log(currentPage)
     if(deletedPage.length === 0) {
       await AddPage({variables: {chapterID: chapter._id}})
       deletedPage.push(1)
@@ -272,11 +278,10 @@ const ComicEditScreen = ({tps}) => {
       setDropdown(deletedPage)
       await fetchData()
     }
-    setLines([])
   }
   const handleSelectPage = (pageNum) => {
-    setLines([])
     setPage(pageNum)
+    setLines(JSON.parse(decodeURI(chapter.page_JSONS[pageNum-1])).lines);
   }
   // const handleColor = () => {
   //   console.log("enter")
@@ -314,7 +319,7 @@ const ComicEditScreen = ({tps}) => {
         <ComicLeftToolbar tool={tool} setTool={setTool}/>
         <div className="flex w-5/6 justify-center relative overflow-hidden">
           <div className="h-[1650px] w-[1275px] border-2">
-          {chapter.page_images !== undefined ? 
+          {/* {chapter.page_images !== undefined ? 
             <div className="relative">
               {
                 chapter.page_images[currentPage-1] === undefined  || chapter.page_images[currentPage-1] === "Unsaved URL" 
@@ -326,7 +331,7 @@ const ComicEditScreen = ({tps}) => {
             </div>
             :
             <div className="relative"></div>
-            }
+            } */}
             <div class="absolute top-0">
             <Stage
               height={1650}
