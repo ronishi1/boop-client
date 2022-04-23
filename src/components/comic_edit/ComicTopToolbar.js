@@ -37,7 +37,7 @@ const ComicTopToolbar = ({currentPage, pages, handleUndo, handleRedo, hasUndo, h
           <div className={"btn cursor-pointer "+(hasUndo ? "":"btn-disabled")} onClick={handleUndo}>Undo</div>
           <div className={"btn cursor-pointer "+(hasRedo ? "":"btn-disabled") } onClick={handleRedo}>Redo</div>
         </div>
-        
+
         <div className='space-x-4'>
           <div className="btn cursor-pointer" onClick={handleSave}>Save</div>
           <div className="btn cursor-pointer" onClick={handleDeletePage}>Delete Page</div>

@@ -13,7 +13,7 @@ import ComicTopToolbar from './ComicTopToolbar';
 import ComicLeftToolbar from './ComicLeftToolbar';
 import ComicRightToolbar from './ComicRightToolbar';
 
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { cloneDeep } from '@apollo/client/utilities';
 
 import { Transition } from '@headlessui/react'
@@ -443,9 +443,18 @@ const ComicEditScreen = ({tps}) => {
       </div>
       <div className="px-8 pb-4" style={{boxShadow: "0 1px 1px 0 rgb(0 0 0 / 0.1)"}}>
         <div className="flex flex-row justify-between">
+          <div className="flex flex-row">
+            <Link to={`/content-management/${chapter.series_id}`}>
+              <div className="cursor-pointer mr-2">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
+                </svg>
+              </div>
+            </Link>
           <div className='flex flex-col'>
             <p className='text-xs'>Series Title: <strong>{chapter.series_title}</strong></p>
             <p className='text-lg'>Chapter Title : <strong>{chapter.chapter_title}</strong></p>
+          </div>
           </div>
           <Transition
             show={saveClicked}

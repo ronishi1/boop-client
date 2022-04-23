@@ -18,8 +18,8 @@ const ChapterTableEntry = ({chapter, seriesId}) => {
     <Link to={`/view/${chapter._id}`} onClick={handleView} >
       <div className={"flex flex-row hover:cursor-pointer hover:bg-gray-400/25"}>
         <p>{chapter.chapter_title}</p>
-        <p className="text-right pr-4">{date.getMonth()+"/"
-        +date.getDay()+"/"+date.getFullYear()}</p>
+        <p className="text-right pr-4">{(date.getMonth()+1)+"/"
+        +date.getDate()+"/"+date.getFullYear()}</p>
       </div>
     </Link>
   );

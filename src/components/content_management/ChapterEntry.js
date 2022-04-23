@@ -39,8 +39,8 @@ const ChapterEntry = ({chapterID,contentType,deleteChapterCallback}) => {
       <div className="flex flex-row items-center space-x-1 mb-1">
         {publicationDate.getTime() !== unix.getTime() ?
           <div className="flex flex-row space-x-2 items-center mt-1.5">
-            <p className="text-right pr-4">{publicationDate.getMonth()+"/"
-              +publicationDate.getDay()+"/"+publicationDate.getFullYear()}</p>
+            <p className="text-right pr-4">{(publicationDate.getMonth()+1)+"/"
+              +publicationDate.getDate()+"/"+publicationDate.getFullYear()}</p>
             <div className="badge text-xs border-none bg-forum">Published</div>
           </div>
           :
