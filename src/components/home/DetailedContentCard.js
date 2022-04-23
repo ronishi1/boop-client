@@ -39,11 +39,11 @@ const DetailedContentCard = ({id,title,cover,genres,synopsis,type}) => {
       leaveFrom="hidden"
       leaveTo="hidden"
     >
-    <div className="flex flex-row hover:cursor-pointer w-[34rem]" onClick={handleClick}>
+    <div className="flex flex-row hover:cursor-pointer w-[24rem]" onClick={handleClick}>
       <img className="object-cover w-40 h-60 rounded" src={cover}/>
-      <div className="ml-2 min-h-60 max-h-60 min-w-96 max-w-96">
-        <div className={"text-lg font-medium"}>{title}</div>
-        <div className="-mt-1.5">
+      <div className="ml-2 max-w-[14rem]">
+        <div className="text-[1.05rem] font-medium leading-5">{title}</div>
+        <div className="-mt-1">
           {contentBadge}
           {genres.map((genre,index) => {
             if(index < 2){
@@ -51,7 +51,7 @@ const DetailedContentCard = ({id,title,cover,genres,synopsis,type}) => {
             }
           })}
         </div>
-        <div className="text-sm line-clamp-9">
+        <div className="text-sm line-clamp-9 break-words">
           {synopsis}
         </div>
       </div>

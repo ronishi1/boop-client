@@ -27,6 +27,7 @@ const HomeReadList = ({user}) => {
             id={content._id}
             title={content.series_title}
             cover={content.cover_image}
+            contentType={content.content_type}
             size="M"
           />
         ))}

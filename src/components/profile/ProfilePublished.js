@@ -30,6 +30,7 @@ const ProfilePublished = ({username}) => {
             size="S"
           />
         ))}
+        {publishedWorks.length == 0 ? <div className="text-gray-400">This user has no published works.</div> : <></>}
       </div>
     </div>
   );
