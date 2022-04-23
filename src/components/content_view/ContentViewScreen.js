@@ -42,7 +42,7 @@ const ContentViewScreen = () => {
 
     // console.log(pageBackground)
   }
-
+  
   // Conditionally render ComicViewScreen or StoryViewScreen depending on what the content pulled was
   const [seriesTitle, setSeriesTitle] = useState("One Punch Man")
   const [chapterTitle, setChapterTitle] = useState("The Return of the S Tier Hero")
@@ -56,7 +56,6 @@ const ContentViewScreen = () => {
     setCurrentChapter(chapterTitle);
     // fetchData();
   }
-  console.log(currentChapter)
 
   const handleSelectPage = (page) => {
     setCurrentPage(page)

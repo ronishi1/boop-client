@@ -1,9 +1,18 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const ChapterSelect = ({chapter, currentChapter, chapterTitles, chapterIds, handleChapter, currentPage, pageDropdown, handleSelectPage, id}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=315%3A2129 
-  console.log(chapter.page_images)
+  let navigate = useNavigate();
+
+  const handleChapterNav = (num) => {
+    let i = chapterIds.indexOf(id) + num;
+    navigate(`/view/${chapterIds[i]}`);
+    handleChapter(chapterIds[i],chapterTitles[i]);
+    handleSelectPage(1);
+  }
+
   return (
     <div className='flex justify-between'>
       <div className="flex flex-row space-x-2">
@@ -52,23 +61,40 @@ const ChapterSelect = ({chapter, currentChapter, chapterTitles, chapterIds, hand
       </div>
       <div>
         <div className="btn-group">
-          <button 
-            className={"btn btn-sm btn-outline hover:bg-gray-200 hover:text-neutral "+(currentPage > 1 ? "" : "btn-disabled")} 
-            onClick={() => {
-              handleSelectPage(currentPage - 1);
-            }}
-          >
-            Prev Page
-          </button>
+          {currentPage > 1 ? 
+            <button 
+              className={"btn btn-sm btn-outline hover:bg-gray-200 hover:text-neutral"} 
+              onClick={() => {
+                handleSelectPage(currentPage - 1);
+              }}
+            >
+              Prev Page
+            </button>:
+            <button
+              className={"btn btn-sm btn-outline hover:bg-gray-200 hover:text-neutral "+(chapterIds.indexOf(id) > 0 ? "": "btn-disabled")}
+              onClick={() => handleChapterNav(-1)}
+            >
+              Prev Chapter
+            </button>
+          }
 
-          <button
-            className={"btn btn-sm btn-outline hover:bg-gray-200 hover:text-neutral "+(chapter.page_images && currentPage < chapter.page_images.length ?  "" : "btn-disabled")}
-            onClick={() => {
-              handleSelectPage(currentPage + 1);
-            }}
-          >
-            Next Page
-          </button> 
+          {chapter.page_images && currentPage < chapter.page_images.length ? 
+            <button
+              className={"btn btn-sm btn-outline hover:bg-gray-200 hover:text-neutral"}
+              onClick={() => {
+                handleSelectPage(currentPage + 1);
+              }}
+            >
+              Next Page
+            </button> 
+            : 
+            <button
+              className={"btn btn-sm btn-outline hover:bg-gray-200 hover:text-neutral "+(chapterIds.indexOf(id) < chapterIds.length-1 ? "": "btn-disabled")}
+              onClick={() => handleChapterNav(1)}
+            >
+              Next Chapter
+            </button>
+          }
         </div>
       </div>
     </div>
