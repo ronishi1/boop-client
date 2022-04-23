@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-const ComicTopToolbar = ({currentPage, pages, handleUndo, handleRedo, tps, handleSelectPage, handleSave, handleAddPage, handleDeletePage}) => {
-  
+const ComicTopToolbar = ({currentPage, pages, handleUndo, handleRedo, hasUndo, hasRedo, handleSelectPage, handleSave, handleAddPage, handleDeletePage}) => {
+
   return (
     <div className='p-4' style={{boxShadow: "0 1px 0 0 rgb(0 0 0 / 0.1)"}}>
       <div className="flex flex-row justify-between pt-2">
@@ -34,8 +34,8 @@ const ComicTopToolbar = ({currentPage, pages, handleUndo, handleRedo, tps, handl
             </ul>
           </div>
           <div className="btn cursor-pointer" onClick={handleAddPage}>Add Page</div>
-          <div className={"btn cursor-pointer "} onClick={handleUndo}>Undo</div>
-          <div className={"btn cursor-pointer "} onClick={handleRedo}>Redo</div>
+          <div className={"btn cursor-pointer "+(hasUndo ? "":"btn-disabled")} onClick={handleUndo}>Undo</div>
+          <div className={"btn cursor-pointer "+(hasRedo ? "":"btn-disabled") } onClick={handleRedo}>Redo</div>
         </div>
         
         <div className='space-x-4'>

@@ -46,6 +46,8 @@ const ComicEditScreen = ({tps}) => {
     opacity: 1,
   });
   const [isTyping, toggleTyping] = useState(false);
+  const [hasUndo, toggleUndo] = useState(tps.hasTransactionToUndo());
+  const [hasRedo, toggleRedo] = useState(tps.hasTransactionToRedo());
 
   const isDrawing =  useRef(false);
   const stageRef = useRef(null);
@@ -60,7 +62,7 @@ const ComicEditScreen = ({tps}) => {
   useEffect(() => {
 		const keyboardShortcut = (e) => {
 			if(e.ctrlKey && e.key==='z'){
-          handleUndo();
+        handleUndo();
       }
 			if(e.ctrlKey && e.key==='y'){
 				handleRedo();
@@ -89,10 +91,12 @@ const ComicEditScreen = ({tps}) => {
 
   const handleUndo = () => {
     tps.undoTransaction();
+    toggleUndo(tps.hasTransactionToUndo());
   }
 
   const handleRedo = () => {
     tps.redoTransaction();
+    toggleRedo(tps.hasTransactionToRedo());
   }
   // attempt to set up undo/redo
 
@@ -130,6 +134,8 @@ const ComicEditScreen = ({tps}) => {
       newText.pop(i);
       setText(newText);
       tps.addTransaction(new comicEditTransaction('deleteText',prev,newText,setText));
+      toggleUndo(tps.hasTransactionToUndo());
+      toggleRedo(tps.hasTransactionToRedo());
     }
   }
 
@@ -144,6 +150,8 @@ const ComicEditScreen = ({tps}) => {
       newText[index].points = pos;
       setText(newText);
       tps.addTransaction(new comicEditTransaction('transform', prev, newText, setText));
+      toggleUndo(tps.hasTransactionToUndo());
+      toggleRedo(tps.hasTransactionToRedo());
     }
   }
 
@@ -152,13 +160,21 @@ const ComicEditScreen = ({tps}) => {
     let next = [...text,newText];
     setText([...text,newText]);
     tps.addTransaction(new comicEditTransaction(tool,prev,next,setText));
+    toggleUndo(tps.hasTransactionToUndo());
+    toggleRedo(tps.hasTransactionToRedo());
   }
   
   const handleMouseDown = (e) => {
     if(tool == 'eraser' || tool == 'pen'){
       isDrawing.current = true;
       const pos = e.target.getStage().getPointerPosition();
-      setLines([...lines, { tool, points: [pos.x, pos.y], stroke: color, strokeWidth: stroke.width, opacity: stroke.opacity }]);
+      setLines([...lines, { tool, points: [pos.x, pos.y], stroke: (tool==='eraser' ? "#ffffff" :color), strokeWidth: stroke.width, opacity: stroke.opacity }]);
+      let prev = [...lines];
+      prev.pop();
+      let next = [...lines];
+      tps.addTransaction(new comicEditTransaction(tool, prev, next, setLines));
+      toggleUndo(tps.hasTransactionToUndo());
+      toggleRedo(tps.hasTransactionToRedo());
     }
     // console.log(lines);
   };
@@ -182,10 +198,14 @@ const ComicEditScreen = ({tps}) => {
   const handleMouseUp = () => {
     if(tool === 'pen' || tool === 'eraser'){
       isDrawing.current = false;
+      tps.transactions.pop();
+      tps.ptr--;
       let prev = [...lines];
       prev.pop();
-      let next = [...lines]
+      let next = [...lines];
       tps.addTransaction(new comicEditTransaction(tool, prev, next, setLines));
+      toggleUndo(tps.hasTransactionToUndo());
+      toggleRedo(tps.hasTransactionToRedo());
     }
   };
 
@@ -201,7 +221,6 @@ const ComicEditScreen = ({tps}) => {
     if (backgroundRef.current !== null) {
       backgroundRef.current.hide()
     }
-    
 
     var data = new FormData();
     let converted = b64toBlob(dataURL, "image/png")
@@ -215,10 +234,10 @@ const ComicEditScreen = ({tps}) => {
     ).then(async data => {
         console.log(data)
         await SavePage({variables:{chapterID:chapter._id, pageNumber:currentPage, url:data.url}})
-        let result = await GetContentChapter({variables: {chapterID:id}});
-        setChapter(result.data.getContentChapter);
-        setBackground(data.url)
-        console.log(result.data.getContentChapter, data.url)
+        // let result = await GetContentChapter({variables: {chapterID:id}});
+        // setChapter(result.data.getContentChapter);
+        // setBackground(data.url)
+        // console.log(result.data.getContentChapter, data.url)
     });
   }
 
@@ -289,7 +308,7 @@ const ComicEditScreen = ({tps}) => {
         </div>
         
       </div>
-      <ComicTopToolbar currentPage={currentPage} pages={pageDropdown} handleUndo={handleUndo} handleRedo={handleRedo} tps={tps}
+      <ComicTopToolbar currentPage={currentPage} pages={pageDropdown} handleUndo={handleUndo} handleRedo={handleRedo} hasUndo={hasUndo} hasRedo={hasRedo}
         handleSelectPage={handleSelectPage} handleSave={handleSave} handleAddPage={handleAddPage} handleDeletePage={handleDeletePage}/>
       <div className='flex flex-row justify-between'>
         <ComicLeftToolbar tool={tool} setTool={setTool}/>
@@ -342,9 +361,6 @@ const ComicEditScreen = ({tps}) => {
                     strokeWidth={line.strokeWidth}
                     tension={0.5}
                     lineCap="round"
-                    globalCompositeOperation={
-                      line.tool === 'eraser' ? 'destination-out' : 'source-over'
-                    }
                     opacity={line.opacity}
                   />
                 ))}

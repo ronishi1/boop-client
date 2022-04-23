@@ -74,7 +74,7 @@ export class scuffedjsTPS {
 
     // returns boolean value if the pointer can be moved backward
     hasTransactionToUndo() {
-        console.log(this.ptr >= 0)
+        // console.log(this.ptr >= 0)
         return this.ptr >= 0;
     }
 

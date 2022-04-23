@@ -23,9 +23,14 @@ const ComicRightToolbar = ({tool, stroke, setStroke, color, setColor, handleAddT
           <IroColorPicker width={180} wheelLightness={false} color={color} onColorChange={onColorChange}/>
         </div>: <></>}
         {tool === 'pen' || tool === 'eraser' ? 
-        <div className='grid grid-cols-1 justify-items-center'>
+        <div className='grid grid-cols-1 space-y-2 justify-items-center'>
           <label className='text-center'>Stroke Width</label>
-          <div>{stroke.width}</div>
+          <input 
+            type="number" 
+            className="input input-bordered input-xs w-16 text-right"
+            value={stroke.width}
+            onChange={(e) => setStroke({...stroke, width: parseInt(e.target.value)})}
+          />
           <input 
             type="range" 
             min="0" 
