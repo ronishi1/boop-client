@@ -168,6 +168,7 @@ export const GET_CONTENT_CHAPTER = gql`
 	query GetContentChapter($chapterID: ID) {
 		getContentChapter(chapterID:$chapterID) {
 			_id
+			series_id
 			series_title
 			chapter_title
 			num_pages

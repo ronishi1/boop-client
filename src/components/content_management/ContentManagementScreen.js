@@ -215,7 +215,7 @@ const ContentManagementScreen = ({user}) => {
                   <div class="grid items-center space-y-4 p-4 mr-8 ml-8">
                     <div class="w-full flex flex-row justify-between">
                       <div class="text-left text-xl font-medium">
-                        Are you sure you want to delete this work?
+                        Are you sure you want to delete this chapter?
                       </div>
                       <div className="cursor-pointer" onClick={() => {setShowDelete(false)}}>
                         <svg

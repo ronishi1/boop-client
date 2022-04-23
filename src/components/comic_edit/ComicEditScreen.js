@@ -16,7 +16,7 @@ import ComicRightToolbar from './ComicRightToolbar';
 import { useNavigate } from "react-router-dom";
 import { cloneDeep } from '@apollo/client/utilities';
 
-
+import { Transition } from '@headlessui/react'
 const ComicEditScreen = ({tps}) => {
   let { id } = useParams();
   let navigate = useNavigate();
@@ -28,13 +28,18 @@ const ComicEditScreen = ({tps}) => {
   const [chapter, setChapter] = useState({})
   const [pageBackground, setBackground] = useState("")
   const [pageDropdown, setDropdown] = useState([])
+  const [saveClicked,setSaveClicked] = useState(false);
+  const [addPageClicked,setAddPageClicked] = useState(false);
+  const [showPublishConfirm,setShowPublishConfirm] = useState(false);
+  const [showDelete,setShowDelete] = useState(false);
+
   // might not even use the error
 
   const [SavePage] = useMutation(SAVE_PAGE);
   const [DeletePage] = useMutation(DELETE_PAGE);
   const [AddPage] = useMutation(ADD_PAGE);
   const [PublishChapter] = useMutation(PUBLISH_CHAPTER);
-   
+
   const [tool, setTool] = useState('pen');
   const [lines, setLines] = useState([]);
   const [text, setText] = useState([]);
@@ -116,7 +121,7 @@ const ComicEditScreen = ({tps}) => {
     // setLines(data.lines);
     // setText(data.text);
 
-    // Background code 
+    // Background code
     let result = await GetContentChapter({variables: {chapterID:id}});
     setChapter(result.data.getContentChapter);
     let chapter = result.data.getContentChapter
@@ -179,7 +184,7 @@ const ComicEditScreen = ({tps}) => {
     toggleUndo(tps.hasTransactionToUndo());
     toggleRedo(tps.hasTransactionToRedo());
   }
-  
+
   const handleMouseDown = (e) => {
     if(tool == 'eraser' || tool == 'pen'){
       isDrawing.current = true;
@@ -237,7 +242,10 @@ const ComicEditScreen = ({tps}) => {
     if (backgroundRef.current !== null) {
       backgroundRef.current.hide()
     }
-
+    setSaveClicked(true);
+    setTimeout(() => {
+      setSaveClicked(false);
+    },3000)
     var data = new FormData();
     let converted = b64toBlob(dataURL, "image/png")
     data.append('content', converted)
@@ -262,7 +270,8 @@ const ComicEditScreen = ({tps}) => {
   const handlePublish = async () => {
     await PublishChapter({variables:{chapterID: chapter._id}});
     refetch();
-    navigate("/studio");
+    console.log(chapter);
+    navigate(`/content-management/${chapter.series_id}`);
   }
 
   const handleAddPage = async () => {
@@ -271,6 +280,10 @@ const ComicEditScreen = ({tps}) => {
     addedPage.push(pageDropdown[-1] + 1)
     setDropdown(addedPage)
     fetchData()
+    setAddPageClicked(true);
+    setTimeout(() => {
+      setAddPageClicked(false);
+    },3000)
   }
   const handleDeletePage = async () => {
     await DeletePage({variables: {chapterID: chapter._id, pageNumber: currentPage}})
@@ -287,12 +300,13 @@ const ComicEditScreen = ({tps}) => {
       await AddPage({variables: {chapterID: chapter._id}})
       deletedPage.push(1)
       await fetchData()
-    } 
+    }
     else {
       console.log(deletedPage.length)
       setDropdown(deletedPage)
       await fetchData()
     }
+    setShowDelete(false);
   }
   const handleSelectPage = (pageNum) => {
     setPage(pageNum)
@@ -305,7 +319,7 @@ const ComicEditScreen = ({tps}) => {
   // }
   const URLImage = ({ url }) => {
     const [image, status] = useImage(url, "Anonymous");
-    
+
     return (
       <Image
         image={image}
@@ -319,26 +333,170 @@ const ComicEditScreen = ({tps}) => {
 
   return (
     <div>
+      <div>
+        <input
+          type="checkbox"
+          id="delete-modal"
+          class="modal-toggle"
+          checked={showDelete}
+          onChange={() => {setShowDelete(false)}}
+          />
+
+        <label for="delete-modal" class="modal cursor-pointer">
+          <label class="modal-box w-4/12 max-w-5xl">
+            <div>
+              <div class="grid items-center space-y-4 p-4 mr-8 ml-8">
+                <div class="w-full flex flex-row justify-between">
+                  <div class="text-left text-xl font-medium">
+                    Are you sure you want to delete this page?
+                  </div>
+                  <div className="cursor-pointer" onClick={() => {setShowDelete(false)}}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="grey"
+                      strokeWidth={2}
+                      >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M6 18L18 6M6 6l12 12"
+                        />
+                    </svg>
+                  </div>
+                </div>
+                <span class="w-full flex flex-row justify-between items-center">
+                  <label
+                    className="text-zinc-400 text-sm ml-2 cursor-pointer"
+                    onClick={() => {setShowDelete(false)}}
+                    >
+                    Cancel
+                  </label>
+                  <div
+                    className="btn bg-red-400 border-none hover:bg-red-500 normal-case mr-2"
+                    onClick={() => {handleDeletePage()}}
+                    >
+                    Delete
+                  </div>
+                </span>
+              </div>
+            </div>
+          </label>
+        </label>
+      </div>
+      <div>
+        <input
+          type="checkbox"
+          id="publish-confirm-modal"
+          class="modal-toggle"
+          checked={showPublishConfirm}
+          onChange={() => {setShowPublishConfirm(false)}}
+          />
+
+        <label for="publish-confirm-modal" class="modal cursor-pointer">
+          <label class="modal-box w-4/12 max-w-5xl">
+            <div>
+              <div class="grid items-center space-y-4 p-4 mr-8 ml-8">
+                <div class="w-full flex flex-row justify-between">
+                  <div class="text-left text-xl font-medium">
+                    Are you sure you want to publish this chapter?
+                    <div className="text-xs">You will not be able to make any changes after you publish.</div>
+
+                  </div>
+                  <div className="cursor-pointer" onClick={() => {setShowPublishConfirm(false)}}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="grey"
+                      strokeWidth={2}
+                      >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M6 18L18 6M6 6l12 12"
+                        />
+                    </svg>
+                  </div>
+                </div>
+                <span class="w-full flex flex-row justify-between items-center">
+                  <label
+                    className="text-zinc-400 text-sm ml-2 cursor-pointer"
+                    onClick={() => {setShowPublishConfirm(false)}}
+                    >
+                    Cancel
+                  </label>
+                  <div
+                    className="btn bg-forum border-none hover:bg-forum/80 normal-case mr-2"
+                    onClick={() => {handlePublish()}}
+                    >
+                    Publish
+                  </div>
+                </span>
+              </div>
+            </div>
+          </label>
+        </label>
+      </div>
       <div className="px-8 pb-4" style={{boxShadow: "0 1px 1px 0 rgb(0 0 0 / 0.1)"}}>
         <div className="flex flex-row justify-between">
           <div className='flex flex-col'>
             <p className='text-xs'>Series Title: <strong>{chapter.series_title}</strong></p>
-            <p className='text-lg'>Chapter Title : <strong>{chapter.chapter_title}</strong></p> 
+            <p className='text-lg'>Chapter Title : <strong>{chapter.chapter_title}</strong></p>
           </div>
-          <div className="btn" onClick={handlePublish}>Publish</div>
+          <Transition
+            show={saveClicked}
+            enter="transition-opacity duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="transition-opacity duration-500"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+            >
+            <div className="flex place-content-center -mt-2">
+            <div class="alert alert-info shadow-lg">
+              <div>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span>Your changes have been saved.</span>
+              </div>
+            </div>
+            </div>
+          </Transition>
+          <Transition
+            show={addPageClicked}
+            enter="transition-opacity duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="transition-opacity duration-500"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+            >
+            <div className="flex place-content-center -mt-2">
+            <div class="alert alert-info shadow-lg">
+              <div>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span>New page #{pageDropdown.length} has been successfully created.</span>
+              </div>
+            </div>
+            </div>
+          </Transition>
+          <div className="btn" onClick={() => {setShowPublishConfirm(true)}}>Publish</div>
         </div>
-        
+
       </div>
       <ComicTopToolbar currentPage={currentPage} pages={pageDropdown} handleUndo={handleUndo} handleRedo={handleRedo} hasUndo={hasUndo} hasRedo={hasRedo}
-        handleSelectPage={handleSelectPage} handleSave={handleSave} handleAddPage={handleAddPage} handleDeletePage={handleDeletePage}/>
+        handleSelectPage={handleSelectPage} handleSave={handleSave} handleAddPage={handleAddPage} handleDeletePage={() => setShowDelete(true)}/>
       <div className='flex flex-row justify-between'>
         <ComicLeftToolbar tool={tool} setTool={setTool}/>
         <div className="flex w-5/6 justify-center relative overflow-hidden">
           <div className="h-[1650px] w-[1275px] border-2">
-          {chapter.page_images !== undefined ? 
+          {chapter.page_images !== undefined ?
             <div className="relative">
               {
-                chapter.page_images[currentPage-1] === undefined  || chapter.page_images[currentPage-1] === "Unsaved URL" 
+                chapter.page_images[currentPage-1] === undefined  || chapter.page_images[currentPage-1] === "Unsaved URL"
                 ?
                 <div></div>
                 :
@@ -357,8 +515,8 @@ const ComicEditScreen = ({tps}) => {
               onMouseup={handleMouseUp}
               onClick={(e) => handleClick(e)}
               ref = {stageRef}
-            > 
-              <Layer 
+            >
+              <Layer
                 ref = {layerRef}
               >
                 {chapter.page_images !== undefined  && chapter.page_images[currentPage-1] !== "Unsaved URL"  ? <URLImage url={chapter.page_images[currentPage-1]}/>  : null}
@@ -403,7 +561,7 @@ const ComicEditScreen = ({tps}) => {
             </div>
           </div>
         </div>
-        <ComicRightToolbar tool={tool} stroke={stroke} text={text} setText={setText} setStroke={setStroke} color={color} setColor={setColor} 
+        <ComicRightToolbar tool={tool} stroke={stroke} text={text} setText={setText} setStroke={setStroke} color={color} setColor={setColor}
           handleAddText={handleAddText} toggleTyping={toggleTyping}/>
       </div>
     </div>
