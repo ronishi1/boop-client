@@ -100,16 +100,30 @@ const ComicEditScreen = ({tps}) => {
   // attempt to set up undo/redo
 
   async function fetchData() {
+    // let result = await GetContentChapter({variables: {chapterID:id}});
+    // setChapter(result.data.getContentChapter);
+    // let chapter = result.data.getContentChapter
+    // let data = null
+    // console.log(currentPage)
+    // console.log(chapter.page_JSONS[currentPage])
+    // if((chapter.page_JSONS[currentPage] !== undefined && chapter.page_JSONS[currentPage] !== || chapter.page_JSONS[currentPage-1])
+    // if (currentPage == 1) {
+    //   data = JSON.parse(decodeURI(chapter.page_JSONS[currentPage]));
+    // }
+    // else {
+    //   data = JSON.parse(decodeURI(chapter.page_JSONS[currentPage-1]));
+    // }
+    // setLines(data.lines);
+    // setText(data.text);
+
+    // Background code 
     let result = await GetContentChapter({variables: {chapterID:id}});
     setChapter(result.data.getContentChapter);
     let chapter = result.data.getContentChapter
-    let data = JSON.parse(decodeURI(chapter.page_JSONS[currentPage-1]));
-    setLines(data.lines);
-    setText(data.text);
-    // const background = chapter.page_images[currentPage-1]
-    // if (background !== undefined && background !== "Unsaved URL") {
-    //   setBackground(chapter.page_images[currentPage-1])
-    // }
+    const background = chapter.page_images[currentPage-1]
+    if (background !== undefined && background !== "Unsaved URL") {
+      setBackground(chapter.page_images[currentPage-1])
+    }
     let dropdown = []
     for (var i = 0; i < chapter.num_pages; i++) {
       dropdown.push(i+1)
@@ -266,7 +280,8 @@ const ComicEditScreen = ({tps}) => {
     console.log(pageDropdown)
     let deletedPage = pageDropdown
     deletedPage.pop()
-    setLines(JSON.parse(decodeURI(chapter.page_JSONS[currentPage])).lines);
+    // setLines(JSON.parse(decodeURI(chapter.page_JSONS[currentPage])).lines);
+    setLines([])
     console.log(currentPage)
     if(deletedPage.length === 0) {
       await AddPage({variables: {chapterID: chapter._id}})
@@ -281,7 +296,8 @@ const ComicEditScreen = ({tps}) => {
   }
   const handleSelectPage = (pageNum) => {
     setPage(pageNum)
-    setLines(JSON.parse(decodeURI(chapter.page_JSONS[pageNum-1])).lines);
+    setLines([])
+    // setLines(JSON.parse(decodeURI(chapter.page_JSONS[pageNum-1])).lines);
   }
   // const handleColor = () => {
   //   console.log("enter")
@@ -319,7 +335,7 @@ const ComicEditScreen = ({tps}) => {
         <ComicLeftToolbar tool={tool} setTool={setTool}/>
         <div className="flex w-5/6 justify-center relative overflow-hidden">
           <div className="h-[1650px] w-[1275px] border-2">
-          {/* {chapter.page_images !== undefined ? 
+          {chapter.page_images !== undefined ? 
             <div className="relative">
               {
                 chapter.page_images[currentPage-1] === undefined  || chapter.page_images[currentPage-1] === "Unsaved URL" 
@@ -331,7 +347,7 @@ const ComicEditScreen = ({tps}) => {
             </div>
             :
             <div className="relative"></div>
-            } */}
+            }
             <div class="absolute top-0">
             <Stage
               height={1650}

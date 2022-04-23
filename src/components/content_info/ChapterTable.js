@@ -14,12 +14,16 @@ const ChapterTable = ({chapterIds}) => {
   }
 
   let chapters = data.getChapters;
+  let date = new Date(null)
+
+  chapters = chapters.filter(chapter => new Date(chapter.publication_date).getTime() !== date.getTime())
 
   return (
     <div className="card rounded-none">
       <p className='card-title'>Chapter List</p>
       <div className="card rounded-none h-full overflow-y-auto">
         {chapters.map(chapter => (
+          
           <ChapterTableEntry chapter={chapter}/>
         ))}
       </div>
