@@ -7,7 +7,7 @@ import HomeReadList from './HomeReadList';
 const HomeScreen = ({auth, user}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=207%3A324
   return (
-    <div className="container mx-auto">
+    <div className="container max-w-screen-xl mx-auto">
       <div className="grid grid-flow-row auto-rows-max gap-6">
         <div>
           {auth && user ? <HomeReadList user={user}/> : <></>}
