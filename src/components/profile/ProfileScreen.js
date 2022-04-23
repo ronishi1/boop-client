@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import ProfileActivity from "./ProfileActivity";
-import ProfileFavorites from "./ProfileFavorites";
 import ProfilePublished from "./ProfilePublished";
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom';
 import { GET_USER_PROFILE } from '../../cache/queries';
 import { UPDATE_BIO, FOLLOW_USER, UNFOLLOW_USER,UPDATE_PROFILE_PICTURE} from '../../cache/mutations';
 import { useQuery, useMutation } 	from '@apollo/client';
-import { Transition } from '@headlessui/react'
-import { uploadFile } from '../../utils/utils.js'
-
+import { Transition } from '@headlessui/react';
+import { uploadFile } from '../../utils/utils.js';
+import { useNavigate } from 'react-router-dom';
 const ProfileScreen = ({fetchUser,user}) => {
   let profile = {};
   let { username } = useParams();
+  let navigate = useNavigate();
 
   const { loading, error, data, refetch } = useQuery(GET_USER_PROFILE, {
       variables: { username: username },
@@ -112,27 +112,11 @@ const ProfileScreen = ({fetchUser,user}) => {
     refetch();
   }
 
-  // changes which collection is being viewed
-  const handleSelectedCollection = (collection) => {
-    setSelectedCollection(collection);
-  };
-
-  const loadSelectedCollection = () => {
-    switch (selectedCollection) {
-      case "Published":
-        return <ProfilePublished published={user_data.published} />;
-      case "Favorites":
-        return <ProfileFavorites favorites={user_data.favorites} />;
-      default:
-        return;
-    }
-  };
-  
   const handleUpload = async(e) => {
     const file = e.target.files[0]
     const url = await uploadFile(file, updatePFPCallback, fetchUser, setImageError)
   }
-  
+
   const updatePFPCallback = async (input) => {
     await UpdateProfilePicture(input)
   }
@@ -182,6 +166,14 @@ const ProfileScreen = ({fetchUser,user}) => {
             src={profile ? (profile.profile_pic ? profile.profile_pic : "https://sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png") : <></>}
           />
         )}
+        <div className="grid grid-cols-2 place-content-center mt-5 mb-5">
+            <div
+              className="btn bg-forum border-none col-span-1 mx-2"
+              onClick={() => {navigate(`/read-list/${username}`)}}>Read List</div>
+            <div
+              className="btn bg-forum border-none col-span-1 mx-2"
+              onClick={() => {navigate(`/favorites/${username}`)}}>Favorites</div>
+        </div>
         <div className="grid grid-cols-2 justify-items-center">
           <div>
             <div className="font-bold text-center">
@@ -235,31 +227,7 @@ const ProfileScreen = ({fetchUser,user}) => {
       </div>
       <div className="w-1/2">
         <ProfileActivity activities={user_data.activities} />
-        <div className="card ml-8 my-4 py-4 px-12 shadow">
-          <div className="space-x-2">
-            <a
-              className={
-                "link no-underline " +
-                (selectedCollection == "Published" ? "font-bold" : "")
-              }
-              onClick={() => handleSelectedCollection("Published")}
-            >
-              Published
-            </a>
-            <a
-              className={
-                "link no-underline " +
-                (selectedCollection == "Favorites" ? "font-bold" : "")
-              }
-              onClick={() => handleSelectedCollection("Favorites")}
-            >
-              Favorites
-            </a>
-          </div>
-          <div className="card grid content-center px-4 h-24 bg-gray-300">
-            {loadSelectedCollection()}
-          </div>
-        </div>
+        <ProfilePublished username={username}/>
       </div>
     </div>
   ) : <div>loading...</div>;

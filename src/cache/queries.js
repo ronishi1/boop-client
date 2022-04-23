@@ -272,3 +272,28 @@ export const GET_FILTERED_CONTENT = gql`
 		}
 	}
 `
+
+export const GET_USER_PUBLISHED = gql`
+	query GetUserPublished($username: String){
+		getUserPublished(username:$username){
+			_id
+			series_title
+			author
+			author_username
+			synopsis
+			genres
+			num_chapters
+			chapters
+			views
+			discussion_post
+			current_rating
+			num_of_ratings
+			total_ratings
+			publication_date
+			completed
+			cover_image
+			storyboard
+			content_type
+		}
+	}
+`

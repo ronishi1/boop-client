@@ -19,15 +19,15 @@ const ProfileActivity = ({activities}) => {
 
   return (
     <div className='card static ml-8 py-4 px-12 shadow'>
-      <p className='py-4'>Recent Activity</p>
+      <p className='py-4 text-lg font-medium'>Recent Activity</p>
       {activities.map((activity) => {
         return (
-          <div className='grid grid-cols-2'>
-            <div className='flex flex-row'>
+          <div className='grid grid-cols-5'>
+            <div className='flex flex-row col-span-3'>
               <p className='pr-1'>{activity.activity_type}</p>
               <p className={"text-"+activity.content.content_color}>{activity.content.title}</p>
             </div>
-            <p className='text-right'>{formatDate(activity.content)}</p>
+            <p className='text-right col-span-2'>{formatDate(activity.content)}</p>
           </div>)
       })}
 
