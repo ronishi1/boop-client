@@ -141,6 +141,12 @@ export const RATE_CONTENT = gql`
 	}
 `;
 
+export const INCREASE_VIEW = gql`
+	mutation IncreaseView($contentID: ID) {
+		increaseView(contentID: $contentID)
+	}
+`
+
 export const ADD_CONTENT_TO_READ_LIST = gql`
 	mutation AddContentToReadList($contentID: ID) {
 		addContentToReadList(contentID: $contentID)

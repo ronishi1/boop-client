@@ -36,6 +36,7 @@ const ContentInfoScreen = ({auth}) => {
   }
 
   let content = data.getContentInfo;
+  console.log(content)
   if(!content || (new Date(content.publication_date).getTime() == (new Date(0)).getTime())) {
     return <div className="flex place-content-center">Could not find content</div>
   }
@@ -262,7 +263,7 @@ const ContentInfoScreen = ({auth}) => {
           </div>
         </div>
         <div className="card-body row-start-3 row-end-6 col-start-3 col-end-7">
-          <ChapterTable chapterIds={content.chapters} />
+          <ChapterTable chapterIds={content.chapters} seriesId={content._id}/>
         </div>
         <div className="card-body row-start-6 row-end-7 col-start-3 col-end-5 border-t-2 p-4">
           <DiscussionPost post={content.discussion_post} coverImage={content.cover_image}/>
