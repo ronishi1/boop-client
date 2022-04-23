@@ -6,7 +6,7 @@ import Unauthorized from '../unauthorized/Unauthorized';
 import Loading from '../loading/Loading';
 import { GET_MY_CONTENT } from '../../cache/queries';
 import { DELETE_CONTENT } from '../../cache/mutations';
-
+import {Transition} from '@headlessui/react'
 import {useQuery, useMutation} from '@apollo/client'
 const CreatorStudioScreen = ({user}) => {
   // will replace published with dates later, currently just using booleans to make it easier
@@ -142,6 +142,16 @@ const CreatorStudioScreen = ({user}) => {
             </div>
             <div className="col-span-7 ml-10">
               <div className="text-2xl font-normal">Published Works</div>
+                <Transition
+                  appear={true}
+                  show={true}
+                  enter="transition-opacity duration-[400ms]"
+                  enterFrom="opacity-0"
+                  enterTo="opacity-100"
+                  leave="transition-opacity duration-0"
+                  leaveFrom="hidden"
+                  leaveTo="hidden"
+                  >
               <div className="flex flex-row overflow-x-scroll space-x-5">
                 {contents.map((content) => {
                     if(content != null){
@@ -159,8 +169,19 @@ const CreatorStudioScreen = ({user}) => {
                   }
                 })}
               </div>
+            </Transition>
               <div className="divider"></div>
               <div className="text-2xl font-normal">Unpublished Works</div>
+                <Transition
+                  appear={true}
+                  show={true}
+                  enter="transition-opacity duration-[400ms]"
+                  enterFrom="opacity-0"
+                  enterTo="opacity-100"
+                  leave="transition-opacity duration-0"
+                  leaveFrom="hidden"
+                  leaveTo="hidden"
+                  >
               <div className="flex flex-row overflow-x-scroll space-x-5">
                 {contents.map((content) => {
                   if(content != null){
@@ -178,6 +199,8 @@ const CreatorStudioScreen = ({user}) => {
                   }
                 })}
               </div>
+            </Transition>
+
             </div>
           </div>
         </div>
