@@ -1,10 +1,76 @@
-import React 	from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
-const ChapterSelect = () => {
+const ChapterSelect = ({chapter, currentChapter, chapterTitles, chapterIds, handleChapter, currentPage, pageDropdown, handleSelectPage, id}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=315%3A2129 
+  console.log(chapter.page_images)
   return (
-    <div>
-      <h1>Chapter SelectFiller</h1>
+    <div className='flex justify-between'>
+      <div className="flex flex-row space-x-2">
+        <div className="grid justify-self-center dropdown">
+          <label tabindex="0" className="select select-bordered h-8 min-h-0 w-full overflow-hidden">Chapter : {currentChapter}</label>
+          <ul tabindex="0" className="dropdown-content absolute z-10 mt-10 border-solid border-2 menu bg-base-100 w-full rounded-box overflow-hidden max-h-80">
+            {chapterTitles.map((chapterTitle, i) => {
+              return (
+                <Link to={`/view/${chapterIds[i]}`}>
+                <li key={i}>
+                  <a
+                    onClick={() => {
+                      handleChapter(chapterIds[i], chapterTitle);
+                      handleSelectPage(1);
+                    }}
+                    className="text-sm py-1.5 h-8 hover:bg-gray-400/25"
+                  >
+                      {chapterTitle}
+                  </a>
+                </li>
+                </Link>
+              );
+            })}
+          </ul>
+        </div>
+
+        <div className="grid justify-self-end dropdown mr-4">
+          <label tabindex="0" class="select select-bordered h-8 min-h-0 w-100">Page {currentPage}</label>
+          <ul tabindex="0" class="dropdown-content absolute z-10 mt-10 border-solid border-2 menu bg-base-100 w-24 rounded-box overflow-hidden max-h-80">
+            {pageDropdown.map((page, i) => {
+              return (
+                <li key={i}>
+                  <a
+                    className="text-sm py-1.5 h-8 hover:bg-gray-400/25"
+                    onClick={() => {
+                      handleSelectPage(i + 1);
+                    }}
+                  >
+                    {i+1}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div className="btn-group">
+          <button 
+            className={"btn btn-sm btn-outline hover:bg-gray-200 hover:text-neutral "+(currentPage > 1 ? "" : "btn-disabled")} 
+            onClick={() => {
+              handleSelectPage(currentPage - 1);
+            }}
+          >
+            Prev Page
+          </button>
+
+          <button
+            className={"btn btn-sm btn-outline hover:bg-gray-200 hover:text-neutral "+(chapter.page_images && currentPage < chapter.page_images.length ?  "" : "btn-disabled")}
+            onClick={() => {
+              handleSelectPage(currentPage + 1);
+            }}
+          >
+            Next Page
+          </button> 
+        </div>
+      </div>
     </div>
   );
 }
