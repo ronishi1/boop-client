@@ -295,6 +295,7 @@ const ComicEditScreen = ({tps}) => {
     deletedPage.pop()
     // setLines(JSON.parse(decodeURI(chapter.page_JSONS[currentPage])).lines);
     setLines([])
+    setText([])
     console.log(currentPage)
     if(deletedPage.length === 0) {
       await AddPage({variables: {chapterID: chapter._id}})
