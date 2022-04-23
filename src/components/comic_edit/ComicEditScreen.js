@@ -82,9 +82,9 @@ const ComicEditScreen = ({tps}) => {
         case "t":
           setTool("text")
           break;
-        case "d":
-          setTool("dropper")
-          break;
+        // case "d":
+        //   setTool("dropper")
+        //   break;
         default:
       }
 		}
@@ -141,9 +141,9 @@ const ComicEditScreen = ({tps}) => {
   },[]);
 
   const handleClick = (e) => {
-    if(tool === 'dropper'){
-      setColor(e.target.attrs.stroke);
-    }
+    // if(tool === 'dropper'){
+    //   setColor(e.target.attrs.stroke);
+    // }
     // create circle of stroke width at coordinates if using pen/eraser
     // allow for selection of text objects for scaling if using text
   }
@@ -311,6 +311,7 @@ const ComicEditScreen = ({tps}) => {
   const handleSelectPage = (pageNum) => {
     setPage(pageNum)
     setLines([])
+    setText([])
     // setLines(JSON.parse(decodeURI(chapter.page_JSONS[pageNum-1])).lines);
   }
   // const handleColor = () => {
