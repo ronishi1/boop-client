@@ -13,7 +13,7 @@ const ContentInfoScreen = ({auth}) => {
   const [followed, toggleFollow] = useState(false);
   let { id } = useParams();
   const ratings = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  
+
   const { data:userData, loading: userLoading, error: userError, refetch: fetchUser } = useQuery(GET_USER_CONTENT_INFO);
   const { data, loading, error, refetch } = useQuery(GET_CONTENT_INFO, {
     variables: { contentID: id },
@@ -30,7 +30,7 @@ const ContentInfoScreen = ({auth}) => {
   if(loading || userLoading){
     return <></>;
   }
-  
+
   if(error || userError){
     return <div>error</div>;
   }
@@ -50,7 +50,7 @@ const ContentInfoScreen = ({auth}) => {
       contentColor = "story"
       break;
     default:
-  } 
+  }
 
   const handleFavorite = async () => {
     if(user.favorites.includes(id)){
@@ -198,15 +198,12 @@ const ContentInfoScreen = ({auth}) => {
             <p className="text-xs">{content.synopsis}</p>
           </div>
           <div className="card-body">
-            <p className="text-xs">Views: {content.views}</p>
+            <p className="text-sm"><span className="font-medium">Views:</span> {content.views}</p>
             {/* <p className="text-xs">Favorites: {content.favorites}</p> */}
-            <p className="text-xs">Chapters: {content.num_chapters}</p>
-            <p className="text-xs">
-              Completion Status:{" "}
-              {content.completion_status ? "Complete" : "Incomplete"}
-            </p>
-            <div className="text-xs flex flex-wrap space-x-1">Genres: {content.genres.map((genre) => {
-              return <div>{genre}</div>
+            <p className="text-sm"><span className="font-medium">Chapters:</span> {content.num_chapters}</p>
+            <div className="text-sm flex flex-wrap space-x-1"><span className="font-medium">Genres:</span>
+              {content.genres.map((genre) => {
+              return <div>{genre},</div>
             })}</div>
           </div>
         </div>
