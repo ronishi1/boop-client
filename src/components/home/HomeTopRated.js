@@ -33,6 +33,7 @@ const HomeTopRated = () => {
       <div className="ml-10 text-2xl">Top Rated</div>
       {splitContent.map((contentChunk, index) => {
         return <Transition
+          key={index}
           show={slide == index}
           enter="transition-opacity duration-1000"
           enterFrom="opacity-0"
@@ -51,10 +52,10 @@ const HomeTopRated = () => {
             </div>
             <div className={"grid grid-cols-"+maxContent}>
               {contentChunk.map((content) => (
-                <DetailedContentCard id={content._id} title={content.series_title} cover={content.cover_image} genres={content.genres} synopsis={content.synopsis} type={content.content_type}/>
+                <DetailedContentCard key={content._id} id={content._id} title={content.series_title} cover={content.cover_image} genres={content.genres} synopsis={content.synopsis} type={content.content_type}/>
               ))}
             </div>
-            
+
             <div className="mt-[6.5rem]">
               <div className={"btn btn-circle btn-sm "+(slide == splitContent.length-1 ? "invisible" : "")} onClick={() => {setSlide(slide+1)}}>
                 <svg xmlns="http://www.w3.org/2000/svg" className="cursor-pointer h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

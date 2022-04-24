@@ -30,10 +30,10 @@ const CreateChapter = ({toggleCreateChapterCallback,contentID,series_title,autho
   return (
     <div>
       <form
-        class="w-full h-full m-1.5"
+        className="w-full h-full m-1.5"
         onSubmit={handleSubmit}
       >
-      <div class="grid items-center space-y-4 p-4 mr-8 ml-8">
+      <div className="grid items-center space-y-4 p-4 mr-8 ml-8">
         <Transition
           show={error.status}
           enter="transition-opacity duration-300"
@@ -43,15 +43,15 @@ const CreateChapter = ({toggleCreateChapterCallback,contentID,series_title,autho
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div class="alert alert-error py-1.5 shadow-lg">
+          <div className="alert alert-error py-1.5 shadow-lg">
             <div>
-              <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
               <span>{error.message}</span>
             </div>
           </div>
         </Transition>
-        <div class="w-full flex flex-row justify-between">
-            <div class="text-left text-xl font-medium">
+        <div className="w-full flex flex-row justify-between">
+            <div className="text-left text-xl font-medium">
               Create new chapter
             </div>
             <div className="cursor-pointer" onClick={() => {toggleCreateChapterCallback(false)}}>
@@ -71,17 +71,17 @@ const CreateChapter = ({toggleCreateChapterCallback,contentID,series_title,autho
               </svg>
             </div>
           </div>
-          <span class="w-full">
+          <span className="w-full">
             <input
               type="text"
               name="title"
               placeholder="Chapter Title"
-              class="input input-bordered w-full focus:outline-none"
+              className="input input-bordered w-full focus:outline-none"
               value={title}
               onChange={(e) => {setTitle(e.target.value)}}
             />
           </span>
-          <span class="w-full flex flex-row justify-between items-center">
+          <span className="w-full flex flex-row justify-between items-center">
             <label
               className="text-zinc-400 text-sm ml-2 cursor-pointer"
               onClick={() => {toggleCreateChapterCallback(false)}}

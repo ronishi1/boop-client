@@ -123,7 +123,7 @@ const ContentInfoScreen = ({auth}) => {
           className="card-title row-start-1 row-end-2 col-span-full p-5 border-b-2
           align-center"
         >
-          <p class={"text-2xl text-"+contentColor}>{content.series_title}</p>
+          <p className={"text-2xl text-"+contentColor}>{content.series_title}</p>
         </div>
         <div
           className="card-body row-start-2 row-end-4 col-start-1 col-end-3 border-r-2
@@ -142,12 +142,12 @@ const ContentInfoScreen = ({auth}) => {
                 fill={user.favorites && user.favorites.includes(id) ? "currentColor" : "none"}
                 viewBox="0 0 24 24"
                 stroke="currentColor"
-                stroke-width="2"
+                strokeWidth="2"
                 onClick={handleFavorite}
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
                 />
               </svg>
@@ -157,12 +157,12 @@ const ContentInfoScreen = ({auth}) => {
                 fill={user.read_list && user.read_list.includes(id) ? "currentColor" : "none"}
                 viewBox="0 0 24 24"
                 stroke="currentColor"
-                stroke-width="2"
+                strokeWidth="2"
                 onClick={handleBookmark}
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
                 />
               </svg>
@@ -172,12 +172,12 @@ const ContentInfoScreen = ({auth}) => {
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
-                stroke-width="2"
+                strokeWidth="2"
                 onClick={handleShare}
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
                 />
               </svg>
@@ -202,8 +202,8 @@ const ContentInfoScreen = ({auth}) => {
             {/* <p className="text-xs">Favorites: {content.favorites}</p> */}
             <p className="text-sm"><span className="font-medium">Chapters:</span> {content.num_chapters}</p>
             <div className="text-sm flex flex-wrap space-x-1"><span className="font-medium">Genres:</span>
-              {content.genres.map((genre) => {
-              return <div>{genre},</div>
+              {content.genres.map((genre,index) => {
+              return <div key={index}>{genre},</div>
             })}</div>
           </div>
         </div>
@@ -214,12 +214,12 @@ const ContentInfoScreen = ({auth}) => {
             fill={user.following && user.following.includes(content.author) ? "currentColor" : "none"}
             viewBox="0 0 24 24"
             stroke="currentColor"
-            stroke-width="2"
+            strokeWidth="2"
             onClick={handleFollow}
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
             />
           </svg> : <></>}
@@ -230,7 +230,7 @@ const ContentInfoScreen = ({auth}) => {
         <div className="card-body row-start-2 row-end-3 col-start-5 col-end-7 border-b-2 flex-row items-center justify-center">
           <div className="flex flex-col">
             Rating: {content.current_rating}/10
-            {auth && user ? <div class={"dropdown"}>
+            {auth && user ? <div className={"dropdown"}>
               <label
                 tabIndex="0"
                 className="select select-bordered h-8 min-h-0 w-28"
@@ -239,11 +239,11 @@ const ContentInfoScreen = ({auth}) => {
               </label>
               <ul
                 tabIndex="0"
-                class="dropdown-content absolute z-10 mt-2 border-solid border-2 menu bg-base-100 w-28 rounded-box overflow-auto max-h-88"
+                className="dropdown-content absolute z-10 mt-2 border-solid border-2 menu bg-base-100 w-28 rounded-box overflow-auto max-h-88"
               >
                 {ratings.map((rating) => {
                   return (
-                    <li>
+                    <li key={rating}>
                       <a
                         className="text-sm py-1.5 h-8 hover:bg-gray-400/25"
                         onClick={() => {

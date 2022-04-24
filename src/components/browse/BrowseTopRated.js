@@ -23,6 +23,7 @@ const BrowseTopRated = () => {
       <div className="overflow-x-scroll flex flex-row space-x-3">
         {contents.map((content) => (
           <ContentCard
+            key={content._id}
             title={content.series_title}
             cover={content.cover_image}
             id={content._id}

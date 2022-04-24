@@ -30,16 +30,16 @@ const FilterDropDown = ({title,options,selectCallback,deselectCallback,selected}
   return (
     <div>
       <p className="text=lg">{title}</p>
-      <div class="dropdown">
-        <label tabindex="0" className="select select-bordered h-8 min-h-0 w-52">
+      <div className="dropdown">
+        <label tabIndex="0" className="select select-bordered h-8 min-h-0 w-52">
           {preview}
         </label>
-        <ul tabindex="0" class="dropdown-content absolute z-10 mt-2 border-solid border-2 menu bg-base-100 w-52 rounded-box overflow-scroll max-h-80">
+        <ul tabIndex="0" className="dropdown-content absolute z-10 mt-2 border-solid border-2 menu bg-base-100 w-52 rounded-box overflow-scroll max-h-80">
           {options.map((option) => {
             if(selected.includes(option)){
               if(option == "Comic"){
                 return(
-                  <li>
+                  <li key={option}>
                     <a className="flex justify-between py-1.5 h-8 text-sm hover:bg-gray-400/25" onClick={() => {deselectOption(option)}}>
                       <div>{option}</div>
                       <div>
@@ -53,7 +53,7 @@ const FilterDropDown = ({title,options,selectCallback,deselectCallback,selected}
               }
               if(option == "Story"){
                 return(
-                  <li>
+                  <li key={option}>
                     <a className="flex justify-between py-1.5 h-8 text-sm hover:bg-gray-400/25" onClick={() => {deselectOption(option)}}>
                       <div>{option}</div>
                       <div>
@@ -67,7 +67,7 @@ const FilterDropDown = ({title,options,selectCallback,deselectCallback,selected}
               }
               else {
                 return(
-                  <li>
+                  <li key={option}>
                     <a className="flex justify-between py-1.5 h-8 text-sm hover:bg-gray-400/25" onClick={() => {deselectOption(option)}}>
                       <div>{option}</div>
                       <div>
@@ -81,7 +81,7 @@ const FilterDropDown = ({title,options,selectCallback,deselectCallback,selected}
               }
             }
             else {
-              return <li><a className="text-sm py-1.5 h-8 hover:bg-gray-400/25" onClick={() => {selectOption(option)}}>{option}</a></li>
+              return <li key={option}><a className="text-sm py-1.5 h-8 hover:bg-gray-400/25" onClick={() => {selectOption(option)}}>{option}</a></li>
             }
           })}
         </ul>

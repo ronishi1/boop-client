@@ -39,6 +39,7 @@ const BrowseFiltered = ({genres,rating,releaseYears,contentTypes}) => {
       <div className="grid lg:grid-cols-8 md:grid-cols-4 gap-6">
         {contents.map((content) => (
           <ContentCard
+            key={content._id}
             title={content.series_title}
             cover={content.cover_image}
             contentType={content.content_type}

@@ -47,7 +47,7 @@ const DetailedContentCard = ({id,title,cover,genres,synopsis,type}) => {
           {contentBadge}
           {genres.map((genre,index) => {
             if(index < 2){
-              return <div className={"badge text-xs border-none mr-1 bg-"+contentColor}>{genre}</div>
+              return <div key={genre} className={"badge text-xs border-none mr-1 bg-"+contentColor}>{genre}</div>
             }
           })}
         </div>

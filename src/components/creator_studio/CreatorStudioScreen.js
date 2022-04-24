@@ -49,13 +49,13 @@ const CreatorStudioScreen = ({user}) => {
           <input
             type="checkbox"
             id="create-content-modal"
-            class="modal-toggle"
+            className="modal-toggle"
             checked={showCreate}
-            onClick={() => {setShowCreate(false)}}
+            onChange={() => {setShowCreate(false)}}
           />
 
-        <label for="create-content-modal" className="modal cursor-pointer">
-            <label class="modal-box w-4/12 max-w-5xl">
+        <label htmlFor="create-content-modal" className="modal cursor-pointer">
+            <label className="modal-box w-4/12 max-w-5xl">
               <CreateContent
                 toggleCreateCallback={setShowCreate}/>
             </label>
@@ -65,17 +65,17 @@ const CreatorStudioScreen = ({user}) => {
           <input
             type="checkbox"
             id="delete-modal"
-            class="modal-toggle"
+            className="modal-toggle"
             checked={showDelete}
             onChange={() => {setShowDelete(false)}}
             />
 
-          <label for="delete-modal" class="modal cursor-pointer">
-            <label class="modal-box w-4/12 max-w-5xl">
+          <label htmlFor="delete-modal" className="modal cursor-pointer">
+            <label className="modal-box w-4/12 max-w-5xl">
               <div>
-                <div class="grid items-center space-y-4 p-4 mr-8 ml-8">
-                  <div class="w-full flex flex-row justify-between">
-                    <div class="text-left text-xl font-medium">
+                <div className="grid items-center space-y-4 p-4 mr-8 ml-8">
+                  <div className="w-full flex flex-row justify-between">
+                    <div className="text-left text-xl font-medium">
                       Are you sure you want to delete this work?
                     </div>
                     <div className="cursor-pointer" onClick={() => {setShowDelete(false)}}>
@@ -95,7 +95,7 @@ const CreatorStudioScreen = ({user}) => {
                       </svg>
                     </div>
                   </div>
-                  <span class="w-full flex flex-row justify-between items-center">
+                  <span className="w-full flex flex-row justify-between items-center">
                     <label
                       className="text-zinc-400 text-sm ml-2 cursor-pointer"
                       onClick={() => {setShowDelete(false)}}
@@ -114,7 +114,7 @@ const CreatorStudioScreen = ({user}) => {
             </label>
           </label>
         </div>
-        <div class="container mx-auto">
+        <div className="container mx-auto">
           <div className="grid grid-cols-11">
             <div className="col-span-4 border-r-2  border-base-content/10">
               <div className="flex flex-row items-center justify-between">
@@ -131,6 +131,7 @@ const CreatorStudioScreen = ({user}) => {
                   }
                   return(
                     <WorkListEntry
+                    key={content._id}
                     contentID={content._id}
                     seriesTitle={content.series_title}
                     contentType={content.content_type}
@@ -160,6 +161,7 @@ const CreatorStudioScreen = ({user}) => {
                     if(temp.getTime() != temp2.getTime()){
                       return (
                         <WorkCard
+                          key={content._id}
                           contentID={content._id}
                           seriesTitle={content.series_title}
                           cover={content.cover_image}
@@ -190,6 +192,7 @@ const CreatorStudioScreen = ({user}) => {
                     if(temp.getTime() == temp2.getTime()){
                       return (
                         <WorkCard
+                          key={content._id}
                           contentID={content._id}
                           seriesTitle={content.series_title}
                           cover={content.cover_image}

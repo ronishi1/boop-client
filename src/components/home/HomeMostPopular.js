@@ -16,7 +16,7 @@ const HomeMostPopular = () => {
   useEffect(() => {
     refetch();
   },[])
-  
+
   if(loading){
     return <div></div>
   }
@@ -36,6 +36,7 @@ const HomeMostPopular = () => {
       <div className="ml-10 text-2xl">Most Popular</div>
       {splitContent.map((contentChunk, index) => {
         return <Transition
+          key={index}
           show={slide == index}
           enter="transition-opacity duration-1000"
           enterFrom="opacity-0"
@@ -54,7 +55,7 @@ const HomeMostPopular = () => {
             </div>
             <div className={"grid grid-cols-"+maxContent}>
               {contentChunk.map((content) => (
-                <DetailedContentCard id={content._id} title={content.series_title} cover={content.cover_image} genres={content.genres} synopsis={content.synopsis} type={content.content_type}/>
+                <DetailedContentCard key={content._id} id={content._id} title={content.series_title} cover={content.cover_image} genres={content.genres} synopsis={content.synopsis} type={content.content_type}/>
               ))}
             </div>
             <div className="mt-[6.5rem]">

@@ -84,7 +84,7 @@ const BrowseScreen = () => {
               console.log(selection);
               if(selection.value == "Comic"){
                 return(
-                  <div className="badge bg-comic border-none cursor-pointer mt-.5 p-2.5" onClick={() => handleDeselect(selection.option,selection.value)}>
+                  <div key={selection.value} className="badge bg-comic border-none cursor-pointer mt-.5 p-2.5" onClick={() => handleDeselect(selection.option,selection.value)}>
                     {selection.value}
                     <svg xmlns="http://www.w3.org/2000/svg" className="ml-1 h-3 w-3 stroke-2 stroke-white" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -94,7 +94,7 @@ const BrowseScreen = () => {
               }
               if(selection.value == "Story"){
                 return(
-                  <div className="badge bg-story border-none cursor-pointer mt-.5 p-2.5" onClick={() => handleDeselect(selection.option,selection.value)}>
+                  <div key={selection.value} className="badge bg-story border-none cursor-pointer mt-.5 p-2.5" onClick={() => handleDeselect(selection.option,selection.value)}>
                     {selection.value}
                     <svg xmlns="http://www.w3.org/2000/svg" className="ml-1 h-3 w-3 stroke-2 stroke-white" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -104,7 +104,7 @@ const BrowseScreen = () => {
               }
               else {
                 return(
-                  <div className="badge bg-forum border-none cursor-pointer mt-.5 p-2.5" onClick={() => handleDeselect(selection.option,selection.value)}>
+                  <div key={selection.value} className="badge bg-forum border-none cursor-pointer mt-.5 p-2.5" onClick={() => handleDeselect(selection.option,selection.value)}>
                     {selection.value}
                     <svg xmlns="http://www.w3.org/2000/svg" className="ml-1 h-3 w-3 stroke-2 stroke-white" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />

@@ -23,8 +23,7 @@ const ChapterTable = ({chapterIds, seriesId}) => {
       <p className='card-title'>Chapter List</p>
       <div className="card rounded-none h-full overflow-y-auto">
         {chapters.map(chapter => (
-          
-          <ChapterTableEntry chapter={chapter} seriesId={seriesId}/>
+          <ChapterTableEntry chapter={chapter} seriesId={seriesId} key={seriesId}/>
         ))}
       </div>
     </div>

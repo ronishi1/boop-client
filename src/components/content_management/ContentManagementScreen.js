@@ -133,13 +133,13 @@ const ContentManagementScreen = ({user}) => {
             <input
               type="checkbox"
               id="create-chapter-modal"
-              class="modal-toggle"
+              className="modal-toggle"
               checked={showCreateChapter}
-              onClick={() => {setShowCreateChapter(false)}}
+              onChange={() => {setShowCreateChapter(false)}}
             />
 
-          <label for="create-chapter-modal" className="modal cursor-pointer">
-              <label class="modal-box w-4/12 max-w-5xl">
+          <label htmlFor="create-chapter-modal" className="modal cursor-pointer">
+              <label className="modal-box w-4/12 max-w-5xl">
                 <CreateChapter
                   toggleCreateChapterCallback={setShowCreateChapter} contentID={content._id} series_title={content.series_title} authorID={content.author} content_type={content.content_type}/>
               </label>
@@ -149,17 +149,17 @@ const ContentManagementScreen = ({user}) => {
             <input
               type="checkbox"
               id="publish-confirm-modal"
-              class="modal-toggle"
+              className="modal-toggle"
               checked={showPublishConfirm}
               onChange={() => {setShowPublishConfirm(false)}}
               />
 
-            <label for="publish-confirm-modal" class="modal cursor-pointer">
-              <label class="modal-box w-4/12 max-w-5xl">
+            <label htmlFor="publish-confirm-modal" className="modal cursor-pointer">
+              <label className="modal-box w-4/12 max-w-5xl">
                 <div>
-                  <div class="grid items-center space-y-4 p-4 mr-8 ml-8">
-                    <div class="w-full flex flex-row justify-between">
-                      <div class="text-left text-xl font-medium">
+                  <div className="grid items-center space-y-4 p-4 mr-8 ml-8">
+                    <div className="w-full flex flex-row justify-between">
+                      <div className="text-left text-xl font-medium">
                         Are you sure you want to publish this work?
                         <div className="text-xs">You will not be able to change the title, synopsis, genres or cover image after you publish.</div>
 
@@ -181,7 +181,7 @@ const ContentManagementScreen = ({user}) => {
                         </svg>
                       </div>
                     </div>
-                    <span class="w-full flex flex-row justify-between items-center">
+                    <span className="w-full flex flex-row justify-between items-center">
                       <label
                         className="text-zinc-400 text-sm ml-2 cursor-pointer"
                         onClick={() => {setShowPublishConfirm(false)}}
@@ -204,17 +204,17 @@ const ContentManagementScreen = ({user}) => {
             <input
               type="checkbox"
               id="delete-modal"
-              class="modal-toggle"
+              className="modal-toggle"
               checked={showDelete}
               onChange={() => {setShowDelete(false)}}
               />
 
-            <label for="delete-modal" class="modal cursor-pointer">
-              <label class="modal-box w-4/12 max-w-5xl">
+            <label htmlFor="delete-modal" className="modal cursor-pointer">
+              <label className="modal-box w-4/12 max-w-5xl">
                 <div>
-                  <div class="grid items-center space-y-4 p-4 mr-8 ml-8">
-                    <div class="w-full flex flex-row justify-between">
-                      <div class="text-left text-xl font-medium">
+                  <div className="grid items-center space-y-4 p-4 mr-8 ml-8">
+                    <div className="w-full flex flex-row justify-between">
+                      <div className="text-left text-xl font-medium">
                         Are you sure you want to delete this chapter?
                       </div>
                       <div className="cursor-pointer" onClick={() => {setShowDelete(false)}}>
@@ -234,7 +234,7 @@ const ContentManagementScreen = ({user}) => {
                         </svg>
                       </div>
                     </div>
-                    <span class="w-full flex flex-row justify-between items-center">
+                    <span className="w-full flex flex-row justify-between items-center">
                       <label
                         className="text-zinc-400 text-sm ml-2 cursor-pointer"
                         onClick={() => {setShowDelete(false)}}
@@ -257,17 +257,17 @@ const ContentManagementScreen = ({user}) => {
             <input
               type="checkbox"
               id="delete-chapter-modal"
-              class="modal-toggle"
+              className="modal-toggle"
               checked={showDeleteChapter}
               onChange={() => {setShowDeleteChapter(false)}}
               />
 
-            <label for="delete-chapter-modal" class="modal cursor-pointer">
-              <label class="modal-box w-4/12 max-w-5xl">
+            <label htmlFor="delete-chapter-modal" className="modal cursor-pointer">
+              <label className="modal-box w-4/12 max-w-5xl">
                 <div>
-                  <div class="grid items-center space-y-4 p-4 mr-8 ml-8">
-                    <div class="w-full flex flex-row justify-between">
-                      <div class="text-left text-xl font-medium">
+                  <div className="grid items-center space-y-4 p-4 mr-8 ml-8">
+                    <div className="w-full flex flex-row justify-between">
+                      <div className="text-left text-xl font-medium">
                         Are you sure you want to delete this work?
                       </div>
                       <div className="cursor-pointer" onClick={() => {setShowDeleteChapter(false)}}>
@@ -287,7 +287,7 @@ const ContentManagementScreen = ({user}) => {
                         </svg>
                       </div>
                     </div>
-                    <span class="w-full flex flex-row justify-between items-center">
+                    <span className="w-full flex flex-row justify-between items-center">
                       <label
                         className="text-zinc-400 text-sm ml-2 cursor-pointer"
                         onClick={() => {setShowDeleteChapter(false)}}
@@ -306,7 +306,7 @@ const ContentManagementScreen = ({user}) => {
               </label>
             </label>
           </div>
-          <div class="container mx-auto">
+          <div className="container mx-auto">
             <div className='grid grid-cols-2 w-full'>
               <div className='col-span-1 flex flex-col w-full my-8 space-y-2 place-content-center w-5/6 ml-5'>
 
@@ -337,9 +337,9 @@ const ContentManagementScreen = ({user}) => {
                   leaveFrom="opacity-100"
                   leaveTo="opacity-0"
                   >
-                  <div class="alert alert-info shadow-lg">
+                  <div className="alert alert-info shadow-lg">
                     <div>
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-current flex-shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                       <span>Your changes have been saved</span>
                     </div>
                   </div>
@@ -353,17 +353,17 @@ const ContentManagementScreen = ({user}) => {
                   leaveFrom="opacity-100"
                   leaveTo="opacity-0"
                   >
-                  <div class="alert alert-error py-1.5 shadow-lg mt-5">
+                  <div className="alert alert-error py-1.5 shadow-lg mt-5">
                     <div>
-                      <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                       <span>{titleError.message}</span>
                     </div>
                   </div>
                 </Transition>
                 <div className='flex'>
                   <div className='w-full'>
-                    <div class="form-control mt-2">
-                      <span class="text-2xl font-medium">Series Title</span>
+                    <div className="form-control mt-2">
+                      <span className="text-2xl font-medium">Series Title</span>
                       {published ?
                         <div className="text-xl">{content.series_title}</div>
                         :
@@ -378,7 +378,7 @@ const ContentManagementScreen = ({user}) => {
                       }
                     </div>
                     <div className="mt-2">
-                      <span class="text-2xl font-medium">Synopsis</span>
+                      <span className="text-2xl font-medium">Synopsis</span>
                       {published ?
                       <div className="text-md">{content.synopsis}</div>
                       :
@@ -391,19 +391,19 @@ const ContentManagementScreen = ({user}) => {
                       }
                     </div>
                     <div className="mt-2">
-                      <span class="text-2xl font-medium">Genres</span>
+                      <span className="text-2xl font-medium">Genres</span>
                       {published ?
                       <div className="flex flex-row flex-wrap space-x-1">
                         {content.genres.map((genre) => {
                           let initialState = content.genres.includes(genre)
-                          return <GenreSelector genre={genre} initialState={initialState} contentType={content.content_type} selectGenreCallback={selectGenreCallback} published={true}/>
+                          return <GenreSelector key={genre} genre={genre} initialState={initialState} contentType={content.content_type} selectGenreCallback={selectGenreCallback} published={true}/>
                         })}
                       </div>
                       :
                       <div className='flex flex-row flex-wrap space-x-1'>
                         {genres.map((genre) => {
                           let initialState = content.genres.includes(genre)
-                          return <GenreSelector genre={genre} initialState={initialState} contentType={content.content_type} selectGenreCallback={selectGenreCallback} published={false}/>
+                          return <GenreSelector key={genre} genre={genre} initialState={initialState} contentType={content.content_type} selectGenreCallback={selectGenreCallback} published={false}/>
                         })}
                       </div>
                       }
@@ -418,9 +418,9 @@ const ContentManagementScreen = ({user}) => {
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0"
                         >
-                        <div class="alert alert-error py-1.5 shadow-lg mt-5">
+                        <div className="alert alert-error py-1.5 shadow-lg mt-5">
                           <div>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                             <span>{imageError.message}</span>
                           </div>
                         </div>
@@ -492,7 +492,7 @@ const ContentManagementScreen = ({user}) => {
 
                 <div className="card static rounded-none h-full overflow-y-auto mt-2">
                   {content.chapters.map(chapter => (
-                    <ChapterEntry chapterID={chapter} contentType={content.content_type} deleteChapterCallback={deleteChapterCallback}/>
+                    <ChapterEntry key={chapter} chapterID={chapter} contentType={content.content_type} deleteChapterCallback={deleteChapterCallback}/>
                   ))}
                 </div>
               </div>

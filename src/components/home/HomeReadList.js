@@ -24,6 +24,7 @@ const HomeReadList = ({user}) => {
       {readList.length != 0 ? <div className="flex flex-row space-x-3 overflow-x-auto ml-10">
         {readList.map((content) => (
           <ContentCard
+            key={content._id}
             id={content._id}
             title={content.series_title}
             cover={content.cover_image}

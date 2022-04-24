@@ -51,10 +51,10 @@ const Login = ({toggleLoginCallback, toggleRegisterCallback, toggleResetPassword
   return (
     <div>
       <form
-        class="w-full h-full m-1.5"
+        className="w-full h-full m-1.5"
         onSubmit={handleSubmit}
       >
-        <div class="grid items-center space-y-4 p-4 mr-8 ml-8">
+        <div className="grid items-center space-y-4 p-4 mr-8 ml-8">
           <Transition
             show={error.status}
             enter="transition-opacity duration-300"
@@ -64,15 +64,15 @@ const Login = ({toggleLoginCallback, toggleRegisterCallback, toggleResetPassword
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div class="alert alert-error py-1.5 shadow-lg">
+            <div className="alert alert-error py-1.5 shadow-lg">
               <div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 <span>{error.message}</span>
               </div>
             </div>
           </Transition>
-          <div class="w-full flex flex-row justify-between">
-            <div class="text-left text-xl font-medium">Log In</div>
+          <div className="w-full flex flex-row justify-between">
+            <div className="text-left text-xl font-medium">Log In</div>
             <div className="cursor-pointer" onClick={() => {toggleLoginCallback(false)}}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -90,49 +90,49 @@ const Login = ({toggleLoginCallback, toggleRegisterCallback, toggleResetPassword
               </svg>
             </div>
           </div>
-          <div class="place-items-start w-full">
-            <div class="text-left text-sm">
+          <div className="place-items-start w-full">
+            <div className="text-left text-sm">
               Don't have an account?
-              <a class="ml-1 text-forum cursor-pointer" onClick={() => {toggleRegisterCallback(true)}}>
+              <a className="ml-1 text-forum cursor-pointer" onClick={() => {toggleRegisterCallback(true)}}>
                 Sign up here.
               </a>
             </div>
           </div>
-          <span class="w-full">
+          <span className="w-full">
             <input
               type="text"
               name="usernameOrEmail"
               value={inputValues.usernameOrEmail}
               placeholder="Username or Email"
               onChange={handleChange}
-              class="input input-bordered w-full focus:outline-none"
+              className="input input-bordered w-full focus:outline-none"
             />
           </span>
-          <span class="w-full">
+          <span className="w-full">
             <input
               type="password"
               name="password"
               value={inputValues.password}
               placeholder="Password"
               onChange={handleChange}
-              class="input input-bordered w-full focus:outline-none"
+              className="input input-bordered w-full focus:outline-none"
             />
           </span>
-          <div class="w-full">
-            <div class="text-forum text-xs pl-1 cursor-pointer" onClick={() => {toggleResetPasswordCallback(true)}}>
+          <div className="w-full">
+            <div className="text-forum text-xs pl-1 cursor-pointer" onClick={() => {toggleResetPasswordCallback(true)}}>
               Forgot Password
             </div>
           </div>
 
-          <span class="w-full flex flex-row justify-between items-center">
+          <span className="w-full flex flex-row justify-between items-center">
             <label
-              class="text-zinc-400 text-sm ml-2 cursor-pointer"
+              className="text-zinc-400 text-sm ml-2 cursor-pointer"
               onClick={() => {toggleLoginCallback(false)}}
             >
               Cancel
             </label>
             <button
-              class="btn border-none bg-forum normal-case mr-2"
+              className="btn border-none bg-forum normal-case mr-2"
               type="submit"
             >
               Login

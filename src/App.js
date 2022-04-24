@@ -33,7 +33,6 @@ import Register from "./components/modals/Register";
 import ResetPassword from "./components/modals/ResetPassword";
 
 // FOR DEV PURPOSES DEFINITELY DELETE AFTER
-import Dev from "./Dev";
 import StoryEditScreen from "./components/story_edit/StoryEditScreen";
 import ComicEditScreen from "./components/comic_edit/ComicEditScreen";
 import DeleteContentModal from "./components/modals/DeleteContentModal";
@@ -113,10 +112,10 @@ const App = () => {
           id="reset-password-modal"
           className="modal-toggle"
           checked={showResetPassword}
-          onClick={() => {toggleResetPasswordCallback(false)}}
+          onChange={() => {toggleResetPasswordCallback(false)}}
         />
 
-      <label for="reset-password-modal" className="modal cursor-pointer">
+      <label htmlFor="reset-password-modal" className="modal cursor-pointer">
           <label className="modal-box w-4/12 max-w-5xl">
             <ResetPassword
               toggleResetPasswordCallback={toggleResetPasswordCallback}/>
@@ -129,9 +128,9 @@ const App = () => {
           id="login-modal"
           className="modal-toggle"
           checked={showLogin}
-          onClick={() => {toggleLoginCallback(false)}}
+          onChange={() => {toggleLoginCallback(false)}}
         />
-      <label for="login-modal" className="modal cursor-pointer">
+      <label htmlFor="login-modal" className="modal cursor-pointer">
           <label className="modal-box w-5/12 max-w-5xl">
             <Login
               toggleLoginCallback={toggleLoginCallback}
@@ -148,10 +147,10 @@ const App = () => {
           id="signup-modal"
           className="modal-toggle"
           checked={showRegister}
-          onClick={() => {toggleRegisterCallback(false)}}
+          onChange={() => {toggleRegisterCallback(false)}}
         />
 
-      <label for="signup-modal" className="modal cursor-pointer">
+      <label htmlFor="signup-modal" className="modal cursor-pointer">
           <label className="modal-box w-6/12 max-w-5xl">
             <Register
               toggleLoginCallback={toggleLoginCallback}
@@ -190,8 +189,6 @@ const App = () => {
         <Route path="/search" element={<SearchScreen/>} />
         <Route path="/about" element={<AboutScreen />} />
         <Route path="/help" element={<HelpScreen />} />
-
-        <Route path="/dev" element={<Dev />} />
 
         <Route path="/story-edit/:id" element={<StoryEditScreen />} />
         <Route path="/comic-edit/:id" element={<ComicEditScreen tps={tps}/>} />

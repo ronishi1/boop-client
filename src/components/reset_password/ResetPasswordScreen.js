@@ -61,9 +61,9 @@ const ResetPasswordScreen = () => {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-            <div class="alert alert-error py-1.5 shadow-lg mt-5">
+            <div className="alert alert-error py-1.5 shadow-lg mt-5">
               <div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 <span>{passwordError.message}</span>
               </div>
             </div>
@@ -72,7 +72,7 @@ const ResetPasswordScreen = () => {
             Reset Password
           </div>
           <form
-            class="h-full m-1.5 space-y-3"
+            className="h-full m-1.5 space-y-3"
             onSubmit={handleSubmit}
           >
             <input
@@ -81,7 +81,7 @@ const ResetPasswordScreen = () => {
               value={inputValues.password}
               placeholder="Password"
               onChange={handleChange}
-              class="input input-bordered w-full focus:outline-none"
+              className="input input-bordered w-full focus:outline-none"
             />
             <input
               type="password"
@@ -89,10 +89,10 @@ const ResetPasswordScreen = () => {
               value={inputValues.confirm_password}
               placeholder="Confirm Password"
               onChange={handleChange}
-              class="input input-bordered w-full focus:outline-none"
+              className="input input-bordered w-full focus:outline-none"
             />
             <button
-              class="btn border-none bg-forum normal-case mr-2"
+              className="btn border-none bg-forum normal-case mr-2"
               type="submit"
               disabled={submitted}
             >
