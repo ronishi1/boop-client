@@ -145,19 +145,19 @@ const ProfileScreen = ({fetchUser,user}) => {
                   leaveFrom="opacity-100"
                   leaveTo="opacity-0"
                 >
-                <div class="alert alert-error py-1.5 shadow-lg mt-5">
+                <div className="alert alert-error py-1.5 shadow-lg mt-5">
                   <div>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                     <span>{imageError.message}</span>
                   </div>
                 </div>
               </Transition>
             </div>
             <div className="flex place-content-center mt-5 mb-5">
-              <label for="upload-photo" className="btn bg-forum border-none">
+              <label htmlFor="upload-photo" className="btn bg-forum border-none">
                 Change avatar
               </label>
-              <input type="file" id="upload-photo" hidden="true" onChange={handleUpload}/>
+              <input type="file" id="upload-photo" hidden={true} onChange={handleUpload}/>
             </div>
           </div>
         ) : (
@@ -191,7 +191,7 @@ const ProfileScreen = ({fetchUser,user}) => {
         <div className="flex flex-col place-content-center mb-8 pt-4 px-16">
           {editingBio ?
           (<div className="flex flex-col">
-            <textarea class="textarea border-2 border-gray-500/30 focus:ring-0 focus:outline-none" placeholder="Bio" onChange={(event) => { setInput(event.target.value);}}>{profile.bio}</textarea>
+            <textarea className="textarea border-2 border-gray-500/30 focus:ring-0 focus:outline-none" placeholder="Bio" onChange={(event) => { setInput(event.target.value);}}>{profile.bio}</textarea>
             <div className="flex justify-end space-x-4">
               <a className="link no-underline text-forum py-4 w-min" onClick={() => toggleBioEdit(!editingBio)}>
                 Cancel
@@ -215,7 +215,7 @@ const ProfileScreen = ({fetchUser,user}) => {
         {user && profile && profile.username != user.username ? (
           <div className="flex place-content-center py-8">
             <button
-              class="btn bg-forum border-forum w-1/5 hover:bg-forum hover:opacity-50 hover:border-forum"
+              className="btn bg-forum border-forum w-1/5 hover:bg-forum hover:opacity-50 hover:border-forum"
               onClick={() => handleFollow()}
             >
               {profile.followers ? (profile.followers.includes(user._id) ? "Followed" : "Follow") : <></>}

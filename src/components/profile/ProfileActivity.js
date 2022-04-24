@@ -20,9 +20,9 @@ const ProfileActivity = ({activities}) => {
   return (
     <div className='card static ml-8 py-4 px-12 shadow'>
       <p className='py-4 text-lg font-medium'>Recent Activity</p>
-      {activities.map((activity) => {
+      {activities.map((activity,index) => {
         return (
-          <div className='grid grid-cols-5'>
+          <div key={index} className='grid grid-cols-5'>
             <div className='flex flex-row col-span-3'>
               <p className='pr-1'>{activity.activity_type}</p>
               <p className={"text-"+activity.content.content_color}>{activity.content.title}</p>

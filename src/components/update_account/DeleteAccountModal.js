@@ -46,9 +46,8 @@ const DeleteAccountModal = ({fetchUser}) => {
 
   return (
     <div>
-      {/* I think we can just move this button to the navbar we might have to rename id */}
-      <label for="account-delete-modal" 
-      class="btn btn-outline border-red-500 text-red-500 modal-button
+      <label htmlFor="account-delete-modal"
+      className="btn btn-outline border-red-500 text-red-500 modal-button
       hover:bg-red-500 hover:text-white hover:border-red-500">
         Delete Account
       </label>
@@ -56,18 +55,18 @@ const DeleteAccountModal = ({fetchUser}) => {
       <input
         type="checkbox"
         id="account-delete-modal"
-        class="modal-toggle"
+        className="modal-toggle"
         checked={checked}
-        onClick={handleChecked}
+        onChange={handleChecked}
       />
 
-      <label for="account-delete-modal" className="modal cursor-pointer">
-        <label class="modal-box">
-          <form class="w-full h-full" onSubmit={handleDeleteAccount}>
-            <div class="grid items-center  space-y-4 p-2">
-              <div class="w-full flex flex-row justify-between">
-                <h3 class="text-xl font-bold">Delete Account?</h3>
-                <label class="cursor-pointer " onClick={handleChecked}>
+    <label htmlFor="account-delete-modal" className="modal cursor-pointer">
+        <label className="modal-box">
+          <form className="w-full h-full" onSubmit={handleDeleteAccount}>
+            <div className="grid items-center  space-y-4 p-2">
+              <div className="w-full flex flex-row justify-between">
+                <h3 className="text-xl font-bold">Delete Account?</h3>
+                <label className="cursor-pointer " onClick={handleChecked}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-6 w-6"
@@ -84,28 +83,28 @@ const DeleteAccountModal = ({fetchUser}) => {
                   </svg>
                 </label>
               </div>
-              <div class="w-full space-y-4">
-                <div class="place-items-start items-center">
-                  <h3 class="text-sm">This action cannot be undone.</h3>
+              <div className="w-full space-y-4">
+                <div className="place-items-start items-center">
+                  <h3 className="text-sm">This action cannot be undone.</h3>
                 </div>
                 <input
                   type="password"
                   placeholder="Password"
                   name="password"
-                  class="input input-bordered w-full focus:outline-none"
+                  className="input input-bordered w-full focus:outline-none"
                   value={input.password}
                   onChange={(e) => setInput({password: e.target.value})}
                 />
               </div>
-              <span class="w-full flex flex-row justify-between items-center ">
+              <span className="w-full flex flex-row justify-between items-center ">
                 <label
-                  class="text-zinc-400 text-sm ml-1 cursor-pointer "
-                  for="account-delete-modal"
+                  className="text-zinc-400 text-sm ml-1 cursor-pointer "
+                  htmlFor="account-delete-modal"
                 >
                   Cancel
                 </label>
                 <button
-                  class={`text-sm font-bold mr-1 text-story`}
+                  className={`text-sm font-bold mr-1 text-story`}
                   type="submit"
                 >
                   Delete
@@ -120,9 +119,9 @@ const DeleteAccountModal = ({fetchUser}) => {
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
               >
-                <div class="alert alert-error py-1.5 shadow-lg">
+                <div className="alert alert-error py-1.5 shadow-lg">
                   <div>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                     <span>{error.message}</span>
                   </div>
                 </div>

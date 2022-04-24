@@ -23,6 +23,7 @@ const ProfilePublished = ({username}) => {
       <div className='flex flex-row space-x-2 overflow-x-auto'>
         {publishedWorks.map((content) => (
           <ContentCard
+            key={content._id}
             id={content._id}
             title={content.series_title}
             cover={content.cover_image}

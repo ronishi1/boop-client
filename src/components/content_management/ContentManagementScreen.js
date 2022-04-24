@@ -428,7 +428,7 @@ const ContentManagementScreen = ({user}) => {
                       <div className="flex flex-row justify-between mt-2">
                         <span className="text-2xl font-medium">Cover Image</span>
                         {published ? <></> :
-                        <label for="upload-photo" className="btn btn-xs bg-forum border-none flex flex-row items-center mt-1">
+                        <label htmlFor="upload-photo" className="btn btn-xs bg-forum border-none flex flex-row items-center mt-1">
                           <div className="mr-1">
                             Change cover image
                           </div>
@@ -450,8 +450,8 @@ const ContentManagementScreen = ({user}) => {
                               />
                             :
                             <div>
-                          <input type="file" id="upload-photo" hidden="true" onChange={handleUpload}/>
-                          <label for="upload-photo" className="cursor-pointer">
+                          <input type="file" id="upload-photo" hidden={true} onChange={handleUpload}/>
+                          <label htmlFor="upload-photo" className="cursor-pointer">
                             <img
                               className='w-full max-w-lg hover:cursor-pointer hover:opacity-80'
                               src={content.cover_image}
@@ -462,7 +462,7 @@ const ContentManagementScreen = ({user}) => {
                         </div>
                         :
                         <div className="cursor-pointer">
-                          <label for="upload-photo" className="cursor-pointer">
+                          <label htmlFor="upload-photo" className="cursor-pointer">
                             <div className="flex place-content-center">
                               <div className="text-lg">
                                 No cover image

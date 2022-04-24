@@ -9,7 +9,7 @@ const ListScreen = ({listType,contents,username}) => {
   let listName = listType.toLowerCase();
   let hasStory = false;
   return (
-    <div class="container mx-auto">
+    <div className="container mx-auto">
       <div className="text-2xl">
         <Link to={`/profile/${username}`} className="text-link">
           {username + '\'s '}
@@ -22,7 +22,7 @@ const ListScreen = ({listType,contents,username}) => {
           {contents.map((content) => {
             if(content.content_type == "C"){
               hasComic = true;
-              return <ContentCard title={content.series_title} cover={content.cover_image} size="L" id={content._id}/>
+              return <ContentCard key={content._id} title={content.series_title} cover={content.cover_image} size="L" id={content._id}/>
             }
           })}
           {!hasComic ? <div className="text-xl text-gray-400">There are no comics in this {listName}. </div> : <></>}
@@ -34,7 +34,7 @@ const ListScreen = ({listType,contents,username}) => {
           {contents.map((content) => {
             if(content.content_type == "S"){
               hasStory = true;
-              return <ContentCard title={content.series_title} cover={content.cover_image} size="L" id={content._id} />
+              return <ContentCard key={content._id} title={content.series_title} cover={content.cover_image} size="L" id={content._id} />
             }
           })}
           {!hasStory ? <div className="text-xl text-gray-400">There are no no stories in this {listName}. </div> : <></>}

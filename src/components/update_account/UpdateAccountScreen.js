@@ -158,19 +158,19 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-          <div class="alert alert-error py-1.5 shadow-lg mt-5">
+          <div className="alert alert-error py-1.5 shadow-lg mt-5">
             <div>
-              <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
               <span>{imageError.message}</span>
             </div>
           </div>
         </Transition>
       </div>
       <div className="flex place-content-center mt-5">
-        <label for="upload-photo" className="btn bg-forum border-none">
+        <label htmlFor="upload-photo" className="btn bg-forum border-none">
           Change avatar
         </label>
-        <input type="file" id="upload-photo" hidden="true" onChange={handleUpload}/>
+        <input type="file" id="upload-photo" hidden={true} onChange={handleUpload}/>
 
       </div>
       <div className="flex place-content-center">
@@ -184,9 +184,9 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div class="alert alert-error py-1.5 shadow-lg">
+            <div className="alert alert-error py-1.5 shadow-lg">
               <div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 <span>{usernameError.message}</span>
               </div>
             </div>
@@ -198,13 +198,13 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
           <input
             type="text"
             placeholder="Enter new username"
-            class="mt-4 input input-bordered w-full"
+            className="mt-4 input input-bordered w-full"
             name="username"
             value={input.username}
             onChange={handleChange}
           />
           <div className="flex justify-end">
-            <a class="link no-underline text-forum mt-2" onClick={handleChangeUsername}>Update</a>
+            <a className="link no-underline text-forum mt-2" onClick={handleChangeUsername}>Update</a>
           </div>
         </div>
       </div>
@@ -217,14 +217,15 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
           <textarea
             type="text"
             placeholder="Enter bio"
-            class="mt-4 input input-bordered w-full"
+            className="mt-4 input input-bordered w-full"
             name="bio"
             onChange={handleChange}
+            value={input.bio}
           >
-            {user.bio}
+
           </textarea>
           <div className="flex justify-end">
-            <a class="link no-underline text-forum mt-2" onClick={handleBioEdit}>Update</a>
+            <a className="link no-underline text-forum mt-2" onClick={handleBioEdit}>Update</a>
           </div>
         </div>
       </div>
@@ -240,9 +241,9 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div class="alert alert-error py-1.5 shadow-lg">
+            <div className="alert alert-error py-1.5 shadow-lg">
               <div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 <span>{emailError.message}</span>
               </div>
             </div>
@@ -254,7 +255,7 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
           <input
             type="text"
             placeholder="Enter new email"
-            class="mt-4 input input-bordered w-full"
+            className="mt-4 input input-bordered w-full"
             name="email"
             value={input.email}
             onChange={handleChange}
@@ -262,13 +263,13 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
           <input
             type="password"
             placeholder="Enter password"
-            class="mt-4 input input-bordered w-full"
+            className="mt-4 input input-bordered w-full"
             name="emailPW"
             value={input.emailPW}
             onChange={handleChange}
           />
           <div className="flex justify-end">
-            <a class="link no-underline text-forum mt-2" onClick={handleChangeEmail}>Update</a>
+            <a className="link no-underline text-forum mt-2" onClick={handleChangeEmail}>Update</a>
           </div>
         </div>
       </div>
@@ -283,9 +284,9 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div class="alert alert-error py-1.5 shadow-lg">
+            <div className="alert alert-error py-1.5 shadow-lg">
               <div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 <span>{passwordError.message}</span>
               </div>
             </div>
@@ -296,7 +297,7 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
           <input
             type="password"
             placeholder="Enter new password"
-            class="mt-4 input input-bordered w-full"
+            className="mt-4 input input-bordered w-full"
             name="password"
             value={input.password}
             onChange={handleChange}
@@ -304,7 +305,7 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
           <input
             type="password"
             placeholder="Confirm new password"
-            class="mt-4 input input-bordered w-full"
+            className="mt-4 input input-bordered w-full"
             name="confirmPassword"
             value={input.confirmPassword}
             onChange={handleChange}
@@ -312,13 +313,13 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
           <input
             type="password"
             placeholder="Enter old password"
-            class="mt-4 input input-bordered w-full"
+            className="mt-4 input input-bordered w-full"
             name="passwordPW"
             value={input.passwordPW}
             onChange={handleChange}
           />
           <div className="flex justify-end">
-            <a class="link no-underline text-forum mt-2" onClick={handleChangePassword}>Update</a>
+            <a className="link no-underline text-forum mt-2" onClick={handleChangePassword}>Update</a>
           </div>
           <Transition
             show={submitted}
@@ -329,9 +330,9 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div class="alert alert-info shadow-lg">
+            <div className="alert alert-info shadow-lg">
               <div>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-current flex-shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 <span>
                   <div>Your password has been updated.</div>
                 </span>
