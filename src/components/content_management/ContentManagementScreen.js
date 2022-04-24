@@ -95,6 +95,7 @@ const ContentManagementScreen = ({user}) => {
   }
 
   const handlePublish = async()  => {
+    await saveChanges();
     await PublishContent({variables:{contentID:id}});
     navigate("/studio");
   }
