@@ -96,10 +96,12 @@ const ComicEditScreen = ({tps}) => {
   const handleUndo = () => {
     tps.undoTransaction();
     toggleUndo(tps.hasTransactionToUndo());
+    toggleRedo(tps.hasTransactionToRedo());
   }
 
   const handleRedo = () => {
     tps.redoTransaction();
+    toggleUndo(tps.hasTransactionToUndo());
     toggleRedo(tps.hasTransactionToRedo());
   }
   // attempt to set up undo/redo
