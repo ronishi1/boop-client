@@ -31,7 +31,8 @@ const StoryEditScreen = () => {
   // Need to fix sidebar Arrow
   return (
     <div>
-      <StoryBoardTool />
+      <QuillEditor/>
+      {/* <StoryBoardTool /> */}
     </div>
     // {/* <div class="drawer"> */}
     //       {/* <div class="drawer-content">
