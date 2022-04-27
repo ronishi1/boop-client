@@ -8,7 +8,8 @@ const ForumPostCard = ({post}) => {
   "July", "Aug", "Sep", "Oct", "Nov", "Dec" ];
 
   const formatDate = () => {
-    let date = post.publication_date;
+    console.log(post);
+    let date = new Date(post.timestamp);
     let month = months[date.getMonth()-1];
     let pm = date.getHours() > 12;
     let hour = date.getHours();
@@ -23,7 +24,7 @@ const ForumPostCard = ({post}) => {
     <div className='card-content grid content-center'>
       <Link to="/post">
       <figure className='flex'>
-        <img className="h-16 w-16 object-cover pr-2" src={post.cover_image} alt="cover art"/>
+        <img className="h-16 w-16 object-cover pr-2" src={post.linked_image ? post.linked_image : "https://static.thenounproject.com/png/944120-200.png"} alt="cover art"/>
         <div className='flex flex-col'>
           <div className='text-lg text-link font-medium leading-none'>
             {post.title}
@@ -32,7 +33,7 @@ const ForumPostCard = ({post}) => {
             <div className='flex flex-row'>
               <p className='mr-1'>by</p>
               <Link to="/profile">
-                <div className='text-link'>{post.author}</div>
+                <div className='text-link'>{post.author_name}</div>
               </Link>
             </div>
             {formatDate()}

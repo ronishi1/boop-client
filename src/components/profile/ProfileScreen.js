@@ -132,7 +132,7 @@ const ProfileScreen = ({fetchUser,user}) => {
             <div className="flex place-content-center">
             <img
               className="h-48 object-contain mask mask-circle"
-              src={user ? user.profile_pic : "https://sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png"}
+              src={user.profile_pic ? user.profile_pic : "https://sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png"}
             />
             </div>
             <div className="flex place-content-center">

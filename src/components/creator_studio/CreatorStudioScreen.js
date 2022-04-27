@@ -39,6 +39,24 @@ const CreatorStudioScreen = ({user}) => {
     refetch();
     setShowDelete(false);
   }
+
+  let anyPublished = false;
+  let anyUnpublished = false;
+  if(contents){
+    contents.forEach((content) => {
+      if(content != null){
+        let published = false;
+        let temp = new Date(content.publication_date);
+        let temp2 = new Date(null);
+        if(temp.getTime() != temp2.getTime()){
+          anyPublished = true;
+        }
+        if(temp.getTime() == temp2.getTime()){
+          anyUnpublished = true;
+        }
+      }
+    })
+  }
   if(loading){
     return <Loading />
   }
@@ -140,6 +158,7 @@ const CreatorStudioScreen = ({user}) => {
                   )
                 }
               })}
+              {contents.length == 0 ? <div className="text-lg text-gray-400">You have no works in progress</div> : <></>}
             </div>
             <div className="col-span-7 ml-10">
               <div className="text-2xl font-normal">Published Works</div>
@@ -170,6 +189,7 @@ const CreatorStudioScreen = ({user}) => {
                     }
                   }
                 })}
+                {!anyPublished ? <div className="text-lg text-gray-400">You have no published works.</div> : <></>}
               </div>
             </Transition>
               <div className="divider"></div>
@@ -201,6 +221,8 @@ const CreatorStudioScreen = ({user}) => {
                     }
                   }
                 })}
+                {!anyUnpublished ? <div className="text-lg text-gray-400">You have no unpublished works.</div> : <></>}
+
               </div>
             </Transition>
 

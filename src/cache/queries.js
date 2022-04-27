@@ -299,3 +299,23 @@ export const GET_USER_PUBLISHED = gql`
 		}
 	}
 `
+
+export const GET_CATEGORY_POSTS = gql`
+	query GetCategoryPosts($category: Category){
+		getCategoryPosts(category: $category){
+			_id
+			name
+			posts {
+				_id
+				title
+				author
+				author_name
+				timestamp
+				linked_image
+				linked_title
+			}
+			description
+			category
+		}
+	}
+`

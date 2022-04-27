@@ -344,18 +344,18 @@ const ForumHomeScreen = () => {
       },
     ],
   };
-
+  
   return (
     <div className="flex place-content-center">
       <div className="w-1/2 mr-20">
         <div className="pb-4">
-          <ForumHomeGeneral data={data.general} />
+          <ForumHomeGeneral />
         </div>
         <div className="pb-4">
-          <ForumHomeStory data={data.stories} />
+          <ForumHomeStory/>
         </div>
         <div className="pb-4">
-          <ForumHomeComic data={data.comics} />
+          <ForumHomeComic />
         </div>
       </div>
       <div className="w-64 h-max flex flex-col rounded-none border-4 border-forum">

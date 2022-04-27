@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 const ForumTopicCard = ({data}) => {
   // USED ON FORUM HOME SCREEN
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=255%3A540
+
   return (
     <div>
         <div className='text-lg font-medium text-link leading-normal'>
@@ -16,12 +17,12 @@ const ForumTopicCard = ({data}) => {
         {data.description}
       </div>
       <div className='h-20 grid grid-cols-3'>
-        <ForumPostCard post={data.posts[0]}/>
-        <ForumPostCard post={data.posts[1]}/>
-        <ForumPostCard post={data.posts[2]}/>
+        {data.posts[0] ? <ForumPostCard post={data.posts[0]}/> : <></>}
+        {data.posts[1] ? <ForumPostCard post={data.posts[1]}/> : <></>}
+        {data.posts[2] ? <ForumPostCard post={data.posts[2]}/> : <></>}
       </div>
     </div>
-    
+
   );
 }
 

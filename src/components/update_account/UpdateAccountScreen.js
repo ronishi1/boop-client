@@ -144,7 +144,7 @@ const UpdateAccountScreen = ({fetchUser, user}) => {
       <div className="flex place-content-center">
         <div className="avatar">
           <div className="mt-20 w-64 rounded-full border-2 border-forum">
-            <img src={user ? user.profile_pic : "https://sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png"} />
+            <img src={user.profile_pic ? user.profile_pic : "https://sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png"} />
           </div>
         </div>
       </div>
