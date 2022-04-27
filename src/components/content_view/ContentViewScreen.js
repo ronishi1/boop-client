@@ -71,19 +71,18 @@ const ContentViewScreen = () => {
             Series Title: <strong className="cursor-pointer" onClick={handleSeries}>{chapter.series_title}</strong>
           </div>
           <ChapterSelect chapter={chapter} currentChapter={currentChapter} chapterTitles={chapterTitles} id={id} chapterIds={chapterIds} handleChapter={handleChapter} currentPage={currentPage}
-          pageDropdown={pageDropdown} handleSelectPage={handleSelectPage}/>
+          pageDropdown={pageDropdown} handleSelectPage={handleSelectPage} contentType={chapter.content_type}/>
         </div>
       </div>
       {chapter.content_type === "S"? 
-        <StoryViewScreen seriesTItle={seriesTitle} chapter={chapter}/> 
+        <StoryViewScreen chapter={chapter}/> 
         :
-        <ComicViewScreen handleSeries={handleSeries} chapter={chapter} currentChapter={currentChapter} chapterTitles={chapterTitles}
-          chapterIds={chapterIds} handleChapter={handleChapter} currentPage={currentPage} pageDropdown={pageDropdown} handleSelectPage={handleSelectPage}/>
+        <ComicViewScreen chapter={chapter} currentPage={currentPage}/>
       }
       <div className='flex place-content-center'>
         <div className='flex flex-col w-2/3'>
           <ChapterSelect chapter={chapter} currentChapter={currentChapter} chapterTitles={chapterTitles} id={id} chapterIds={chapterIds} handleChapter={handleChapter} currentPage={currentPage}
-          pageDropdown={pageDropdown} handleSelectPage={handleSelectPage}/>
+          pageDropdown={pageDropdown} handleSelectPage={handleSelectPage} contentType={chapter.content_type}/>
         </div>
       </div>
     </div>
