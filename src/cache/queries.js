@@ -200,6 +200,7 @@ export const GET_CHAPTER_VIEW = gql`
 				num_pages
 				page_images
 				publication_date
+				content_type
 			}
 			chapter_titles
 			chapter_ids
