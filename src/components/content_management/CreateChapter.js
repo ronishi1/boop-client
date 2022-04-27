@@ -19,12 +19,16 @@ const CreateChapter = ({toggleCreateChapterCallback,contentID,series_title,autho
       setError({status:true,message:"Series title must be at least 3 characters"});
       setTimeout(() => {
         setError({status:false,message:''});
-        setTitle("");
-      },3000)
+      },2000)
+      setTitle("");
       return;
     }
-    let result = await CreateChapter({variables: {contentID: contentID, chapterTitle: title, seriesTitle: series_title, authorID: authorID, contentType: content_type}});
-    navigate(`/comic-edit/${result.data.createChapter}`);
+    else
+    {
+      let result = await CreateChapter({variables: {contentID: contentID, chapterTitle: title, seriesTitle: series_title, authorID: authorID, contentType: content_type}});
+      navigate(`/comic-edit/${result.data.createChapter}`);
+    }
+
   }
 
   return (

@@ -20,17 +20,19 @@ const CreateContent = ({toggleCreateCallback}) => {
       setError({status:true,message:"Series title must be at least 3 characters"});
       setTimeout(() => {
         setError({status:false,message:''});
-        setTitle("");
-      },3000)
+      },2000)
+      setTitle("");
     }
-    if(comicSelected){
-      let result = await CreateContent({variables: {contentInput: {series_title:title,content_type:"C",synopsis:''}}});
-      console.log(result.data.createContent);
-      navigate(`/content-management/${result.data.createContent}`);
-    }
-    else {
-      let result = await CreateContent({variables: {contentInput: {series_title:title,content_type:"S"}}});
-      navigate(`/content-management/${result.data.createContent}`);
+    else{
+      if(comicSelected){
+        let result = await CreateContent({variables: {contentInput: {series_title:title,content_type:"C",synopsis:''}}});
+        console.log(result.data.createContent);
+        navigate(`/content-management/${result.data.createContent}`);
+      }
+      else {
+        let result = await CreateContent({variables: {contentInput: {series_title:title,content_type:"S"}}});
+        navigate(`/content-management/${result.data.createContent}`);
+      }
     }
   }
 
