@@ -26,7 +26,16 @@ const CreateChapter = ({toggleCreateChapterCallback,contentID,series_title,autho
     else
     {
       let result = await CreateChapter({variables: {contentID: contentID, chapterTitle: title, seriesTitle: series_title, authorID: authorID, contentType: content_type}});
-      navigate(`/comic-edit/${result.data.createChapter}`);
+      switch (content_type) {
+        case "C":
+          navigate(`/comic-edit/${result.data.createChapter}`);
+          break;
+        case "S":
+          navigate(`/story-edit/${result.data.createChapter}`);
+          break;
+        default:
+      }
+      
     }
 
   }
