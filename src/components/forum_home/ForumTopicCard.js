@@ -9,8 +9,8 @@ const ForumTopicCard = ({data}) => {
   return (
     <div>
         <div className='text-lg font-medium text-link leading-normal'>
-          <Link to="/topic">
-            {data.title}
+          <Link to={`/topic/${data._id}`}>
+            {data.name}
           </Link>
         </div>
       <div className='text-sm leading-none pb-2'>

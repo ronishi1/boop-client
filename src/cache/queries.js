@@ -319,3 +319,23 @@ export const GET_CATEGORY_POSTS = gql`
 		}
 	}
 `
+
+export const GET_TOPIC = gql`
+	query GetTopic($topicId: ID){
+		 getTopic(topicId: $topicId){
+			 _id
+			 name
+			 posts {
+				 _id
+				 title
+				 author
+				 author_name
+				 timestamp
+				 linked_image
+				 linked_title
+			 }
+			 description
+			 category
+		 }
+	}
+`
