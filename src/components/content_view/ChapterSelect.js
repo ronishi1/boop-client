@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-const ChapterSelect = ({chapter, currentChapter, chapterTitles, chapterIds, handleChapter, currentPage, pageDropdown, handleSelectPage, id}) => {
+const ChapterSelect = ({chapter, currentChapter, chapterTitles, chapterIds, handleChapter, currentPage, pageDropdown, handleSelectPage, id, contentType}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=315%3A2129 
   let navigate = useNavigate();
 
@@ -17,8 +17,8 @@ const ChapterSelect = ({chapter, currentChapter, chapterTitles, chapterIds, hand
     <div className='flex justify-between'>
       <div className="flex flex-row space-x-2">
         <div className="grid justify-self-center dropdown">
-          <label tabindex="0" className="select select-bordered h-8 min-h-0 w-full overflow-hidden">Chapter : {currentChapter}</label>
-          <ul tabindex="0" className="dropdown-content absolute z-10 mt-10 border-solid border-2 menu bg-base-100 w-full rounded-box overflow-hidden max-h-80">
+          <label tabIndex="0" className="select select-bordered h-8 min-h-0 w-full overflow-hidden">Chapter : {currentChapter}</label>
+          <ul tabIndex="0" className="dropdown-content absolute z-10 mt-10 border-solid border-2 menu bg-base-100 w-full rounded-box overflow-hidden max-h-80">
             {chapterTitles.map((chapterTitle, i) => {
               return (
                 <Link to={`/view/${chapterIds[i]}`}>
@@ -39,9 +39,9 @@ const ChapterSelect = ({chapter, currentChapter, chapterTitles, chapterIds, hand
           </ul>
         </div>
 
-        <div className="grid justify-self-end dropdown mr-4">
-          <label tabindex="0" class="select select-bordered h-8 min-h-0 w-100">Page {currentPage}</label>
-          <ul tabindex="0" class="dropdown-content absolute z-10 mt-10 border-solid border-2 menu bg-base-100 w-24 rounded-box overflow-hidden max-h-80">
+        {contentType === "C" && <div className="grid justify-self-end dropdown mr-4">
+          <label tabIndex="0" class="select select-bordered h-8 min-h-0 w-100">Page {currentPage}</label>
+          <ul tabIndex="0" class="dropdown-content absolute z-10 mt-10 border-solid border-2 menu bg-base-100 w-24 rounded-box overflow-hidden max-h-80">
             {pageDropdown.map((page, i) => {
               return (
                 <li key={i}>
@@ -57,7 +57,7 @@ const ChapterSelect = ({chapter, currentChapter, chapterTitles, chapterIds, hand
               );
             })}
           </ul>
-        </div>
+        </div>}
       </div>
       <div>
         <div className="btn-group">
