@@ -14,7 +14,8 @@ const StoryViewScreen = ({chapter}) => {
 
   return (
     <div className='flex justify-center'>
-      <div className="w-3/4 m-8 leading-relaxed" onCopy={handleCopy} onCut={handleCopy}>
+      <div className="w-3/4 m-8 leading-relaxed" 
+      onMouseDown={handleCopy} onCopy={handleCopy} onCut={handleCopy}>
         <ReactQuill 
           theme="snow" 
           value={content}
