@@ -176,7 +176,7 @@ const App = () => {
         <Route path="/forum-edit" element={<ForumEditScreen />} />
         <Route path="/forum-home" element={<ForumHomeScreen />} />
         <Route path="/forum-management" element={<ForumManagementScreen />} />
-        <Route path="/post" element={<ForumPostScreen />} />
+        <Route path="/post/:id" element={<ForumPostScreen />} />
         <Route path="/topic/:id" element={<ForumTopicScreen />} />
         <Route path="/landing" element={<LandingScreen />} />
         <Route path="/profile/:username" element={<ProfileScreen user={user} fetchUser={refetch}/>} />

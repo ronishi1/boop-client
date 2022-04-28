@@ -22,25 +22,31 @@ const ForumPostCard = ({post}) => {
 
   return (
     <div className='card-content grid content-center'>
-      <Link to="/post">
       <figure className='flex'>
-        <img className="h-16 w-16 object-cover pr-2" src={post.linked_image ? post.linked_image : "https://static.thenounproject.com/png/944120-200.png"} alt="cover art"/>
+        <Link to={`/post/${post._id}`}>
+          <img className="h-16 w-16 object-cover pr-2" src={post.linked_image ? post.linked_image : "https://static.thenounproject.com/png/944120-200.png"} alt="cover art"/>
+        </Link>
         <div className='flex flex-col'>
-          <div className='text-lg text-link font-medium leading-none'>
-            {post.title}
-          </div>
+          <Link to={`/post/${post._id}`}>
+            <div className='text-lg text-link font-medium leading-none'>
+              {post.title}
+            </div>
+          </Link>
           <div className='text-xs leading-snug flex flex-col'>
             <div className='flex flex-row'>
               <p className='mr-1'>by</p>
-              <Link to="/profile">
-                <div className='text-link'>{post.author_name}</div>
-              </Link>
+                {post.author_name != "AutoModerator" ?
+                  <Link to={`/profile/${post.author_name}`}>
+                    <div className='text-link'>{post.author_name}</div>
+                  </Link>
+                  :
+                  <div>{post.author_name}</div>
+                }
             </div>
             {formatDate()}
           </div>
         </div>
       </figure>
-      </Link>
     </div>
   );
 }

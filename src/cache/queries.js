@@ -334,6 +334,14 @@ export const GET_TOPIC = gql`
 				 timestamp
 				 linked_image
 				 linked_title
+				 tags
+				 num_replies
+				 replies {
+					 author
+					 author_name
+					 content
+					 timestamp
+				 }
 			 }
 			 description
 			 category

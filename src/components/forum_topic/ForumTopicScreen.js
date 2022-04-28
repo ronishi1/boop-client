@@ -16,14 +16,15 @@ const ForumTopicScreen = () => {
   let topic = {}
   if(data) {
     topic = data.getTopic;
+    console.log(topic);
     if(topic.category == "General"){
       bg = "bg-forum";
     }
     else if (topic.category == "Comics"){
-      bg = "bg-comics";
+      bg = "bg-comic";
     }
     else {
-      bg = "bg-stories";
+      bg = "bg-story";
     }
   }
 
@@ -116,7 +117,7 @@ const ForumTopicScreen = () => {
             </ul>
           </div>
         </div>
-        <ForumTopicTable posts={data2.topic_posts} />
+        <ForumTopicTable posts={topic.posts} />
       </div>
     </div>
   );

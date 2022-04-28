@@ -14,6 +14,7 @@ const ForumTopicTable = ({posts}) => {
           </tr>
         </thead>
         <tbody>
+          {posts.length == 0 ? <div className="text-lg p-4 text-gray-400">There are currently no posts in this topic.</div> : <></>}
           {posts.map((post) => {
             return <ForumTopicTableEntry post={post}/>
           })}
