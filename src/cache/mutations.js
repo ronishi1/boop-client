@@ -128,7 +128,11 @@ export const SAVE_PAGE = gql`
 		savePage(chapterID: $chapterID, pageNumber: $pageNumber, url: $url, pageJSON: $pageJSON)
 	}
 `
-
+export const SAVE_TEXT = gql`
+	mutation SaveText($chapterID: ID, $pageJSON: String) {
+		saveText(chapterID: $chapterID, pageJSON: $pageJSON)
+	}
+`
 export const DELETE_PAGE = gql`
 	mutation DeletePage($chapterID: ID, $pageNumber: Int) {
 		deletePage(chapterID: $chapterID, pageNumber: $pageNumber)

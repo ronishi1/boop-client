@@ -2,6 +2,47 @@
 @tailwind components;
 @tailwind utilities;
 
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value='']::before,
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value='']::before
+{
+  content: 'Arial';
+}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value='Georgia']::before,
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value='Georgia']::before
+{
+  content: 'Georgia';
+  font-family: 'Georgia';
+}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value='arial']::before,
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value='arial']::before
+{
+  content: 'Arial';
+  font-family: 'Arial';
+}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value='arial']::before,
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value='arial']::before
+{
+  content: 'Verdana';
+  font-family: 'Verdana';
+}
+
+/****************************************************
+Set the font-family content used for the HTML content.
+*****************************************************/
+.ql-font-arial {
+  font-family: 'Arial';
+}
+
+.ql-font-Georgia {
+  font-family: 'Georgia';
+}
+
+.ql-font-Georgia {
+  font-family: 'Verdana';
+}
 body {
   font-family: 'Montserrat', sans-serif;
 }

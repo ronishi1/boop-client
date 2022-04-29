@@ -198,6 +198,7 @@ export const GET_CHAPTER_VIEW = gql`
 				series_title
 				chapter_title
 				num_pages
+				page_JSONS
 				page_images
 				publication_date
 				content_type
