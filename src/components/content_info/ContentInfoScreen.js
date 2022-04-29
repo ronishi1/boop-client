@@ -112,7 +112,6 @@ const ContentInfoScreen = ({auth}) => {
     await navigator.clipboard.writeText(temp.value);
     document.body.removeChild(temp);
   };
-
   return (
     <div className="flex place-content-center">
       <div
@@ -189,11 +188,14 @@ const ContentInfoScreen = ({auth}) => {
           pt-0 px-5"
         >
           {/* Either start from beginning or continue */}
+          
+          <Link to={`/view/${content.chapters[0]}`}>
           <button
-            className={"w-full text-white font-bold border border-comic hover:opacity-70 py-2 px-2 mr-4 rounded bg-"+contentColor}
+            className={"w-full text-white font-bold border border-"+contentColor+ " hover:opacity-70 py-2 px-2 mr-4 rounded bg-"+contentColor}
           >
             Read
           </button>
+          </Link>
           <div className="card-body rounded-none max-h-48 overflow-y-auto">
             <p className="text-xs">{content.synopsis}</p>
           </div>
