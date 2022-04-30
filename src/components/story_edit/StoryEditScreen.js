@@ -119,7 +119,7 @@ const StoryEditScreen = () => {
         </div>
         <div className="btn mr-4 mb-4" onClick={() => {setShowPublishConfirm(true)}}>Publish</div>
       </div>
-      <div className="mr-8 ml-8 ">
+      <div className="mr-8 ml-8 mb-8">
         <QuillToolbar toolbarId={'t1'}/>
         <ReactQuill 
             theme="snow" 
