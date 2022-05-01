@@ -9,7 +9,6 @@ import ChapterSelect from './ChapterSelect';
 
 const ContentViewScreen = () => {
   let navigate = useNavigate();
-
   const { id } = useParams();
   // const { loading, error, data, refetch } = useQuery(GET_CHAPTER_VIEW, {
   //   variables: { chapterID:id },
@@ -24,7 +23,7 @@ const ContentViewScreen = () => {
 
   useEffect(() => {
     fetchData();
-  },[currentChapter]);
+  },[id]);
 
   async function fetchData() {
     let result = await GetChapterView({variables: {chapterID:id}});
