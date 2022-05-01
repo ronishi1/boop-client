@@ -376,3 +376,17 @@ export const GET_POST = gql`
 		}
 	}
 `
+
+export const GET_USER_ACTIVITY_FEED = gql`
+	query GetUserActivityFeed($username: String){
+		getUserActivityFeed(username:$username){
+			activity_type
+			content_ID
+			content_name
+			chapter_ID
+			chapter_name
+			timestamp
+			_id
+		}
+	}
+`

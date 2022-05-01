@@ -226,7 +226,7 @@ const ProfileScreen = ({fetchUser,user}) => {
         )}
       </div>
       <div className="w-1/2">
-        <ProfileActivity activities={user_data.activities} />
+        <ProfileActivity username={username}/>
         <ProfilePublished username={username}/>
       </div>
     </div>
