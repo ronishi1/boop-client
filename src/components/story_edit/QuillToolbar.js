@@ -81,9 +81,6 @@ export const formats = [
   "list",
   "bullet",
   "indent",
-  "link",
-  "image",
-  "video",
   "color",
   "code-block"
 ];
@@ -139,7 +136,6 @@ export const QuillToolbar = (props) => {
       <button className="ql-script" value="super" />
       <button className="ql-script" value="sub" />
       <button className="ql-blockquote" />
-      <button className="ql-direction" />
     </span>
     <span className="ql-formats">
       <select className="ql-align" />
