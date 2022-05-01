@@ -64,7 +64,7 @@ const ForumTopicTableEntry = ({post}) => {
         </div>
       </th>
       <th>{post.num_replies}</th>
-      <th>{post.replies.length != 0 ? post.replies[0].toDateString() : ""}</th>
+      <th>{post.replies.length != 0 ? post.replies[0].toDateString() : <div className="text-gray-400 text-sm p-2">There are no replies to this post</div>}</th>
     </tr>
   );
 }

@@ -1,8 +1,19 @@
 import React from "react";
 import ForumPost from "./ForumPost";
-
+import { GET_POST } from '../../cache/queries';
+import {useQuery} from '@apollo/client';
+import {useParams} from 'react-router-dom';
+import Loading from '../loading/Loading'
 const ForumPostScreen = () => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=329%3A2498
+  const { id } = useParams();
+  const { loading, error, data, refetch } = useQuery(GET_POST, {
+      variables: { postId: id },
+    });
+
+  if(data){
+    console.log(data);
+  }
   const samplePost = {
     title: "sample post title :D",
     author: "author of this post",
@@ -60,9 +71,12 @@ const ForumPostScreen = () => {
     ],
   };
 
+  if(loading){
+    return <Loading />
+  }
   return (
     <div className="flex place-content-center">
-      <ForumPost post={samplePost} />
+      <ForumPost post={data.getPost} />
     </div>
   );
 };

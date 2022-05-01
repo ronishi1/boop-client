@@ -47,7 +47,7 @@ const ForumPost = ({post}) => {
           <Link to='/info'>
             <div>
               <p className='text-center font-bold text-comic'>
-                {post.content.title}
+                {post.linked_title}
               </p>
             </div>
             <div className='flex flex-row place-content-center'>
@@ -72,19 +72,19 @@ const ForumPost = ({post}) => {
               })}
             </div>
             <div className='flex my-4 place-content-center h-2/5'>
-              <img className='h-72' src={post.content.cover_image} alt="cover image"/>
+              <img className='h-72' src={post.linked_image} alt="cover image"/>
             </div>
             <div className='h-72 overflow-y-auto'>
-              <p>{post.content.synopsis}</p>
+              <p>{post.linked_synopsis}</p>
             </div>
           </Link>
         </div>
         <div className='w-2/3 ml-12'>
-          
+
             {post.replies.slice((page-1)*repliesPerPage,page*repliesPerPage).map((reply) => {
               return <ForumReply reply={reply}/>
             })}
-          
+
         </div>
       </div>
       <div className='grid grid-cols-3 my-2'>
@@ -96,7 +96,7 @@ const ForumPost = ({post}) => {
           </div>
         </div>
       </div>
-      
+
     </div>
   );
 }

@@ -39,6 +39,7 @@ const StoryEditScreen = () => {
   }, [])
 
   const handleChange = (content, delta, source, editor) => {
+    console.log(text.length)
     setText(content)
     let encode = encodeURI(content)
     SaveText({variables: {chapterID: chapter._id, pageJSON: encode}})
@@ -160,7 +161,7 @@ const StoryEditScreen = () => {
             </div>
           </div>
         </div>
-        <div className="btn mr-4 mb-4" onClick={() => {setShowPublishConfirm(true)}}>Publish</div>
+        <div className={`btn mr-4 mb-4`} disabled={text.length > 11 ? false : true} onClick={() => {setShowPublishConfirm(true)}}>Publish</div>
       </div>
       <div className="mr-8 ml-8 mb-8">
         <QuillToolbar toolbarId={'t1'}/>

@@ -349,3 +349,44 @@ export const GET_TOPIC = gql`
 		 }
 	}
 `
+
+export const GET_POST = gql`
+	query getPost($postId: ID){
+		getPost(postId:$postId){
+			_id
+			title
+			content
+			linked_content
+			linked_title
+			linked_image
+			linked_synopsis
+			tags
+			author
+			author_name
+			replies {
+				author
+				author_name
+				content
+				timestamp
+			}
+			num_replies
+			views
+			timestamp
+			topic
+		}
+	}
+`
+
+export const GET_USER_ACTIVITY_FEED = gql`
+	query GetUserActivityFeed($username: String){
+		getUserActivityFeed(username:$username){
+			activity_type
+			content_ID
+			content_name
+			chapter_ID
+			chapter_name
+			timestamp
+			_id
+		}
+	}
+`
