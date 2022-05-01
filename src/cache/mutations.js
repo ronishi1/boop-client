@@ -175,6 +175,12 @@ export const REMOVE_CONTENT_FROM_FAVORITES = gql`
 	}
 `;
 
+export const EDIT_CHAPTER = gql`
+	mutation EditChapter($chapterID: ID, $chapter_title: String) {
+		editChapter(chapterID: $chapterID, chapter_title: $chapter_title)
+	}
+`;
+
 export const DELETE_CHAPTER = gql`
 	mutation DeleteChapter($chapterID: ID) {
 		deleteChapter(chapterID: $chapterID)

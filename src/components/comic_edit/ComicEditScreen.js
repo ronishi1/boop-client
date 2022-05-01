@@ -1,22 +1,19 @@
 import React, {useState, useRef, useEffect} from 'react';
-import { render } from 'react-dom';
 import { useParams } from 'react-router-dom'
 import { Stage, Layer, Line, Text, Image} from 'react-konva';
 import { Html } from 'react-konva-utils';
 import useImage from 'use-image'
 import { b64toBlob, comicEditTransaction } from '../../utils/utils.js'
-
 import { GET_CONTENT_CHAPTER } from '../../cache/queries';
-import { ADD_PAGE, SAVE_PAGE, DELETE_PAGE, PUBLISH_CHAPTER } from '../../cache/mutations'
+import { ADD_PAGE, SAVE_PAGE, DELETE_PAGE, EDIT_CHAPTER, PUBLISH_CHAPTER } from '../../cache/mutations'
 import { useLazyQuery, useMutation } 	from '@apollo/client';
 import ComicTopToolbar from './ComicTopToolbar';
 import ComicLeftToolbar from './ComicLeftToolbar';
 import ComicRightToolbar from './ComicRightToolbar';
-
 import { Link, useNavigate } from "react-router-dom";
 import { cloneDeep } from '@apollo/client/utilities';
-
 import { Transition } from '@headlessui/react'
+
 const ComicEditScreen = ({tps}) => {
   let { id } = useParams();
   let navigate = useNavigate();
@@ -32,12 +29,15 @@ const ComicEditScreen = ({tps}) => {
   const [addPageClicked,setAddPageClicked] = useState(false);
   const [showPublishConfirm,setShowPublishConfirm] = useState(false);
   const [showDelete,setShowDelete] = useState(false);
+  const [titleError,setTitleError] = useState({status:false,message:""});
+  const [title, setTitle] = useState("");
 
   // might not even use the error
 
   const [SavePage] = useMutation(SAVE_PAGE);
   const [DeletePage] = useMutation(DELETE_PAGE);
   const [AddPage] = useMutation(ADD_PAGE);
+  const [EditChapter] = useMutation(EDIT_CHAPTER);
   const [PublishChapter] = useMutation(PUBLISH_CHAPTER);
 
   const [tool, setTool] = useState('pen');
@@ -132,10 +132,12 @@ const ComicEditScreen = ({tps}) => {
       setBackground(chapter.page_images[currentPage-1])
     }
     let dropdown = []
-    for (var i = 0; i < chapter.num_pages; i++) {
+    for(var i = 0; i < chapter.num_pages; i++) {
       dropdown.push(i+1)
     }
     setDropdown(dropdown)
+
+    setTitle(chapter.chapter_title);
     // console.log(pageBackground)
   }
   useEffect(() => {
@@ -335,23 +337,37 @@ const ComicEditScreen = ({tps}) => {
     );
   };
 
+  const handleChangeTitle = async () => {
+    toggleTyping(!isTyping);
+    if(title.length < 3){
+      setTitleError({status:true,message:"Chapter title must be at least 3 characters"});
+      setTimeout(() => {
+        setTitleError({status:false,message:''});
+      },2000)
+      setTitle(chapter.chapter_title);
+      return;
+    }
+    await EditChapter({variables: {chapterID: id, chapter_title: title}});
+    refetch();
+  }
+
   return (
     <div>
       <div>
         <input
           type="checkbox"
           id="delete-modal"
-          class="modal-toggle"
+          className="modal-toggle"
           checked={showDelete}
           onChange={() => {setShowDelete(false)}}
           />
 
-        <label for="delete-modal" class="modal cursor-pointer">
-          <label class="modal-box w-4/12 max-w-5xl">
+        <label form="delete-modal" className="modal cursor-pointer">
+          <label className="modal-box w-4/12 max-w-5xl">
             <div>
-              <div class="grid items-center space-y-4 p-4 mr-8 ml-8">
-                <div class="w-full flex flex-row justify-between">
-                  <div class="text-left text-xl font-medium">
+              <div className="grid items-center space-y-4 p-4 mr-8 ml-8">
+                <div className="w-full flex flex-row justify-between">
+                  <div className="text-left text-xl font-medium">
                     Are you sure you want to delete this page?
                   </div>
                   <div className="cursor-pointer" onClick={() => {setShowDelete(false)}}>
@@ -371,7 +387,7 @@ const ComicEditScreen = ({tps}) => {
                     </svg>
                   </div>
                 </div>
-                <span class="w-full flex flex-row justify-between items-center">
+                <span className="w-full flex flex-row justify-between items-center">
                   <label
                     className="text-zinc-400 text-sm ml-2 cursor-pointer"
                     onClick={() => {setShowDelete(false)}}
@@ -394,17 +410,17 @@ const ComicEditScreen = ({tps}) => {
         <input
           type="checkbox"
           id="publish-confirm-modal"
-          class="modal-toggle"
+          className="modal-toggle"
           checked={showPublishConfirm}
           onChange={() => {setShowPublishConfirm(false)}}
           />
 
-        <label for="publish-confirm-modal" class="modal cursor-pointer">
-          <label class="modal-box w-4/12 max-w-5xl">
+        <label form="publish-confirm-modal" className="modal cursor-pointer">
+          <label className="modal-box w-4/12 max-w-5xl">
             <div>
-              <div class="grid items-center space-y-4 p-4 mr-8 ml-8">
-                <div class="w-full flex flex-row justify-between">
-                  <div class="text-left text-xl font-medium">
+              <div className="grid items-center space-y-4 p-4 mr-8 ml-8">
+                <div className="w-full flex flex-row justify-between">
+                  <div className="text-left text-xl font-medium">
                     Are you sure you want to publish this chapter?
                     <div className="text-xs">You will not be able to make any changes after you publish.</div>
 
@@ -426,7 +442,7 @@ const ComicEditScreen = ({tps}) => {
                     </svg>
                   </div>
                 </div>
-                <span class="w-full flex flex-row justify-between items-center">
+                <span className="w-full flex flex-row justify-between items-center">
                   <label
                     className="text-zinc-400 text-sm ml-2 cursor-pointer"
                     onClick={() => {setShowPublishConfirm(false)}}
@@ -447,7 +463,7 @@ const ComicEditScreen = ({tps}) => {
       </div>
       <div className="px-8 pb-4" style={{boxShadow: "0 1px 1px 0 rgb(0 0 0 / 0.1)"}}>
         <div className="flex flex-row justify-between">
-          <div className="flex flex-row">
+          <div className="flex flex-row w-5/6">
             <Link to={`/content-management/${chapter.series_id}`}>
               <div className="cursor-pointer mr-2">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -455,9 +471,35 @@ const ComicEditScreen = ({tps}) => {
                 </svg>
               </div>
             </Link>
-          <div className='flex flex-col'>
+          <div className='flex flex-col w-full'>
             <p className='text-xs'>Series Title: <strong>{chapter.series_title}</strong></p>
-            <p className='text-lg'>Chapter Title : <strong>{chapter.chapter_title}</strong></p>
+            <Transition
+              show={titleError.status}
+              enter="transition-opacity duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="transition-opacity duration-500"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <div className="alert alert-error py-1.5 shadow">
+                <div>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                  <span>{titleError.message}</span>
+                </div>
+              </div>
+            </Transition>
+            <div className='flex flex-row text-lg space-x-2'>
+              <p className='border-2 border-transparent'>Chapter Title:</p>
+              <input
+                placeholder="Title your chapter"
+                className='border-2 border-transparent hover:border-inherit focus:outline-none focus:border-inherit'
+                value={title}
+                onFocus={() => toggleTyping(!isTyping)}
+                onChange={(event) => { setTitle(event.target.value);}}
+                onBlur={handleChangeTitle}
+              />
+            </div>
           </div>
           </div>
           <Transition
@@ -470,9 +512,9 @@ const ComicEditScreen = ({tps}) => {
             leaveTo="opacity-0"
             >
             <div className="flex place-content-center -mt-2">
-            <div class="alert alert-info shadow-lg">
+            <div className="alert alert-info shadow-lg">
               <div>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-current flex-shrink-0 w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 <span>Your changes have been saved.</span>
               </div>
             </div>
@@ -488,9 +530,9 @@ const ComicEditScreen = ({tps}) => {
             leaveTo="opacity-0"
             >
             <div className="flex place-content-center -mt-2">
-            <div class="alert alert-info shadow-lg">
+            <div className="alert alert-info shadow-lg">
               <div>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-current flex-shrink-0 w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 <span>New page #{pageDropdown.length} has been successfully created.</span>
               </div>
             </div>
@@ -519,7 +561,7 @@ const ComicEditScreen = ({tps}) => {
             :
             <div className="relative"></div>
             }
-            <div class="absolute top-0">
+            <div className="absolute top-0">
             <Stage
               height={1650}
               width={1275}

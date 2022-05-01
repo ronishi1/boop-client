@@ -16,7 +16,7 @@ const CreateChapter = ({toggleCreateChapterCallback,contentID,series_title,autho
   const handleSubmit = async (event) => {
     event.preventDefault();
     if(title.length < 3){
-      setError({status:true,message:"Series title must be at least 3 characters"});
+      setError({status:true,message:"Chapter title must be at least 3 characters"});
       setTimeout(() => {
         setError({status:false,message:''});
       },2000)

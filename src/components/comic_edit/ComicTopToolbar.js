@@ -8,14 +8,14 @@ const ComicTopToolbar = ({currentPage, pages, handleUndo, handleRedo, hasUndo, h
         <div className='space-x-4'>
           <div className="dropdown">
             <label
-              tabindex="0"
+              tabIndex="0"
               className="select select-bordered h-8 min-h-0 w-28"
             >
               Page: {currentPage}
             </label>
             <ul
-              tabindex="0"
-              class="dropdown-content absolute z-10 mt-2 border-solid border-2 menu bg-base-100 w-28 rounded-box overflow-auto max-h-88"
+              tabIndex="0"
+              className="dropdown-content absolute z-10 mt-2 border-solid border-2 menu bg-base-100 w-28 rounded-box overflow-auto max-h-88"
             >
               {pages.map((page, i) => {
                 return (
