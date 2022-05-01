@@ -163,16 +163,20 @@ const StoryEditScreen = () => {
         </div>
         <div className={`btn mr-4 mb-4`} disabled={text.length > 11 ? false : true} onClick={() => {setShowPublishConfirm(true)}}>Publish</div>
       </div>
-      <div className="mr-8 ml-8 mb-8">
-        <QuillToolbar toolbarId={'t1'}/>
-        <ReactQuill 
-            theme="snow" 
-            value={text !== "" ? text : ""}
-            onChange={handleChange}
-            modules={modules('t1')}
-            formats={formats}
-            />
-        </div>
+      <div class="flex justify-center">
+        <div className="w-3/4 mr-8 ml-8 mb-8">
+          <QuillToolbar toolbarId={'t1'}/>
+          <ReactQuill 
+              theme="snow" 
+              value={text !== "" ? text : ""}
+              onChange={handleChange}
+              modules={modules('t1')}
+              formats={formats}
+              />
+          </div>
+
+      </div>
+     
     </div>
   );
 };
