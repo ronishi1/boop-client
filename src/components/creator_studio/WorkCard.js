@@ -13,7 +13,7 @@ const WorkCard = ({contentID,seriesTitle,cover,contentType}) => {
   return (
     <div>
       <Link to={`/content-management/${contentID}`}>
-        <div className="cursor-pointer card text-primary-content text-center h-48 w-32">
+        <div className="cursor-pointer card text-primary-content static text-center h-48 w-32">
           <div className="card-body justify-end p-2 text-white" style={{background:`linear-gradient(180deg, hsl(0, 100%, 100%, 0), hsl(0, 0%, 0%, 0.65)),url(${cover}) no-repeat center center`,backgroundSize:"cover"}}>
             <div className="font-medium card-title leading-4 text-sm block">{seriesTitle}</div>
             {badge}

@@ -10,7 +10,7 @@ const ForumPostCard = ({post}) => {
   const formatDate = () => {
     console.log(post);
     let date = new Date(post.timestamp);
-    let month = months[date.getMonth()-1];
+    let month = months[date.getMonth()];
     let pm = date.getHours() > 12;
     let hour = date.getHours();
     if(pm) hour -= 12;

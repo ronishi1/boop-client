@@ -1,4 +1,4 @@
-import React, { useState } 	from 'react';
+import React, { useState, useEffect } 	from 'react';
 import ForumTopicCard from './ForumTopicCard';
 import { GET_CATEGORY_POSTS } from '../../cache/queries';
 import {useQuery} from '@apollo/client'
@@ -11,6 +11,10 @@ const ForumHomeComic = () => {
   const { loading, error, data, refetch } = useQuery(GET_CATEGORY_POSTS, {
       variables: { category: "Comics" },
     });
+
+    useEffect(() => {
+      refetch();
+    },[])
 
   if(data) {
     console.log(data.getCategoryPosts);
