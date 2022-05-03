@@ -275,7 +275,7 @@ export const GET_FILTERED_CONTENT = gql`
 			content_type
 		}
 	}
-`
+`;
 
 export const GET_USER_PUBLISHED = gql`
 	query GetUserPublished($username: String){
@@ -300,7 +300,7 @@ export const GET_USER_PUBLISHED = gql`
 			content_type
 		}
 	}
-`
+`;
 
 export const GET_CATEGORY_POSTS = gql`
 	query GetCategoryPosts($category: Category){
@@ -320,7 +320,7 @@ export const GET_CATEGORY_POSTS = gql`
 			category
 		}
 	}
-`
+`;
 
 export const GET_TOPIC = gql`
 	query GetTopic($topicId: ID){
@@ -348,7 +348,7 @@ export const GET_TOPIC = gql`
 			 category
 		 }
 	}
-`
+`;
 
 export const GET_POST = gql`
 	query getPost($postId: ID){
@@ -375,7 +375,7 @@ export const GET_POST = gql`
 			topic
 		}
 	}
-`
+`;
 
 export const GET_USER_ACTIVITY_FEED = gql`
 	query GetUserActivityFeed($username: String){
@@ -389,4 +389,12 @@ export const GET_USER_ACTIVITY_FEED = gql`
 			_id
 		}
 	}
-`
+`;
+
+export const GET_CONTENT_BASIC = gql`
+	query GetContentBasic($contentID: ID!){
+		getContentInfo(contentID: $contentID){
+			content_type
+		}
+	}
+`;
