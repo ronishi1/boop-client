@@ -390,3 +390,21 @@ export const GET_USER_ACTIVITY_FEED = gql`
 		}
 	}
 `
+
+export const GET_FOLLOWED_ACTIVITY = gql`
+	query GetFollowedActivity{
+		getFollowedActivity{
+			activity {
+				activity_type
+				content_ID
+				content_name
+				chapter_ID
+				chapter_name
+				timestamp
+				_id
+			}
+			username
+			_id
+		}
+	}
+`

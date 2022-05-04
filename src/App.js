@@ -22,7 +22,7 @@ import AboutScreen from './components/about/AboutScreen';
 import HelpScreen from './components/help/HelpScreen';
 import ContentManagementScreen from './components/content_management/ContentManagementScreen'
 import ResetPasswordScreen from './components/reset_password/ResetPasswordScreen';
-
+import FollowedScreen from './components/followed/FollowedScreen';
 // nav and sidebar, might also move or do something else with but will keep explicit path for dev purposes
 import NavBar from "./components/navbar/NavBar";
 import SideBar from "./components/sidebar/SideBar";
@@ -185,7 +185,7 @@ const App = () => {
         <Route path="/update-account" element={<UpdateAccountScreen fetchUser={refetch} user={user}/>} />
         <Route path="/content-management/:id" element={<ContentManagementScreen user={user}/>} />
         <Route path="/reset/:reset_string" element={<ResetPasswordScreen />} />
-
+        <Route path="/followed" element={<FollowedScreen user={user}/>} />
         <Route path="/search" element={<SearchScreen/>} />
         <Route path="/about" element={<AboutScreen />} />
         <Route path="/help" element={<HelpScreen />} />
