@@ -1,43 +1,87 @@
-import React 	from 'react';
+import React, { useState } 	from 'react';
 import { Link } from "react-router-dom";
+import DeleteReplyModal from "./DeleteReplyModal";
 
-const ForumReply = ({reply}) => {
+const ForumReply = ({reply, formatDate, userId, handleDeleteReply,handleEditReply}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=341%3A2898
-  const months = [ "Jan", "Feb", "Mar", "April", "May", "June",
-  "July", "Aug", "Sep", "Oct", "Nov", "Dec" ];
-  
-  const formatDate = () => {
-    let date = reply.publication_date;
-    let month = months[date.getMonth()-1];
-    let pm = date.getHours() > 12;
-    let hour = date.getHours();
-    if(pm) hour -= 12;
-    if(hour == 0) hour = 12;
-    let strHour = ("0" + hour).slice(-2);
-    let strMinutes = ("0" + date.getMinutes()).slice(-2);
-    return month + " " + date.getDate() + ", " + strHour + ":" + strMinutes + (pm ? "pm" : "am");
+  const [deleteModal, toggleDeleteModal] = useState(false);
+  const [isEditing, toggleEdit] = useState(false);
+  const [content, setContent] = useState(reply.content);
+
+  const handleDeleteConfirm = () => {
+    toggleDeleteModal(false);
+    handleDeleteReply(reply._id);
   }
-  
+
+  const handleEditSave = () => {
+    toggleEdit(false);
+    handleEditReply(reply._id, content);
+  }
+
   return (
-    <div className='card rounded-none w-full border-t-2 shadow mb-4'>
-      <div className='border-b-2'>{formatDate(reply.publication_date)}</div>
-      <div className='flex flex-cols items-stretch'>
-        <div className='w-1/6 border-r-2'>
-          <Link to='/profile'>
-            <div className='flex flex-col'>
-              <p className='text-link font-medium'>{reply.username}</p>
-              <img className="h-full object-contain" src={reply.profile_picture}/>
-              <p>Posts: {reply.post_count}</p>
-            </div>
-          </Link>
-        </div>
-        <div className='w-5/6'>
-          <p className='text-left h-min'>
-            {reply.reply_content}
+    <div>
+      <div className='card rounded-none w-full bg-white shadow px-4 py-1'>
+        <div className='flex justify-between'>
+          <p className='w-max text-link font-medium'>
+            <Link to={'/profile/'+reply.author}>
+              {reply.author_name}
+            </Link>
           </p>
+          <div>
+            {formatDate(reply)}
+          </div>
         </div>
+        {isEditing ? 
+          <div>
+            <textarea
+              className='textarea textarea-bordered w-full'
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+            />
+            <div className='flex justify-end space-x-2 text-xs'>
+              <a 
+                className="link no-underline text-gray-400
+                hover:brightness-90"
+                onClick={() => toggleEdit(false)}
+              >
+                Cancel
+              </a>
+              <a 
+                className="link no-underline text-forum
+                hover:brightness-90"
+                onClick={handleEditSave}
+              >
+                Save
+              </a>
+            </div>
+          </div>
+        :
+          <div className='whitespace-pre-wrap'>
+            {reply.content}
+          </div>
+        }
+        {userId == reply.author && !isEditing ? 
+          <div className='flex justify-end space-x-2 text-xs'>
+            <a 
+              className="link no-underline text-forum
+              hover:brightness-90"
+              onClick={() => toggleEdit(true)}
+            >
+              Edit
+            </a>
+            <a 
+              className="link no-underline text-red-600
+              hover:brightness-90"
+              onClick={() => toggleDeleteModal(true)}
+            >
+              Delete
+            </a>
+          </div> : <></>
+        }
       </div>
+      <DeleteReplyModal visible={deleteModal} deleteFunction={handleDeleteConfirm} cancelDelete={() => toggleDeleteModal(false)}/>
     </div>
+    
   );
 }
 

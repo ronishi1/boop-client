@@ -198,3 +198,15 @@ export const CREATE_REPLY = gql`
 		createReply(postID: $postID, content: $content)
 	}
 `;
+
+export const EDIT_REPLY = gql`
+	mutation EditReply($postID: ID, $content: String, $replyID: ID) {
+		editReply(postID: $postID, content: $content, replyID: $replyID)
+	}
+`;
+
+export const DELETE_REPLY = gql`
+	mutation DeleteReply($postID: ID, $replyID: ID) {
+		deleteReply(postID: $postID, replyID: $replyID)
+	}
+`;
