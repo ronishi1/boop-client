@@ -364,6 +364,7 @@ export const GET_POST = gql`
 			author
 			author_name
 			replies {
+				_id
 				author
 				author_name
 				content

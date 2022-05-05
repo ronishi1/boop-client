@@ -192,3 +192,9 @@ export const PUBLISH_CHAPTER = gql`
 		publishChapter(chapterID: $chapterID)
 	}
 `;
+
+export const CREATE_REPLY = gql`
+	mutation CreateReply($postID: ID, $content: String) {
+		createReply(postID: $postID, content: $content)
+	}
+`;
