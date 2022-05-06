@@ -38,7 +38,7 @@ const DiscussionPost = ({post,coverImage}) => {
     <div className='flex flex-row h-full '>
       <img className="h-24 w-16 object-cover" src={coverImage} alt="cover art"/>
       <div className='pl-2 text-xs w-full'>
-        <Link to="/post">
+        <Link to={"/post/"+post_data._id}>
           <p className='card-title text-link'>{post_data.title}</p>
         </Link>
         <div className='flex flex-row'>by: <p className='text-link'>{post_data.author_name}</p></div>
