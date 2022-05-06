@@ -2,7 +2,7 @@ import React, { useState } 	from 'react';
 import { Link } from "react-router-dom";
 import DeleteReplyModal from "./DeleteReplyModal";
 
-const ForumReply = ({reply, formatDate, userId, handleDeleteReply,handleEditReply}) => {
+const ForumReply = ({reply, formatDate, user, handleDeleteReply,handleEditReply}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=341%3A2898
   const [deleteModal, toggleDeleteModal] = useState(false);
   const [isEditing, toggleEdit] = useState(false);
@@ -60,7 +60,7 @@ const ForumReply = ({reply, formatDate, userId, handleDeleteReply,handleEditRepl
             {reply.content}
           </div>
         }
-        {userId == reply.author && !isEditing ? 
+        {user && user._id == reply.author && !isEditing ? 
           <div className='flex justify-end space-x-2 text-xs'>
             <a 
               className="link no-underline text-forum

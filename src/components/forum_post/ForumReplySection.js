@@ -1,7 +1,7 @@
 import React, { useState } 	from 'react';
 import ForumReply from './ForumReply';
     
-const ForumReplySection = ({replies, userId,handleDeleteReply,handleEditReply}) => {
+const ForumReplySection = ({replies, user,handleDeleteReply,handleEditReply}) => {
   const months = [ "Jan", "Feb", "Mar", "April", "May", "June",
   "July", "Aug", "Sep", "Oct", "Nov", "Dec" ];
   const [page, setPage] = useState(1);
@@ -26,7 +26,7 @@ const ForumReplySection = ({replies, userId,handleDeleteReply,handleEditReply}) 
       : 
       <div className='space-y-2'>
         {replies.slice((page-1)*repliesPerPage,page*repliesPerPage).map(reply => 
-          <ForumReply reply={reply} formatDate={formatDate} key={reply._id} userId={userId} 
+          <ForumReply reply={reply} formatDate={formatDate} key={reply._id} user={user} 
             handleDeleteReply={(replyId) => {
               if(page > 1 && replies.slice((page-1)*repliesPerPage,page*repliesPerPage).length == 1)
                 setPage(page-1); 

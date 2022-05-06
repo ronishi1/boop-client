@@ -47,7 +47,7 @@ const ForumPostScreen = ({auth, user}) => {
     refetch();
   }
 
-  if(loading || !user){
+  if(loading || (auth && !user)){
     return <Loading />
   }
 
@@ -60,7 +60,7 @@ const ForumPostScreen = ({auth, user}) => {
           <div className='text-white font-bold'>
             {data.getPost.title}
           </div>
-          {auth && !isReplying ? <button 
+          {user && !isReplying ? <button 
             className="btn btn-outline btn-sm border-white text-white
             hover:text-forum hover:bg-white hover:border-white"
             onClick={() => {
@@ -108,7 +108,7 @@ const ForumPostScreen = ({auth, user}) => {
                 </div>
               </div>: <></>
             }
-            <ForumReplySection replies={data.getPost.replies} userId={user._id} handleDeleteReply={handleDeleteReply}
+            <ForumReplySection replies={data.getPost.replies} user={user} handleDeleteReply={handleDeleteReply}
             handleEditReply={handleEditReply}/>
           </div>
         </div>
