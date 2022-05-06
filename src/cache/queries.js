@@ -417,3 +417,19 @@ export const GET_CONTENT_BASIC = gql`
 		}
 	}
 `
+
+export const GET_SEARCH = gql`
+	query GetSearch($searchTerm: String){
+		getSearch(searchTerm: $searchTerm){
+			content_ID
+			content_title
+			content_image
+			content_info
+			content_author_name
+			content_author
+			content_type
+			content_timestamp
+			_id
+		}
+	}
+`

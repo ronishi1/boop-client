@@ -186,7 +186,7 @@ const App = () => {
         <Route path="/content-management/:id" element={<ContentManagementScreen user={user}/>} />
         <Route path="/reset/:reset_string" element={<ResetPasswordScreen />} />
         <Route path="/followed" element={<FollowedScreen user={user}/>} />
-        <Route path="/search" element={<SearchScreen/>} />
+        <Route path="/search/:search_term" element={<SearchScreen/>} />
         <Route path="/about" element={<AboutScreen />} />
         <Route path="/help" element={<HelpScreen />} />
 
