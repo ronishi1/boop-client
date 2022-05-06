@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 import { useMutation } 		from '@apollo/client';
 import { LOGIN }	from '../../cache/mutations';
 import { Transition } from '@headlessui/react'
-
+import {useNavigate} from 'react-router-dom';
 const Login = ({toggleLoginCallback, toggleRegisterCallback, toggleResetPasswordCallback, fetchUser}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=208%3A348
+  let navigate = useNavigate();
 
   const [Login] = useMutation(LOGIN);
 
@@ -32,6 +33,7 @@ const Login = ({toggleLoginCallback, toggleRegisterCallback, toggleResetPassword
           password:''
         });
         toggleLoginCallback(false);
+        navigate("/");
       }
     } catch (e) {
       setError({status:true,message:e.message});

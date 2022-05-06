@@ -8,6 +8,8 @@ import { useQuery, useMutation } 	from '@apollo/client';
 import { Transition } from '@headlessui/react';
 import { uploadFile } from '../../utils/utils.js';
 import { useNavigate } from 'react-router-dom';
+import PageNotFound from '../page_not_found/PageNotFound';
+import Loading from '../loading/Loading';
 const ProfileScreen = ({fetchUser,user}) => {
   let profile = {};
   let { username } = useParams();
@@ -17,11 +19,7 @@ const ProfileScreen = ({fetchUser,user}) => {
       variables: { username: username },
     });
 
-  if(loading) { console.log(loading, 'loading'); }
-	if(error) { console.log(error, 'error'); }
-  if(data) {
-    profile = data.getUserProfile;
-  }
+
 
   const [UpdateBio] = useMutation(UPDATE_BIO);
   const [FollowUser] = useMutation(FOLLOW_USER);
@@ -34,58 +32,14 @@ const ProfileScreen = ({fetchUser,user}) => {
   const [selectedCollection, setSelectedCollection] = useState("Published");
   const [imageError, setImageError] = useState({status:false,message:""})
 
-  const user_data = {
-    username: "username_goes_here",
-    profilePicture: "https://i.imgflip.com/2r2rjf.jpg",
-    followers: 14332,
-    following: 12,
-    bio: "this is a sample bio yep",
-    published: [
-      {
-        cover_art:
-          "https://64.media.tumblr.com/1c5fc044dd705d5cb8d599ca3d276996/af204ae0844cdf4f-7e/s500x750/75357cbfa0b6aa2e142cb43dc8ac16dd86130d62.jpg",
-        content_color: "comic",
-      },
-    ],
-    favorites: [
-      {
-        cover_art:
-          "https://vignette.wikia.nocookie.net/tensei-shitara-slime-datta-ken/images/e/e7/LN_Vol_13.5.jpg/revision/latest?cb=20190116235139",
-        content_color: "story",
-      },
-      {
-        cover_art:
-          "https://d28hgpri8am2if.cloudfront.net/book_images/onix/cvr9781974706631/kaguya-sama-love-is-war-vol-10-9781974706631_hr.jpg",
-        content_color: "comic",
-      },
-    ],
-    activities: [
-      {
-        activity_type: "Added chapter to",
-        content: {
-          title: "a published title",
-          publication_date: new Date(2022, 5, 6, 14, 25),
-          content_color: "comic",
-        },
-      },
-      {
-        activity_type: "Added chapter to",
-        content: {
-          title: "a published title 2",
-          publication_date: new Date(2022, 5, 6, 14, 25),
-          content_color: "story",
-        },
-      },
-      {
-        activity_type: "Replied to",
-        content: {
-          title: "forum post about something",
-          publication_date: new Date(2022, 5, 6, 14, 25),
-          content_color: "forum",
-        },
-      },
-    ],
-  };
+  if(loading) { return <Loading /> }
+	if(error) { console.log(error, 'error'); }
+  if(data) {
+    profile = data.getUserProfile;
+    if(profile == null){
+      return <PageNotFound />
+    }
+  }
 
   // converts follower/following count to a readable number
   const readableNumber = (number) => {

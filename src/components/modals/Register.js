@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import { REGISTER }	from '../../cache/mutations';
 import { useMutation } 		from '@apollo/client';
 import { Transition } from '@headlessui/react'
-
+import { useNavigate} from 'react-router-dom'
 const Register = ({toggleLoginCallback,toggleRegisterCallback,registerCallback,fetchUser}) => {
+  let navigate = useNavigate();
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=208%3A296
   const [Register] = useMutation(REGISTER);
 
@@ -59,6 +60,7 @@ const Register = ({toggleLoginCallback,toggleRegisterCallback,registerCallback,f
       if(result.data){
         await fetchUser()
         toggleRegisterCallback(false);
+        navigate("/");
       }
     } catch (e) {
       console.log(e.message);

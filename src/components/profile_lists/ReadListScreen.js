@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import { GET_READ_LIST} from '../../cache/queries';
 import { useQuery } from '@apollo/client';
 import Loading from '../loading/Loading';
+import PageNotFound from '../page_not_found/PageNotFound';
 
 const ReadListScreen = () => {
   let { username } = useParams();
@@ -14,9 +15,12 @@ const ReadListScreen = () => {
     });
 
   if(loading) { console.log(loading, 'loading'); }
-	if(error) { console.log(error, 'error'); }
+	if(error) { return <PageNotFound /> }
   if(data) {
     contents = data.getReadList;
+    if(contents == null){
+      return <PageNotFound />
+    }
   }
 
   if(loading){

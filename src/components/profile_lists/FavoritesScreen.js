@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom'
 import { GET_FAVORITES } from '../../cache/queries';
 import { useQuery } from '@apollo/client';
 import Loading from '../loading/Loading';
+import PageNotFound from '../page_not_found/PageNotFound';
+
 const FavoritesScreen = () => {
   let { username } = useParams();
 
@@ -13,9 +15,13 @@ const FavoritesScreen = () => {
     });
 
   if(loading) { console.log(loading, 'loading'); }
-	if(error) { console.log(error, 'error'); }
+	if(error) { return <PageNotFound />}
   if(data) {
     contents = data.getFavorites;
+    console.log(contents);
+    if(contents == null){
+      return <PageNotFound />
+    }
   }
 
   if(loading){
