@@ -7,7 +7,7 @@ import { GET_CONTENT_INFO, GET_USER_CONTENT_INFO } from '../../cache/queries'
 import {RATE_CONTENT, ADD_CONTENT_TO_READ_LIST, ADD_CONTENT_TO_FAVORITES,
   REMOVE_CONTENT_FROM_READ_LIST, REMOVE_CONTENT_FROM_FAVORITES, FOLLOW_USER, UNFOLLOW_USER} from '../../cache/mutations'
 import { useMutation, useQuery } from '@apollo/client';
-
+import PageNotFound from '../page_not_found/PageNotFound'
 const ContentInfoScreen = ({auth}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=311%3A1266
   const [followed, toggleFollow] = useState(false);
@@ -32,7 +32,7 @@ const ContentInfoScreen = ({auth}) => {
   }
 
   if(error || userError){
-    return <div>error</div>;
+    return <PageNotFound />;
   }
 
   let content = data.getContentInfo;
@@ -188,7 +188,7 @@ const ContentInfoScreen = ({auth}) => {
           pt-0 px-5"
         >
           {/* Either start from beginning or continue */}
-          
+
           <Link to={`/view/${content.chapters[0]}`}>
           <button
             className={"w-full text-white font-bold border border-"+contentColor+ " hover:opacity-70 py-2 px-2 mr-4 rounded bg-"+contentColor}
