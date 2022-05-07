@@ -1,10 +1,12 @@
 import React, { useState } 	from 'react';
 import ForumReply from './ForumReply';
+import PageSelectModal from './PageSelectModal';
     
 const ForumReplySection = ({replies, user,handleDeleteReply,handleEditReply}) => {
   const months = [ "Jan", "Feb", "Mar", "April", "May", "June",
   "July", "Aug", "Sep", "Oct", "Nov", "Dec" ];
   const [page, setPage] = useState(1);
+  const [pageModal, toggleModal] = useState(false);
   const repliesPerPage = 8;
   
   const formatDate = (reply) => {
@@ -17,6 +19,11 @@ const ForumReplySection = ({replies, user,handleDeleteReply,handleEditReply}) =>
     let strHour = ("0" + hour).slice(-2);
     let strMinutes = ("0" + date.getMinutes()).slice(-2);
     return month + " " + date.getDate() + ", " + strHour + ":" + strMinutes + (pm ? "pm" : "am");
+  }
+
+  const handleSetPage = (page) => {
+    toggleModal(false);
+    setPage(page);
   }
   
   return (
@@ -38,7 +45,7 @@ const ForumReplySection = ({replies, user,handleDeleteReply,handleEditReply}) =>
       </div>
       
       }
-      {replies.length > repliesPerPage ?<div className='flex justify-center'>
+      {replies.length > repliesPerPage ? <div className='flex justify-center'>
         <div className='col-start-2 col-end-4 justify-self-center'>
           <div className="btn-group">
             {page==1 ? <button className="btn btn-disabled">«</button> : 
@@ -53,10 +60,11 @@ const ForumReplySection = ({replies, user,handleDeleteReply,handleEditReply}) =>
             <button 
               className="btn w-[10em] border-forum bg-forum text-white
               hover:border-forum hover:bg-white hover:text-forum"
+              onClick={() => toggleModal(true)}
             >
               Page {page}
             </button>
-            {(page+1) > Math.ceil(replies.length/repliesPerPage) ? <button className="btn btn-disabled">»</button> : 
+            {page == Math.ceil(replies.length/repliesPerPage) ? <button className="btn btn-disabled">»</button> : 
               <button 
                 className="btn border-forum bg-forum text-white 
                 hover:border-forum hover:bg-white hover:text-forum" 
@@ -68,6 +76,7 @@ const ForumReplySection = ({replies, user,handleDeleteReply,handleEditReply}) =>
           </div>
         </div>
       </div> : <></>}
+      <PageSelectModal visible={pageModal} maxPage={Math.ceil(replies.length/repliesPerPage)} handleSetPage={handleSetPage} cancel={() => toggleModal(false)}/>
     </div>
   );
 }

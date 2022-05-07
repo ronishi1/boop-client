@@ -20,9 +20,9 @@ const ForumReply = ({reply, formatDate, user, handleDeleteReply,handleEditReply}
 
   return (
     <div>
-      <div className='card rounded-none w-full bg-white shadow px-4 py-1'>
-        <div className='flex justify-between'>
-          <p className='w-max text-link font-medium'>
+      <div className='card rounded-none w-full bg-white shadow'>
+        <div className='card-title bg-forum text-white p-2 flex justify-between'>
+          <p className='w-max text-white hover:underline font-medium'>
             <Link to={'/profile/'+reply.author}>
               {reply.author_name}
             </Link>
@@ -32,9 +32,9 @@ const ForumReply = ({reply, formatDate, user, handleDeleteReply,handleEditReply}
           </div>
         </div>
         {isEditing ? 
-          <div>
+          <div className='p-2'>
             <textarea
-              className='textarea textarea-bordered w-full'
+              className='textarea textarea-bordered w-full leading-normal'
               value={content}
               onChange={(e) => setContent(e.target.value)}
             />
@@ -56,12 +56,12 @@ const ForumReply = ({reply, formatDate, user, handleDeleteReply,handleEditReply}
             </div>
           </div>
         :
-          <div className='whitespace-pre-wrap'>
+          <div className='whitespace-pre-wrap p-4'>
             {reply.content}
           </div>
         }
         {user && user._id == reply.author && !isEditing ? 
-          <div className='flex justify-end space-x-2 text-xs'>
+          <div className='flex justify-end space-x-2 text-xs p-2'>
             <a 
               className="link no-underline text-forum
               hover:brightness-90"
