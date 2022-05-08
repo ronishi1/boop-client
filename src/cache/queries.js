@@ -378,6 +378,20 @@ export const GET_POST = gql`
 	}
 `;
 
+export const GET_MY_POSTS = gql`
+	query GetMyPosts {
+		getMyPosts {
+			_id
+			title
+			timestamp
+			tags
+			content
+			linked_content
+			linked_image
+		}
+	}
+`
+
 export const GET_USER_ACTIVITY_FEED = gql`
 	query GetUserActivityFeed($username: String){
 		getUserActivityFeed(username:$username){

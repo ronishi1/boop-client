@@ -210,3 +210,21 @@ export const DELETE_REPLY = gql`
 		deleteReply(postID: $postID, replyID: $replyID)
 	}
 `;
+
+export const CREATE_POST = gql`
+	mutation CreatePost($forumPost: ForumPostInput) {
+		createPost(forumPost: $forumPost)
+	}
+`
+
+export const EDIT_POST = gql`
+	mutation EditPost($postID: ID, $title: String, $content: String, $tags: [String]) {
+		editPost(postID: $postID, title:$title, content: $content, tags: $tags)
+	}
+`
+
+export const DELETE_POST = gql`
+	mutation DeletePost($postID: ID) {
+		deletePost(postID: $postID)
+	}
+`

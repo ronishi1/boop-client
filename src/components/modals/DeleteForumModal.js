@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { DELETE_POST } from '../../cache/mutations'
+import { useMutation } from '@apollo/client'
 
-const DeleteForumModal = ({ title, toggleForumDeleteCallback}) => {
-  
-  function handleSubmit(e) {
-    console.log(title);
-    e.preventDefault();
+const DeleteForumModal = ({ postId, title, toggleForumDeleteCallback}) => {
+  const [DeletePost] = useMutation(DELETE_POST);
+
+  const handleSubmit = (e) => {
+    DeletePost({variables: {postID: postId}})
   }
   return (
     <div>

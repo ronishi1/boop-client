@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import CancelPostModal from "../modals/CancelPostModal";
 
 // Can use this class for reply, edit, and create
-const ForumCreateScreen = ({toggleForumCallback}) => {
+const ForumCreateModal = ({toggleForumCallback}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=274%3A632
   const [spoiler, toggleSpoiler] = useState(false);
   const [nsfw, toggleNSFW] = useState(false);
@@ -81,4 +81,4 @@ const ForumCreateScreen = ({toggleForumCallback}) => {
   );
 };
 
-export default ForumCreateScreen;
+export default ForumCreateModal;

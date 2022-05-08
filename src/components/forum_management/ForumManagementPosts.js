@@ -1,60 +1,33 @@
-import React 	from 'react';
+import React, {useState, useEffect}	from 'react';
 import ForumManagementPost from "./ForumManagementPost"
+import { GET_MY_POSTS } from '../../cache/queries'
+import { useQuery } from '@apollo/client'
+
 const ForumManagementPosts = ({toggleForumCallback, toggleForumDeleteCallback}) => {
-  // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=718%3A3452
-  
-  var data = [
-    {
-      cover_image: "https://cover.nep.li/cover/Spy-X-Family.jpg",
-      forum_title: "Comic with great action!!!",
-      publication_date: new Date(2022, 3, 24, 14, 11),
-      tags:["Spoiler", "NSFW", "Discussion"],
-      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-    },
-    {
-      cover_image: "https://cover.nep.li/cover/Spy-X-Family.jpg",
-      forum_title: "Comic with great action!!!",
-      publication_date: new Date(2022, 3, 24, 14, 11),
-      tags:["Spoiler", "NSFW", "Discussion"],
-      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-    },
-    {
-      cover_image: "https://cover.nep.li/cover/Spy-X-Family.jpg",
-      forum_title: "Comic with great action!!!",
-      publication_date: new Date(2022, 3, 24, 14, 11),
-      tags:["Spoiler", "NSFW", "Discussion"],
-      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-    },
-    {
-      cover_image: "https://cover.nep.li/cover/Spy-X-Family.jpg",
-      forum_title: "Comic with great action!!!",
-      publication_date: new Date(2022, 3, 24, 14, 11),
-      tags:["Spoiler", "NSFW", "Discussion"],
-      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-    },
-    {
-      cover_image: "https://cover.nep.li/cover/Spy-X-Family.jpg",
-      forum_title: "Comic with great action!!!",
-      publication_date: new Date(2022, 3, 24, 14, 11),
-      tags:["Spoiler", "NSFW", "Discussion"],
-      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-    },
-  ]
-  
+  const { loading, error, data } = useQuery(GET_MY_POSTS);
+
+  if (loading) return 'Loading...';
+  if (error) return `Error! ${error.message}`;
+  console.log(data)
   return (
     <div>
-      {data.map((post,i) => (
+      {data.getMyPosts.length !== 0 
+      ? 
+        data.getMyPosts.map((post,i) => (
           <ForumManagementPost
               key={i} 
-              cover={post.cover_image} 
-              title={post.forum_title} 
-              publicationDate={post.publication_date} 
+              postId={post._id}
+              cover={post.linked_image}
+              title={post.title}
+              publicationDate={post.timestamp}
               tags={post.tags}
               content={post.content}
               toggleForumCallback={toggleForumCallback}
               toggleForumDeleteCallback={toggleForumDeleteCallback}
           />
-        ))}
+        ))
+        : 
+        <div> No forum posts have been created </div>}
     </div>
   );
 }

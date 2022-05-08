@@ -5,8 +5,6 @@ import BrowseScreen from "./components/browse/BrowseScreen";
 import ContentInfoScreen from "./components/content_info/ContentInfoScreen";
 import ContentViewScreen from "./components/content_view/ContentViewScreen";
 import CreatorStudioScreen from "./components/creator_studio/CreatorStudioScreen";
-import ForumCreateScreen from "./components/forum_create/ForumCreateScreen";
-import ForumEditScreen from "./components/forum_edit/ForumEditScreen";
 import ForumHomeScreen from "./components/forum_home/ForumHomeScreen";
 import ForumManagementScreen from "./components/forum_management/ForumManagementScreen";
 import ForumPostScreen from "./components/forum_post/ForumPostScreen";
@@ -172,10 +170,8 @@ const App = () => {
         <Route path="/info/:id" element={<ContentInfoScreen auth={auth}/>} />
         <Route path="/view/:id" element={<ContentViewScreen />} />
         <Route path="/studio" element={<CreatorStudioScreen user={user}/>} />
-        <Route path="/forum-create" element={<ForumCreateScreen />} />
-        <Route path="/forum-edit" element={<ForumEditScreen />} />
         <Route path="/forum-home" element={<ForumHomeScreen />} />
-        <Route path="/forum-management" element={<ForumManagementScreen />} />
+        <Route path="/forum-management" element={<ForumManagementScreen user={user}/>} />
         <Route path="/post/:id" element={<ForumPostScreen auth={auth} user={user}/>} />
         <Route path="/topic/:id" element={<ForumTopicScreen />} />
         <Route path="/landing" element={<LandingScreen />} />
