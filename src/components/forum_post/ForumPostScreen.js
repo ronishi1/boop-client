@@ -6,6 +6,7 @@ import {useMutation, useQuery} from '@apollo/client';
 import {useParams} from 'react-router-dom';
 import Loading from '../loading/Loading'
 import ForumReplySection from "./ForumReplySection";
+import { Transition } from '@headlessui/react';
 
 const ForumPostScreen = ({auth, user}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=329%3A2498
@@ -20,8 +21,16 @@ const ForumPostScreen = ({auth, user}) => {
 
   const [isReplying,toggleReply] = useState(false);
   const [reply, setReply] = useState("");
+  const [error,setError] = useState({status:false,message:""});
 
   const handleCreateReply = async () => {
+    if(reply.length === 0){
+      setError({status:true,message:"Reply cannot be empty"});
+      setTimeout(() => {
+        setError({status:false,message:''});
+      },2000)
+      return;
+    }
     await CreateReply({variables : {
       postID: id,
       content: reply
@@ -79,6 +88,22 @@ const ForumPostScreen = ({auth, user}) => {
             {isReplying ? 
               <div className='card flex flex-col p-4 rounded-none shadow'>
                 <div className='space-y-2'>
+                  <Transition
+                    show={error.status}
+                    enter="transition-opacity duration-300"
+                    enterFrom="opacity-0"
+                    enterTo="opacity-100"
+                    leave="transition-opacity duration-500"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                  >
+                    <div className="alert alert-error py-1.5 shadow-lg">
+                      <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        <span>{error.message}</span>
+                      </div>
+                    </div>
+                  </Transition>
                   <label>Reply to <strong>{data.getPost.title}</strong></label>
                   <textarea 
                     className='w-full textarea textarea-bordered leading-normal whitespace-pre-wrap'
