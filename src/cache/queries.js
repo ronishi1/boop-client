@@ -453,3 +453,31 @@ export const GET_SEARCH = gql`
 		}
 	}
 `
+
+export const GET_RECENT_POSTS = gql`
+	query GetRecentPosts{
+		getRecentPosts {
+			_id
+			title
+			content
+			linked_content
+			linked_title
+			linked_image
+			linked_synopsis
+			tags
+			author
+			author_name
+			replies {
+				_id
+				author
+				author_name
+				content
+				timestamp
+			}
+			num_replies
+			views
+			timestamp
+			topic
+		}
+	}
+`

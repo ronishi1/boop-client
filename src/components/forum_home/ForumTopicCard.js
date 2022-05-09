@@ -17,7 +17,7 @@ const ForumTopicCard = ({data}) => {
         {data.description}
       </div>
       {data.posts.length == 0 ? <div className="text-lg text-gray-400">There are currently no posts in this topic</div> :
-      <div className='h-20 grid grid-cols-3'>
+      <div className='grid grid-cols-3'>
         {data.posts[0] ? <ForumPostCard post={data.posts[0]}/> : <></>}
         {data.posts[1] ? <ForumPostCard post={data.posts[1]}/> : <></>}
         {data.posts[2] ? <ForumPostCard post={data.posts[2]}/> : <></>}

@@ -21,14 +21,14 @@ const ForumPostCard = ({post}) => {
   }
 
   return (
-    <div className='card-content grid content-center'>
-      <figure className='flex'>
+    <div className='card-content grid content-center h-20 w-56'>
+      <div className='flex flex-row'>
         <Link to={`/post/${post._id}`}>
-          <img className="h-16 min-w-[70px] object-cover pr-2" src={post.linked_image ? post.linked_image : "https://static.thenounproject.com/png/944120-200.png"} alt="cover art"/>
+          <img className="h-20 w-16 object-cover pr-2" src={post.linked_image ? post.linked_image : "https://static.thenounproject.com/png/944120-200.png"} alt="cover art"/>
         </Link>
-        <div className='flex flex-col'>
+        <div className='flex flex-col h-20 w-40'>
           <Link to={`/post/${post._id}`}>
-            <div className='text-lg text-link line-clamp-2 font-medium leading-none'>
+            <div className='text-lg text-link line-clamp-2 font-medium leading-none text-ellipsis'>
               {post.title}
             </div>
           </Link>
@@ -46,7 +46,7 @@ const ForumPostCard = ({post}) => {
             {formatDate()}
           </div>
         </div>
-      </figure>
+      </div>
     </div>
   );
 }
