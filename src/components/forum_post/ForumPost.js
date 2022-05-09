@@ -68,7 +68,7 @@ const ForumPost = ({post}) => {
       </div>
       <Link to={'/info/'+post.linked_content}>
         <div className='flex my-4 place-content-center h-2/5'>
-          <img className='h-72 w-48 object-cover' src={post.linked_image ? post.linked_content : "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Question_mark_%28black%29.svg/800px-Question_mark_%28black%29.svg.png" } alt="cover image"/>
+          <img className='h-72 w-48 object-cover' src={post.linked_image ? post.linked_image : "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Question_mark_%28black%29.svg/800px-Question_mark_%28black%29.svg.png" } alt="cover image"/>
         </div>
       </Link>
       <div className='grid grid-cols-1 justify-items-center space-y-2'>
