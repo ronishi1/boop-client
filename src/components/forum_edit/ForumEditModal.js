@@ -2,12 +2,12 @@ import React, { useState, useEffect} from "react";
 import { EDIT_POST } from '../../cache/mutations';
 import { useMutation } from '@apollo/client';
 
-const ForumEditModal = ({postId, title, content, propTags, toggleForumCallback}) => {
+const ForumEditModal = ({postId, title, linked_title, content, propTags, toggleForumCallback}) => {
   const [spoiler, toggleSpoiler] = useState(false);
   const [nsfw, toggleNSFW] = useState(false);
   const [discussion, toggleDiscussion] = useState(false);
   const [tags, setTags] = useState(new Set());
-  const [link, setLink] = useState('Spy x Family');
+  const [link, setLink] = useState(linked_title);
   const [forumTitle, setTitle] = useState(title);
   const [forumDescription, setDescription] = useState(content);
 
@@ -73,7 +73,7 @@ const ForumEditModal = ({postId, title, content, propTags, toggleForumCallback})
                 <h3 className="font-bold text-lg">Edit Forum Post</h3>
               </div>
               <div>
-                <label for="forum-modal">
+                <label for="forum-modal" onClick={() => toggleForumCallback(false)}>
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                   </svg>
@@ -90,7 +90,7 @@ const ForumEditModal = ({postId, title, content, propTags, toggleForumCallback})
             </div>
             <textarea className="w-full border-2 border-grey rounded text-sm pl-2 pb-6 mt-4" placeholder={content} onChange={(e)=> setDescription(e.target.value)} value={forumDescription}></textarea>
             <div className="flex flex-row justify-between items-center">
-              <label for="forum-modal" className="cursor-pointer ml-4">Cancel</label>
+              <label for="forum-modal" className="cursor-pointer ml-4" onClick={() => toggleForumCallback(false)}>Cancel</label>
                 <button className="btn border-none bg-forum normal-case mr-4" type="submit">Edit</button>
             </div>
         </form>

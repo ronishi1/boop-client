@@ -386,9 +386,15 @@ export const GET_MY_POSTS = gql`
 			timestamp
 			tags
 			content
+			linked_title
 			linked_content
 			linked_image
 		}
+	}
+`
+export const GET_SERIES_TITLES = gql`
+	query GetSeriesTitles($seriesTitle : String){
+		getSeriesTitles(seriesTitle: $seriesTitle)
 	}
 `
 

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import ForumEditModal from '../forum_edit/ForumEditModal';
 import DeleteForumModal from "../modals/DeleteForumModal";
 
-const ForumManagementPost = ({postId, cover, title, publicationDate, tags, content}) => {
+const ForumManagementPost = ({postId, cover, title, linked_title, publicationDate, tags, content}) => {
   
   const [showForumEdit, toggleForumEdit] = useState(false);
   const [showForumDelete, toggleForumDelete] = useState(false);
@@ -12,7 +12,6 @@ const ForumManagementPost = ({postId, cover, title, publicationDate, tags, conte
   "July", "Aug", "Sep", "Oct", "Nov", "Dec" ];
 
   const toggleForumCallback = (show) => {
-    console.log(show)
     toggleForumEdit(show);
     if (show) {
       toggleForumDelete(false);
@@ -40,28 +39,28 @@ const ForumManagementPost = ({postId, cover, title, publicationDate, tags, conte
 
   return (
     <div>
-    <div className="flex flex-row mb-4 justify-between">
-          <div className="flex flex-row">
-            <div>
-              <Link to={`/post/${postId}`}><img className="object-fit max-h-40 mb-4 mr-4 rounded" src={cover}/></Link>
+      <div className="flex flex-row mb-4 justify-between">
+        <div className="flex flex-row">
+          <div>
+            <Link to={`/post/${postId}`}><img className="max-h-40 max-w-[110px] mb-4 mr-4 rounded" src={cover}/></Link>
+          </div>
+          <div>
+            <Link to={`/post/${postId}`}><div className="text-lg font-medium truncate">{title}</div></Link>
+            <p>{formatDate()}</p>
+            { tags.includes("Spoiler") ? 
+            <div className={`badge bg-spoiler text-white border-spoiler badge-outline text-xs mr-1`}>Spoiler</div> : <div></div>}
+            
+            { tags.includes("NSFW") ? 
+            <div className={`badge bg-nsfw text-white border-nsfw badge-outline text-xs mr-1`}>NSFW</div> : <div></div>}
+            { tags.includes("Discussion") ? 
+            <div className={`badge bg-discussion text-white border-discussion badge-outline text-xs mr-1`}>Discussion</div> : <div></div>}
+            <div className="text-sm line-clamp-3">
+              {content}
             </div>
-            <div>
-              <Link to={`/post/${postId}`}><div className="text-lg font-medium truncate">{title}</div></Link>
-              <p>{formatDate()}</p>
-              { tags.includes("Spoiler") ? 
-              <div className={`badge bg-spoiler text-white border-spoiler badge-outline text-xs mr-1`}>Spoiler</div> : <div></div>}
-              
-              { tags.includes("NSFW") ? 
-              <div className={`badge bg-nsfw text-white border-nsfw badge-outline text-xs mr-1`}>NSFW</div> : <div></div>}
-              { tags.includes("Discussion") ? 
-              <div className={`badge bg-discussion text-white border-discussion badge-outline text-xs mr-1`}>Discussion</div> : <div></div>}
-              <div className="text-sm line-clamp-3">
-                {content}
-              </div>
-            </div>
+          </div>
         </div>
           <div className="flex flex-row">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" onClick={() => (toggleForumCallback(true, "id", "another"))}>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" onClick={() => (toggleForumCallback(true))}>
               <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
             </svg>
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 cursor-pointer stroke-red-600" fill="none" viewBox="0 0 24 24" stroke-width="2" onClick={() => (toggleForumDeleteCallback(true))}>
@@ -83,6 +82,7 @@ const ForumManagementPost = ({postId, cover, title, publicationDate, tags, conte
               <ForumEditModal
               postId={postId}
               title={title}
+              linked_title={linked_title}
               content={content}
               propTags={tags}
               toggleForumCallback={toggleForumCallback}
@@ -104,7 +104,6 @@ const ForumManagementPost = ({postId, cover, title, publicationDate, tags, conte
               <DeleteForumModal 
               postId={postId}
               title={title} 
-              toggleForumDeleteCallback={toggleForumDeleteCallback}
               />
             </label>
           </label>
