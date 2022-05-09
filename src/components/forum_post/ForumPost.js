@@ -20,7 +20,7 @@ const ForumPost = ({post}) => {
   console.log("This is the data when it's getting loaded")
   console.log(data)
   let content_color = "";
-  if (post.linked_content === null) {
+  if (post.linked_content === null || data.getContentInfo === null) {
     console.log("enters here")
     content_color = "dead"
   }
