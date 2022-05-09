@@ -16,7 +16,7 @@ const ForumCreateModal = ({toggleForumCreateCallback}) => {
   const [link, setLink] = useState({value: 'Enter Series Title To Link', label: 'Enter Series Title To Link'});
   const [searchTitle, setSearch] = useState("")
   const [options, setOptions] = useState([{value:"test", label:"test"}])
-  const [forumTopic, setTopic] = useState("")
+  const [forumTopic, setTopic] = useState({value:"Comic Recommendations", label:"Comic Recommendations"})
 
   const [GetSeriesTitles, { loading, error, data, refetch }] = useLazyQuery(GET_SERIES_TITLES);
   const [CreatePost] = useMutation(CREATE_POST);
@@ -115,8 +115,8 @@ const ForumCreateModal = ({toggleForumCreateCallback}) => {
     setDescription(e.target.value)
     let tagsArray = Array.from(tags)
     console.log(link.value)
-    console.log(tagsArray)
     console.log(forumTopic.value)
+    console.log(tagsArray)
   }
   return (
     <div>
@@ -163,7 +163,7 @@ const ForumCreateModal = ({toggleForumCreateCallback}) => {
               <div className={`badge ${nsfw===true ? "bg-nsfw" :""} ${nsfw===true ? "text-white" :"text-nsfw"} border-nsfw badge-outline text-xs mr-1 cursor-pointer`} onClick={() => handleClick('NSFW')}>NSFW</div>
               <div className={`badge ${discussion===true ? "bg-discussion" :""} ${discussion===true ? "text-white" :"text-discussion"} border-discussion badge-outline text-xs mr-1 cursor-pointer`} onClick={() => handleClick('Discussion')}>Discussion</div>
             </div>
-            <textarea className="w-full border-2 border-grey rounded text-sm pl-2 pb-6 mt-4" placeholder="Post Description" onChange={(e) => handleDesc(e)}></textarea>
+            <textarea className="w-full border-2 border-grey rounded text-sm pl-2 pb-32 mt-4" placeholder="Post Description" onChange={(e) => handleDesc(e)}></textarea>
             <div className="flex flex-row justify-between items-center">
               <label for="forum-modal" className="cursor-pointer ml-4" onClick={() => toggleForumCreateCallback(false)}>Cancel</label>
                 <button className="btn border-none bg-forum normal-case mr-4" type="submit">Post</button>

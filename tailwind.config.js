@@ -16,6 +16,7 @@ module.exports = {
         'comic': '#57C694',
         'story' : '#D65A47',
         'forum' : '#A38FDC',
+        'dead' : '#776d73',
         'link' : '#3366BB',
         'spoiler' : '#F24E1E',
         'nsfw' : '#BE1111',
