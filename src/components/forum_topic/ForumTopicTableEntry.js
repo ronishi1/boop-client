@@ -17,8 +17,6 @@ const ForumTopicTableEntry = ({post}) => {
     let strMinutes = ("0" + date.getMinutes()).slice(-2);
     return month + " " + date.getDate() + ", " + strHour + ":" + strMinutes + (pm ? "pm" : "am");
   }
-
-  console.log(post);
   return (
     <tr className='hover:bg-gray-400/25'>
       <th className='h-16 text-left grid grid-cols-2 m-2'>
@@ -64,7 +62,7 @@ const ForumTopicTableEntry = ({post}) => {
         </div>
       </th>
       <th>{post.num_replies}</th>
-      <th>{post.replies.length != 0 ? post.replies[0].toDateString() : <div className="text-gray-400 text-sm p-2">There are no replies to this post</div>}</th>
+      <th>{post.replies.length != 0 ? new Date(post.replies[post.replies.length-1].timestamp).toDateString() : <div className="text-gray-400 text-sm p-2">There are no replies to this post</div>}</th>
     </tr>
   );
 }
