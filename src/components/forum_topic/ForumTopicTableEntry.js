@@ -19,12 +19,12 @@ const ForumTopicTableEntry = ({post}) => {
   }
   return (
     <tr className='hover:bg-gray-400/25'>
-      <th className='h-16 text-left grid grid-cols-2 m-2'>
-        <div className='h-16 flex flex-row'>
-          <img className="h-16 w-16 mr-2 object-cover" src={post.linked_image} alt="cover art"/>
-          <div className='flex flex-col'>
+      <th className='h-20 text-left grid grid-cols-2 m-4 items-center'>
+        <div className='h-20 w-96 flex flex-row items-center'>
+          <img className="h-20 w-16 mr-2 object-cover" src={post.linked_image ? post.linked_image : "https://cdn2.iconfinder.com/data/icons/user-interface-vol-2-21/64/No_Data-512.png"} alt="cover art"/>
+          <div className='flex flex-col h-20 w-80'>
             <Link to={`/post/${post._id}`}>
-              <div className='text-lg text-link'>{post.title}</div>
+              <div className='text-lg text-link line-clamp-2'>{post.title}</div>
             </Link>
             <div className='flex flex-row text-sm'>
               <div>{formatDate()}</div>

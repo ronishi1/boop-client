@@ -24,7 +24,7 @@ const ForumPostCard = ({post}) => {
     <div className='card-content grid content-center h-20 w-56'>
       <div className='flex flex-row'>
         <Link to={`/post/${post._id}`}>
-          <img className="h-20 w-16 object-cover pr-2" src={post.linked_image ? post.linked_image : "https://static.thenounproject.com/png/944120-200.png"} alt="cover art"/>
+          <img className="h-20 w-16 object-cover pr-2" src={post.linked_image ? post.linked_image :  "https://cdn2.iconfinder.com/data/icons/user-interface-vol-2-21/64/No_Data-512.png"} alt="cover art"/>
         </Link>
         <div className='flex flex-col h-20 w-40'>
           <Link to={`/post/${post._id}`}>

@@ -68,23 +68,23 @@ const ForumPost = ({post}) => {
       </div>
       <Link to={'/info/'+post.linked_content}>
         <div className='flex my-4 place-content-center h-2/5'>
-          <img className='h-72 w-48 object-cover' src={post.linked_image ? post.linked_image : "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Question_mark_%28black%29.svg/800px-Question_mark_%28black%29.svg.png" } alt="cover image"/>
+          <img className='h-72 w-48 object-cover' src={post.linked_image ? post.linked_image : "https://cdn2.iconfinder.com/data/icons/user-interface-vol-2-21/64/No_Data-512.png" } alt="cover image"/>
         </div>
       </Link>
       <div className='grid grid-cols-1 justify-items-center space-y-2'>
         <div className="tabs">
-          <a 
+          <a
             className={"tab tab-bordered " + ( tab==1 ? 'tab-active' : '')}
             onClick={() => setTab(1)}
           >
             Post
-          </a> 
-          <a 
+          </a>
+          <a
             className={"tab tab-bordered " + ( tab==2 ? 'tab-active' : '')}
             onClick={() => setTab(2)}
           >
             Synopsis
-          </a> 
+          </a>
         </div>
         <div className='h-72 overflow-y-auto'>
           {tab == 1 ? <p>{post.content}</p>:<p>{post.linked_synopsis}</p>}
