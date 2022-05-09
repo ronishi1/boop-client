@@ -27,6 +27,7 @@ const DeleteForumModal = ({ postId, title, toggleForumDeleteCallback}) => {
                     viewBox="0 0 24 24"
                     stroke="grey"
                     strokeWidth={2}
+                    onClick={() => toggleForumDeleteCallback(false)}
                   >
                     <path
                       strokeLinecap="round"

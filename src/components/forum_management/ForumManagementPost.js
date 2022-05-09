@@ -104,6 +104,7 @@ const ForumManagementPost = ({postId, cover, title, linked_title, publicationDat
               <DeleteForumModal 
               postId={postId}
               title={title} 
+              toggleForumDeleteCallback={toggleForumDeleteCallback}
               />
             </label>
           </label>
