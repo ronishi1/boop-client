@@ -30,7 +30,7 @@ const ForumCreateModal = ({toggleForumCreateCallback}) => {
     contentType: "",
     authorUsername: "",
   }])
-  const [forumTopic, setTopic] = useState({value:"Comic Recommendations", label:"Comic Recommendations"})
+  const [forumTopic, setTopic] = useState({value:"Casual Discussion", label:"Casual Discussion"})
 
   const [GetLink, { loading, error:err, data, refetch }] = useLazyQuery(GET_LINK);
   const [CreatePost] = useMutation(CREATE_POST);
@@ -53,6 +53,24 @@ const ForumCreateModal = ({toggleForumCreateCallback}) => {
     {value:"Story Recommendations", label:"Story Recommendations"},
     {value:"Story Discussions", label:"Story Discussions"},
     {value:"Story Upcoming Releases", label:"Story Upcoming Releases"},
+    {value:"Community Announcements", label:"Community Announcements"},
+    {value:"Casual Discussion", label:"Casual Discussion"},
+    {value:"Games, Music, and Entertainment", label:"Games, Music, and Entertainment"},
+  ]
+
+  const storyTopics = [
+    {value:"Story Recommendations", label:"Story Recommendations"},
+    {value:"Story Discussions", label:"Story Discussions"},
+    {value:"Story Upcoming Releases", label:"Story Upcoming Releases"},
+  ]
+
+  const comicTopics = [
+    {value:"Comic Recommendations", label:"Comic Recommendations"},
+    {value:"Comic Discussions", label:"Comic Discussions"},
+    {value:"Comic Upcoming Releases", label:"Comic Upcoming Releases"},
+  ]
+
+  const miscTopics = [
     {value:"Community Announcements", label:"Community Announcements"},
     {value:"Casual Discussion", label:"Casual Discussion"},
     {value:"Games, Music, and Entertainment", label:"Games, Music, and Entertainment"},
@@ -176,10 +194,17 @@ const ForumCreateModal = ({toggleForumCreateCallback}) => {
             styles = {customStyles}
             onChange={(e)=> {
               if(e === null){
-                setLink({value: 'Enter Series Title To Link', label: 'Enter Series Title To Link'})
+                setLink({value: 'Enter Series Title To Link', label: 'Enter Series Title To Link'});
+                setTopic({value:"Casual Discussion", label:"Casual Discussion"});
                 return;
               }
               setLink(e);
+              if(e.contentType === "S"){
+                setTopic({value:"Story Discussions", label:"Story Discussions"})
+              }
+              else{
+                setTopic({value:"Comic Discussions", label:"Comic Discussions"})
+              }
             }}
             defaultValue={{value: 'Enter Series Title To Link', label: 'Enter Series Title To Link'}} 
             options={options}
@@ -201,13 +226,31 @@ const ForumCreateModal = ({toggleForumCreateCallback}) => {
 
         <div id="ForumCreateModal-ForumTopic">
           <label>Forum Topic*</label>
+          {link.contentId !== ""  && link.value !== "Enter Series Title To Link" ? 
+          link.contentType === "C" ? 
           <Select 
             isSearchable={false}
             value = {forumTopic}
             defaultValue={{value: 'Select Forum Topic', label: 'Select Forum Topic'}} 
-            options={forumTopics}
+            options={comicTopics}
+            onChange={(e) => setTopic(e)}
+          /> 
+          : 
+          <Select 
+            isSearchable={false}
+            value = {forumTopic}
+            defaultValue={{value: 'Select Forum Topic', label: 'Select Forum Topic'}} 
+            options={storyTopics}
             onChange={(e) => setTopic(e)}
           />
+          :
+          <Select 
+            isSearchable={false}
+            value = {forumTopic}
+            defaultValue={{value: 'Select Forum Topic', label: 'Select Forum Topic'}} 
+            options={miscTopics}
+            onChange={(e) => setTopic(e)}
+          />}
         </div>
 
         <div id="ForumCreateModal-Tags">
