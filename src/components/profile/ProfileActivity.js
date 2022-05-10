@@ -90,6 +90,30 @@ const ProfileActivity = ({username}) => {
               <p className='text-right col-span-3'>{formatDate(activity)}</p>
             </div>)
         }
+        else if(activity.activity_type == "reply"){
+          return (
+            <div key={index} className='grid grid-cols-12'>
+              <div className='flex flex-row col-span-9'>
+                <p className='pr-1'>
+                  Replied to post
+                  <Link to={`/post/${activity.content_ID}`}><span className="text-forum">&nbsp;{activity.content_name}</span></Link>
+                </p>
+              </div>
+              <p className='text-right col-span-3'>{formatDate(activity)}</p>
+            </div>)
+        }
+        else if(activity.activity_type == "create"){
+          return (
+            <div key={index} className='grid grid-cols-12'>
+              <div className='flex flex-row col-span-9'>
+                <p className='pr-1'>
+                  Created new forum post
+                  <Link to={`/post/${activity.content_ID}`}><span className="text-forum">&nbsp;{activity.content_name}</span></Link>
+                </p>
+              </div>
+              <p className='text-right col-span-3'>{formatDate(activity)}</p>
+            </div>)
+        }
       })}
 
     </div>

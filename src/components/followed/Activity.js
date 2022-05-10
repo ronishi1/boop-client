@@ -132,6 +132,54 @@ const Activity = ({activity,username}) => {
                 <p className='text-right col-span-3'>{formatDate(activity)}</p>
               </div>)
             }
+          else if(activity.activity_type == "reply"){
+            return (
+              <div className='grid grid-cols-12 text-lg'>
+                <div className='flex flex-row col-span-9'>
+                  <p className='pr-1'>
+                    <div className="flex flex-row items-center">
+                      <Link to={`/profile/${username}`}>
+                        <div className="flex flex-row items-center">
+                          <img
+                            className="h-8 -mx-2 object-contain mask mask-circle"
+                            src={profile.profile_pic ? profile.profile_pic : "https://sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png"} />
+                          <div className="text-link pl-3">{username}</div>
+                        </div>
+                        </Link>
+                        <div>
+                        &nbsp;replied to post
+                        <Link to={`/post/${activity.content_ID}`}><span className="text-forum">&nbsp;{activity.content_name}</span></Link>
+                      </div>
+                    </div>
+                  </p>
+                </div>
+                <p className='text-right col-span-3'>{formatDate(activity)}</p>
+              </div>)
+          }
+          else if(activity.activity_type == "create"){
+            return (
+            <div className='grid grid-cols-12 text-lg'>
+              <div className='flex flex-row col-span-9'>
+                <p className='pr-1'>
+                  <div className="flex flex-row items-center">
+                    <Link to={`/profile/${username}`}>
+                      <div className="flex flex-row items-center">
+                        <img
+                          className="h-8 -mx-2 object-contain mask mask-circle"
+                          src={profile.profile_pic ? profile.profile_pic : "https://sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png"} />
+                        <div className="text-link pl-3">{username}</div>
+                      </div>
+                      </Link>
+                      <div>
+                      &nbsp;created new forum post
+                      <Link to={`/post/${activity.content_ID}`}><span className="text-forum">&nbsp;{activity.content_name}</span></Link>
+                    </div>
+                  </div>
+                </p>
+              </div>
+              <p className='text-right col-span-3'>{formatDate(activity)}</p>
+            </div>)
+          }
             else {
               return <div></div>
             }

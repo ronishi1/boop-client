@@ -169,7 +169,7 @@ const ProfileScreen = ({fetchUser,user}) => {
         {user && profile && profile.username != user.username ? (
           <div className="flex place-content-center py-8">
             <button
-              className="btn bg-forum border-forum w-1/5 hover:bg-forum hover:opacity-50 hover:border-forum"
+              className="btn bg-forum border-forum hover:bg-forum hover:opacity-50 hover:border-forum"
               onClick={() => handleFollow()}
             >
               {profile.followers ? (profile.followers.includes(user._id) ? "Followed" : "Follow") : <></>}
