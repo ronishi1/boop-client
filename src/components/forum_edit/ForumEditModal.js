@@ -73,9 +73,9 @@ const ForumEditModal = ({postId, title, linked_title, content, propTags, toggleF
                 <h3 className="font-bold text-lg">Edit Forum Post</h3>
               </div>
               <div>
-                <label for="forum-modal" onClick={() => toggleForumCallback(false)}>
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                <label onClick={() => toggleForumCallback(false)}>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </label>
               </div>
@@ -90,7 +90,7 @@ const ForumEditModal = ({postId, title, linked_title, content, propTags, toggleF
             </div>
             <textarea className="w-full border-2 border-grey rounded text-sm pl-2 pb-6 mt-4" placeholder={content} onChange={(e)=> setDescription(e.target.value)} value={forumDescription}></textarea>
             <div className="flex flex-row justify-between items-center">
-              <label for="forum-modal" className="cursor-pointer ml-4" onClick={() => toggleForumCallback(false)}>Cancel</label>
+              <label className="cursor-pointer ml-4" onClick={() => toggleForumCallback(false)}>Cancel</label>
                 <button className="btn border-none bg-forum normal-case mr-4" type="submit">Edit</button>
             </div>
         </form>

@@ -7,7 +7,7 @@ const PopularPost = ({post}) => {
 
   const formatDate = () => {
     let date = post.publication_date;
-    let month = months[date.getMonth()-1];
+    let month = months[date.getMonth()];
     let pm = date.getHours() > 12;
     let hour = date.getHours();
     if(pm) hour -= 12;

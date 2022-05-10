@@ -12,7 +12,7 @@ const ForumManagementScreen = ({user}) => {
   
   return (
     <div>
-    <div className="flex flex-row justify-between">
+      <div className="flex flex-row justify-between">
         <p className="text-lg ml-4 mb-4 font-semibold">
           Forum Management
         </p>
@@ -32,9 +32,11 @@ const ForumManagementScreen = ({user}) => {
           id="forum-modal" 
           className="modal-toggle"
           checked={showForumCreate}
-          onClick={() => {toggleForumCreateCallback(false)}}/>
+          onClick={() => {toggleForumCreateCallback(false)}}
+          readOnly={true}
+        />
         <div className="modal">
-          <div className="modal-box">
+          <div className="modal-box w-1/3 min-w-[30rem] max-w-[60rem]">
             <ForumCreateModal
               toggleForumCreateCallback={toggleForumCreateCallback}
             />

@@ -20,6 +20,17 @@ const ForumCreateModal = ({toggleForumCreateCallback}) => {
 
   const [GetSeriesTitles, { loading, error, data, refetch }] = useLazyQuery(GET_SERIES_TITLES);
   const [CreatePost] = useMutation(CREATE_POST);
+
+  const customStyles = {
+    option: (provided) => ({
+      ...provided,
+      cursor: "pointer"
+    }),
+    input: (provided) => ({
+      ...provided,
+      cursor: "text"
+    })
+  }
   
   const forumTopics = [
     {value:"Comic Recommendations", label:"Comic Recommendations"},
@@ -55,13 +66,6 @@ const ForumCreateModal = ({toggleForumCreateCallback}) => {
   const handleTitleInputChange = (seriesTitle) => {
     setSearch(seriesTitle)
     fetchData(searchTitle)
-  }
-
-  const handleTitleChange = (seriesTitle) => {
-    setLink(seriesTitle)
-  }
-  const handleForumTopicChange = (forumTopic) => {
-    setTopic(forumTopic)
   }
   
 
@@ -120,52 +124,81 @@ const ForumCreateModal = ({toggleForumCreateCallback}) => {
   }
   return (
     <div>
-    <form className="w-full h-full m-1.5" onSubmit={handleSubmit}>
-            <div className="flex flex-row justify-between">
-              <div>
-                <h3 className="font-bold text-lg">Create Forum Post</h3>
-              </div>
-              <div>
-                <label for="forum-modal" onClick={() => toggleForumCreateCallback(false)}>
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </label>
-              </div>
-              
-            </div>
-            <input type="text" placeholder="Post Title" className="input input-bordered w-full focus:outline-none py-4" onChange={(e) => setTitle(e.target.value)}/>
-            <p className="py-4">Linked to 
-              <Select 
-                value = {link}
-                onChange={(e)=> setLink(e)}
-                defaultValue={{value: 'Enter Series Title To Link', label: 'Enter Series Title To Link'}} 
-                options={options}
-                onInputChange={handleTitleInputChange}
-                onChange={handleTitleChange}
-              />
-            </p>
-            <p className="py-4">Forum Topic: 
-              <Select 
-                isSearchable={false}
-                value = {forumTopic}
-                onChange={(e)=> setLink(e)}
-                defaultValue={{value: 'Select Forum Topic', label: 'Select Forum Topic'}} 
-                options={forumTopics}
-                onChange={handleForumTopicChange}
-              />
-            </p>
-            <p>
-              Tags
-            </p>
-            <div className="flex">
-              <div className={`badge ${spoiler===true ? "bg-spoiler" :""} ${spoiler===true ? "text-white" :"text-spoiler"} border-spoiler badge-outline text-xs mr-1 cursor-pointer`} onClick={() => handleClick('Spoiler')}>Spoiler</div>
-              <div className={`badge ${nsfw===true ? "bg-nsfw" :""} ${nsfw===true ? "text-white" :"text-nsfw"} border-nsfw badge-outline text-xs mr-1 cursor-pointer`} onClick={() => handleClick('NSFW')}>NSFW</div>
-              <div className={`badge ${discussion===true ? "bg-discussion" :""} ${discussion===true ? "text-white" :"text-discussion"} border-discussion badge-outline text-xs mr-1 cursor-pointer`} onClick={() => handleClick('Discussion')}>Discussion</div>
-            </div>
-            <textarea className="w-full border-2 border-grey rounded text-sm pl-2 pb-32 mt-4" placeholder="Post Description" onChange={(e) => handleDesc(e)}></textarea>
+      <form className="w-full h-full m-1.5 space-y-4" onSubmit={handleSubmit}>
+        <div className="flex flex-row justify-between">
+          <div>
+            <h3 className="font-bold text-lg">Create Forum Post</h3>
+          </div>
+          <div>
+            <label onClick={() => toggleForumCreateCallback(false)}>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </label>
+          </div>
+        </div>
+
+        <div id="ForumCreateModal-PostTitle">
+          <label>Post Title*</label>
+          <input 
+            type="text" 
+            placeholder="Post Title" 
+            className="input input-bordered w-full focus:outline-none rounded-md" 
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        </div>
+        
+        <div id="ForumCreateModal-LinkedContent">
+          <label>Linked To</label>
+          <Select 
+            value={link}
+            styles = {customStyles}
+            onChange={(e)=> {
+              if(e === null){
+                setLink({value: 'Enter Series Title To Link', label: 'Enter Series Title To Link'})
+                return;
+              }
+              setLink(e);
+            }}
+            defaultValue={{value: 'Enter Series Title To Link', label: 'Enter Series Title To Link'}} 
+            options={options}
+            isClearable={true}
+          />
+        </div>
+
+        <div id="ForumCreateModal-ForumTopic">
+          <label>Forum Topic*</label>
+          <Select 
+            isSearchable={false}
+            value = {forumTopic}
+            defaultValue={{value: 'Select Forum Topic', label: 'Select Forum Topic'}} 
+            options={forumTopics}
+            onChange={(e) => setTopic(e)}
+          />
+        </div>
+
+        <div id="ForumCreateModal-Tags">
+          <label>Tags*</label>
+          <div className="flex">
+            <div className={`badge ${spoiler===true ? "bg-spoiler" :""} ${spoiler===true ? "text-white" :"text-spoiler"} border-spoiler badge-outline text-xs mr-1 cursor-pointer`} onClick={() => handleClick('Spoiler')}>Spoiler</div>
+            <div className={`badge ${nsfw===true ? "bg-nsfw" :""} ${nsfw===true ? "text-white" :"text-nsfw"} border-nsfw badge-outline text-xs mr-1 cursor-pointer`} onClick={() => handleClick('NSFW')}>NSFW</div>
+            <div className={`badge ${discussion===true ? "bg-discussion" :""} ${discussion===true ? "text-white" :"text-discussion"} border-discussion badge-outline text-xs mr-1 cursor-pointer`} onClick={() => handleClick('Discussion')}>Discussion</div>
+          </div>
+        </div>
+
+        <div id="ForumCreateModal-Description">
+          <label>Description*</label>
+          <textarea 
+            className="w-full textarea textarea-bordered rounded-md leading-normal text-sm" 
+            placeholder="Post Description" 
+            onChange={(e) => handleDesc(e)}
+          />
+        </div>
+            
+            
+          
             <div className="flex flex-row justify-between items-center">
-              <label for="forum-modal" className="cursor-pointer ml-4" onClick={() => toggleForumCreateCallback(false)}>Cancel</label>
+              <label className="cursor-pointer ml-4" onClick={() => toggleForumCreateCallback(false)}>Cancel</label>
                 <button className="btn border-none bg-forum normal-case mr-4" type="submit">Post</button>
             </div>
         </form>
