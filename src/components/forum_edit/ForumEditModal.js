@@ -61,39 +61,84 @@ const ForumEditModal = ({postId, title, linked_title, content, propTags, toggleF
       }
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     let tagsArray = Array.from(tags)
-    EditPost({variables: {postID: postId, title:forumTitle, content: forumDescription, tags: tagsArray}})
+    if(forumTitle.length === 0 || forumDescription.length === 0 || tagsArray.length === 0){
+      return;
+    }
+    await EditPost({variables: {postID: postId, title:forumTitle, content: forumDescription, tags: tagsArray}})
   }
+
   return (
     <div>
-    <form className="w-full h-full m-1.5" onSubmit={handleSubmit}>
-            <div className="flex flex-row justify-between">
-              <div>
-                <h3 className="font-bold text-lg">Edit Forum Post</h3>
-              </div>
-              <div>
-                <label onClick={() => toggleForumCallback(false)}>
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </label>
-              </div>
-              
-            </div>
-            <input type="text"  className="input input-bordered w-full focus:outline-none py-4" onChange={(e) => setTitle(e.target.value)} value={forumTitle}/>
-            <p className="py-4">Linked to <strong className="cursor-pointer">{link}</strong></p>
-            <div className="flex">
-              <div className={`badge ${spoiler===true ? "bg-spoiler" :""} ${spoiler===true ? "text-white" :"text-spoiler"} border-spoiler badge-outline text-xs mr-1 cursor-pointer`} onClick={() => handleClick("Spoiler")}>Spoiler</div>
-              <div className={`badge ${nsfw===true ? "bg-nsfw" :""} ${nsfw===true ? "text-white" :"text-nsfw"} border-nsfw badge-outline text-xs mr-1 cursor-pointer`} onClick={() => handleClick("NSFW")}>NSFW</div>
-              <div className={`badge ${discussion===true ? "bg-discussion" :""} ${discussion===true ? "text-white" :"text-discussion"} border-discussion badge-outline text-xs mr-1 cursor-pointer`} onClick={() => handleClick("Discussion")}>Discussion</div>
-            </div>
-            <textarea className="w-full border-2 border-grey rounded text-sm pl-2 pb-6 mt-4" placeholder={content} onChange={(e)=> setDescription(e.target.value)} value={forumDescription}></textarea>
-            <div className="flex flex-row justify-between items-center">
-              <label className="cursor-pointer ml-4" onClick={() => toggleForumCallback(false)}>Cancel</label>
-                <button className="btn border-none bg-forum normal-case mr-4" type="submit">Edit</button>
-            </div>
-        </form>
+      <form className="w-full h-full m-1.5 space-y-4" onSubmit={handleSubmit}>
+        <div className="flex flex-row justify-between">
+          <div>
+            <h3 className="font-bold text-lg">Edit Forum Post</h3>
+          </div>
+          <div>
+            <label onClick={() => toggleForumCallback(false)}>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </label>
+          </div>  
+        </div>
+
+        <div id="ForumEditModal-PostTitle">
+          <label>Post Title*</label>
+          <input 
+            type="text" 
+            className="input input-bordered w-full focus:outline-none" 
+            onChange={(e) => setTitle(e.target.value)} 
+            placeholder="Give your post a title"
+            value={forumTitle}
+          />
+        </div>
+
+        {link ? <div id="ForumEditModal-LinkedTo">
+          <label>Linked To </label>
+          <strong className="cursor-pointer">{link}</strong>
+        </div> : <></>}
+        
+        <div id="ForumEditModal-Tags">
+          <label>Tags*</label>
+          <div className="flex">
+            <div className={`badge ${spoiler===true ? "bg-spoiler" :""} ${spoiler===true ? "text-white" :"text-spoiler"} border-spoiler badge-outline text-xs mr-1 cursor-pointer`} onClick={() => handleClick("Spoiler")}>Spoiler</div>
+            <div className={`badge ${nsfw===true ? "bg-nsfw" :""} ${nsfw===true ? "text-white" :"text-nsfw"} border-nsfw badge-outline text-xs mr-1 cursor-pointer`} onClick={() => handleClick("NSFW")}>NSFW</div>
+            <div className={`badge ${discussion===true ? "bg-discussion" :""} ${discussion===true ? "text-white" :"text-discussion"} border-discussion badge-outline text-xs mr-1 cursor-pointer`} onClick={() => handleClick("Discussion")}>Discussion</div>
+          </div>
+        </div>
+    
+        <div id="ForumEditModal-Description">
+          <label>Description*</label>
+          <textarea 
+            className="w-full textarea textarea-bordered rounded-md leading-normal text-sm" 
+            placeholder="Post Description" 
+            onChange={(e)=> setDescription(e.target.value)} 
+            value={forumDescription}
+          />
+        </div>
+
+        <div id="ForumEditModal-Footer" className="flex flex-row justify-between items-center">
+          <div className="text-sm">*required</div>
+          <div className="space-x-2">
+            <a 
+              className="link no-underline text-sm" 
+              onClick={() => toggleForumCallback(false)}
+            >
+              Cancel
+            </a>
+            <button 
+              className={"btn btn-sm normal-case "+(forumTitle.length === 0 || forumDescription.length === 0 || Array.from(tags).length === 0 ? "btn-disabled":"")} 
+              type="submit"
+            >
+              Save
+            </button>
+          </div>
+        </div>
+        
+      </form>
     </div>
   );
 };

@@ -392,9 +392,16 @@ export const GET_MY_POSTS = gql`
 		}
 	}
 `
-export const GET_SERIES_TITLES = gql`
-	query GetSeriesTitles($seriesTitle : String){
-		getSeriesTitles(seriesTitle: $seriesTitle)
+export const GET_LINK = gql`
+	query GetLink($seriesTitle : String){
+		getLink(seriesTitle: $seriesTitle){
+			_id
+			content_ID
+			content_title
+			content_image
+			content_type
+			author_username
+		}
 	}
 `
 

@@ -11,22 +11,22 @@ const ForumManagementScreen = ({user}) => {
   }
   
   return (
-    <div>
+    <div className="px-4 pb-4">
       <div className="flex flex-row justify-between">
-        <p className="text-lg ml-4 mb-4 font-semibold">
+        <p className="text-2xl font-semibold">
           Forum Management
         </p>
         <div className="btn btn-sm bg-base-content/90 pr-3 border-none" onClick={() => {toggleForumCreateCallback(true)}}>+ Create Post</div>
       </div>
 
-      <div className="mx-16 ">
+      <div>
         <p className="text-lg font-semibold">
           My Posts
         </p>
         <ForumManagementPosts />
       </div>
       
-      <div>
+      <div id="ForumCreateModal">
         <input 
           type="checkbox" 
           id="forum-modal" 
