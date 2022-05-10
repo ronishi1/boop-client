@@ -14,7 +14,16 @@ const PageSelectModal = ({ visible, maxPage, handleSetPage, cancel }) => {
     setError({status:true,message:"Please enter a page number within the given range"});
     setTimeout(() => {
       setError({status:false,message:''});
-    },2000)
+      setSelectedPage("")
+    },1000)
+  }
+
+  const handleChange = (e) => {
+
+    if(!isNaN(e.target.value))
+      setSelectedPage(parseInt(e.target.value))
+    else
+    setSelectedPage("")
   }
 
   return (
@@ -59,7 +68,7 @@ const PageSelectModal = ({ visible, maxPage, handleSetPage, cancel }) => {
             <input 
               className='input input-bordered w-full'
               value={selectedPage}
-              onChange={(e) => setSelectedPage(parseInt(e.target.value))}
+              onChange={handleChange}
               min={1}
               max={maxPage}
             />
