@@ -3,7 +3,7 @@ import CancelPostModal from "../modals/CancelPostModal";
 import { GET_SERIES_TITLES } from '../../cache/queries';
 import { CREATE_POST } from '../../cache/mutations';
 import { useLazyQuery, useMutation } from '@apollo/client';
-import Select from 'react-select'
+import Select from 'react-select';
 
 const ForumCreateModal = ({toggleForumCreateCallback}) => {
   const [spoiler, toggleSpoiler] = useState(false);
@@ -18,7 +18,7 @@ const ForumCreateModal = ({toggleForumCreateCallback}) => {
   const [options, setOptions] = useState([{value:"test", label:"test"}])
   const [forumTopic, setTopic] = useState({value:"Comic Recommendations", label:"Comic Recommendations"})
 
-  const [GetSeriesTitles, { loading, error, data, refetch }] = useLazyQuery(GET_SERIES_TITLES);
+  const [GetSeriesTitles, { loading, error:err, data, refetch }] = useLazyQuery(GET_SERIES_TITLES);
   const [CreatePost] = useMutation(CREATE_POST);
 
   const customStyles = {
@@ -63,11 +63,10 @@ const ForumCreateModal = ({toggleForumCreateCallback}) => {
     fetchData(searchTitle)
   }, [])
 
-  const handleTitleInputChange = (seriesTitle) => {
-    setSearch(seriesTitle)
-    fetchData(searchTitle)
-  }
-  
+  // const handleTitleInputChange = (seriesTitle) => {
+  //   setSearch(seriesTitle)
+  //   fetchData(searchTitle)
+  // }
 
   const handleClick = (tagType) => {
       if (tagType === "Spoiler") {
@@ -99,7 +98,7 @@ const ForumCreateModal = ({toggleForumCreateCallback}) => {
       }
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     let tagsArray = Array.from(tags)
     console.log(forumTitle)
     console.log(forumDescription)
@@ -113,7 +112,7 @@ const ForumCreateModal = ({toggleForumCreateCallback}) => {
       linked_content: link.value,
       topic : forumTopic.value
     }
-    CreatePost({variables: {forumPost: forumPostInput}})
+    await CreatePost({variables: {forumPost: forumPostInput}})
   }
   const handleDesc = (e) => {
     setDescription(e.target.value)
@@ -194,14 +193,26 @@ const ForumCreateModal = ({toggleForumCreateCallback}) => {
             onChange={(e) => handleDesc(e)}
           />
         </div>
-            
-            
-          
-            <div className="flex flex-row justify-between items-center">
-              <label className="cursor-pointer ml-4" onClick={() => toggleForumCreateCallback(false)}>Cancel</label>
-                <button className="btn border-none bg-forum normal-case mr-4" type="submit">Post</button>
-            </div>
-        </form>
+        
+        <div id="ForumCreateModal-Footer" className="flex flex-row justify-between items-center">
+          <div className="text-sm">*required</div>
+          <div className="space-x-2">
+            <a 
+              className="link no-underline text-sm" 
+              onClick={() => toggleForumCreateCallback(false)}
+            >
+              Cancel
+            </a>
+            <button 
+              className={"btn btn-sm border-none normal-case "+
+              (forumTitle.length === 0 || forumDescription.length===0 || Array.from(tags).length===0 ? "btn-disabled":"")} 
+              type="submit"
+            >
+              Post
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
   );
 };
