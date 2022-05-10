@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from "react";
 import CancelPostModal from "../modals/CancelPostModal";
-import { GET_SERIES_TITLES } from '../../cache/queries';
+import { GET_LINK } from '../../cache/queries';
 import { CREATE_POST } from '../../cache/mutations';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import Select from 'react-select';
@@ -13,12 +13,26 @@ const ForumCreateModal = ({toggleForumCreateCallback}) => {
   const [forumTitle, setTitle] = useState("Create Forum Post");
   const [forumDescription, setDescription] = useState("");
 
-  const [link, setLink] = useState({value: 'Enter Series Title To Link', label: 'Enter Series Title To Link'});
+  const [link, setLink] = useState({
+    value: 'Enter Series Title To Link', 
+    label: 'Enter Series Title To Link',
+    contentId: "",
+    contentImage: "",
+    contentType: "",
+    authorUsername: "",
+  });
   const [searchTitle, setSearch] = useState("")
-  const [options, setOptions] = useState([{value:"test", label:"test"}])
+  const [options, setOptions] = useState([{
+    value:"test", 
+    label:"test",
+    contentId: "",
+    contentImage: "",
+    contentType: "",
+    authorUsername: "",
+  }])
   const [forumTopic, setTopic] = useState({value:"Comic Recommendations", label:"Comic Recommendations"})
 
-  const [GetSeriesTitles, { loading, error:err, data, refetch }] = useLazyQuery(GET_SERIES_TITLES);
+  const [GetLink, { loading, error:err, data, refetch }] = useLazyQuery(GET_LINK);
   const [CreatePost] = useMutation(CREATE_POST);
 
   const customStyles = {
@@ -43,16 +57,24 @@ const ForumCreateModal = ({toggleForumCreateCallback}) => {
     {value:"Casual Discussion", label:"Casual Discussion"},
     {value:"Games, Music, and Entertainment", label:"Games, Music, and Entertainment"},
   ]
-  
+
   const fetchData = async (searchTitle) => {
-    let result = await GetSeriesTitles({variables: {seriesTitle: searchTitle}})
-    console.log(result.data.getSeriesTitles)
+    let result = await GetLink({variables: {seriesTitle: searchTitle}});
+    console.log(result.data.getLink)
     let newOptions = []
     for (let i = 0 ; i <= 10; i++) {
-      if (result.data.getSeriesTitles[i] === undefined) {
-        break
+      if (result.data.getLink[i] === undefined) {
+        break;
       }
-      newOptions.push({value:result.data.getSeriesTitles[i], label: result.data.getSeriesTitles[i]})
+      let item = result.data.getLink[i];
+      newOptions.push({
+        value: item.content_title, 
+        label: item.content_title,
+        contentId: item.content_ID,
+        contentImage: item.content_image,
+        contentType: item.content_type,
+        authorUsername: item.author_username,
+      });
     }
     if (newOptions.length !== 0) {
       setOptions(newOptions)
@@ -163,6 +185,18 @@ const ForumCreateModal = ({toggleForumCreateCallback}) => {
             options={options}
             isClearable={true}
           />
+          {link.contentId !== "" ?
+            <a href={"/info/"+link.contentId} target="_blank"><div 
+              className={"card card-bordered mt-2 rounded-none flex flex-row "
+              + "hover:bg-"+(link.contentType === "S" ? "story" : "comic")}
+            >
+              <img className="h-[72px] w-12 m-1 object-cover" src={link.contentImage}/>
+              <div className="flex flex-col">
+                <div className="text-xl font-semibold truncate">{link.label}</div>
+                <div className="text-sm leading-none truncate">{link.authorUsername}</div>
+              </div>
+            </div></a>
+          : <></>}
         </div>
 
         <div id="ForumCreateModal-ForumTopic">
