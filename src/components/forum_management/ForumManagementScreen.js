@@ -11,7 +11,7 @@ const ForumManagementScreen = ({user}) => {
   }
   
   return (
-    <div className="px-4 pb-4">
+    <div className="container mx-auto px-4 pb-4">
       <div className="flex flex-row justify-between">
         <p className="text-2xl font-semibold">
           Forum Management
