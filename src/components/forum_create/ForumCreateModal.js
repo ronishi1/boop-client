@@ -188,7 +188,7 @@ const ForumCreateModal = ({toggleForumCreateCallback}) => {
           {link.contentId !== "" ?
             <a href={"/info/"+link.contentId} target="_blank"><div 
               className={"card card-bordered mt-2 rounded-none flex flex-row "
-              + "hover:bg-"+(link.contentType === "S" ? "story" : "comic")}
+              + "hover:bg-opacity-20 hover:bg-"+(link.contentType === "S" ? "story" : "comic")}
             >
               <img className="h-[72px] w-12 m-1 object-cover" src={link.contentImage}/>
               <div className="flex flex-col">
