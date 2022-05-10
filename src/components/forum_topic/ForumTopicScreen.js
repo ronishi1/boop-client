@@ -60,7 +60,7 @@ const ForumTopicScreen = () => {
   }
   return (
     <div className="flex place-content-center">
-      <div className={"card rounded-none w-5/6 h-3/4-screen"}>
+      <div className={"card rounded-none w-5/6 h-3/4-screen static"}>
         <div className={`grid grid-cols-2 ${bg}`}>
           <div>
             <div className="grid grid-cols-12">
