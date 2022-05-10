@@ -29,11 +29,7 @@ const ForumReplySection = ({replies, user,handleDeleteReply,handleEditReply, pos
 
   return (
     <div className='card flex flex-col p-4 rounded-none shadow bg-forum bg-opacity-20 space-y-4 mb-4 static'>
-      {replies.length == 0 ?
-      <div>There are currently no replies to this post.</div>
-      :
-      <div className='space-y-2'>
-        <div className='card rounded-none w-full bg-white shadow static'>
+      <div className='card rounded-none w-full bg-white shadow static'>
           <div className='card-title bg-gray-800 text-white p-2 flex justify-between'>
             <p className='w-max text-white hover:underline font-medium flex flex-row'>
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -51,6 +47,10 @@ const ForumReplySection = ({replies, user,handleDeleteReply,handleEditReply, pos
             {post.content}
           </div>
         </div>
+      {replies.length == 0 ?
+      <div>There are currently no replies to this post.</div>
+      :
+      <div className='space-y-2'>
         {replies.slice((page-1)*repliesPerPage,page*repliesPerPage).map(reply =>
           <ForumReply reply={reply} formatDate={formatDate} key={reply._id} user={user}
             handleDeleteReply={(replyId) => {
