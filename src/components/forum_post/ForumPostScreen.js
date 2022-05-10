@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ForumPost from "./ForumPost";
+import ForumPostLink from "./ForumPostLink";
 import { GET_POST } from '../../cache/queries';
 import { CREATE_REPLY, DELETE_REPLY, EDIT_REPLY } from '../../cache/mutations';
 import {useMutation, useQuery} from '@apollo/client';
@@ -59,7 +59,7 @@ const ForumPostScreen = ({auth, user}) => {
   if(loading || (auth && !user)){
     return <Loading />
   }
-
+  console.log(data.getPost.author_name)
   return (
     <div className="flex justify-center">
       <div className='flex flex-col w-5/6 space-y-4'>
@@ -82,7 +82,7 @@ const ForumPostScreen = ({auth, user}) => {
         </div>
         <div className="flex flex-row space-x-4">
           <div className="w-1/4">
-            <ForumPost post={data.getPost} />
+            <ForumPostLink post={data.getPost} />
           </div>
           <div className="w-3/4 space-y-4">
             {isReplying ? 
@@ -134,7 +134,13 @@ const ForumPostScreen = ({auth, user}) => {
               </div>: <></>
             }
             <ForumReplySection replies={data.getPost.replies} user={user} handleDeleteReply={handleDeleteReply}
-            handleEditReply={handleEditReply}/>
+            handleEditReply={handleEditReply} 
+            post={{
+              content:data.getPost.content,
+              author: data.getPost.author,
+              author_name: data.getPost.author_name,
+              timestamp: data.getPost.timestamp
+            }}/>
           </div>
         </div>
       </div>

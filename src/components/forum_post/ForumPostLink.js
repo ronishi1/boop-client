@@ -3,11 +3,10 @@ import {useQuery} from '@apollo/client';
 import { Link } from "react-router-dom";
 import { GET_CONTENT_BASIC } from '../../cache/queries';
 
-const ForumPost = ({post}) => {
+const ForumPostLink = ({post}) => {
   // This is the initial post, should make it different in looks like reddit does
   // replies should be a less of a focus, don't follow figma mockup
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=341%3A2882
-  const [tab, setTab] = useState(1);
 
   const linkedContent = post.linked_content !== null ? post.linked_content : "123456789012345678901234"
   const { loading, error, data } = useQuery(GET_CONTENT_BASIC, {
@@ -72,26 +71,13 @@ const ForumPost = ({post}) => {
         </div>
       </Link>
       <div className='grid grid-cols-1 justify-items-center space-y-2'>
-        <div className="tabs">
-          <a
-            className={"tab tab-bordered " + ( tab==1 ? 'tab-active' : '')}
-            onClick={() => setTab(1)}
-          >
-            Post
-          </a>
-          <a
-            className={"tab tab-bordered " + ( tab==2 ? 'tab-active' : '')}
-            onClick={() => setTab(2)}
-          >
-            Synopsis
-          </a>
-        </div>
+        <p className='font-semibold underline'>Synopsis</p>
         <div className='h-72 overflow-y-auto'>
-          {tab == 1 ? <p>{post.content}</p>:<p>{post.linked_synopsis}</p>}
+          <p>{post.linked_synopsis}</p>
         </div>
       </div>
     </div>
   );
 }
 
-export default ForumPost;
+export default ForumPostLink;

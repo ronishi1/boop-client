@@ -66,6 +66,7 @@ const PageSelectModal = ({ visible, maxPage, handleSetPage, cancel }) => {
           </Transition>
             <div>Enter a page number between <strong>1</strong> and <strong>{maxPage}</strong>: </div>
             <input 
+              type='Number'
               className='input input-bordered w-full'
               value={selectedPage}
               onChange={handleChange}
