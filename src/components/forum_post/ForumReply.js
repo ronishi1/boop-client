@@ -29,7 +29,7 @@ const ForumReply = ({reply, formatDate, user, handleDeleteReply,handleEditReply}
 
   return (
     <div>
-      <div className='card rounded-none w-full bg-white shadow'>
+      <div className='card rounded-none w-full bg-white shadow static'>
         <div className='card-title bg-forum text-white p-2 flex justify-between'>
           <p className='w-max text-white hover:underline font-medium'>
             <Link to={'/profile/'+reply.author_name}>
@@ -56,7 +56,7 @@ const ForumReply = ({reply, formatDate, user, handleDeleteReply,handleEditReply}
             </div>
           </div>
         </Transition>
-        {isEditing ? 
+        {isEditing ?
           <div className='p-2'>
             <textarea
               className='textarea textarea-bordered w-full leading-normal'
@@ -65,14 +65,14 @@ const ForumReply = ({reply, formatDate, user, handleDeleteReply,handleEditReply}
               placeholder="Reply to post"
             />
             <div className='flex justify-end space-x-2 text-xs'>
-              <a 
+              <a
                 className="link no-underline text-gray-400
                 hover:brightness-90"
                 onClick={() => toggleEdit(false)}
               >
                 Cancel
               </a>
-              <a 
+              <a
                 className="link no-underline text-forum
                 hover:brightness-90"
                 onClick={handleEditSave}
@@ -86,16 +86,16 @@ const ForumReply = ({reply, formatDate, user, handleDeleteReply,handleEditReply}
             {reply.content}
           </div>
         }
-        {user && user._id == reply.author && !isEditing ? 
+        {user && user._id == reply.author && !isEditing ?
           <div className='flex justify-end space-x-2 text-xs p-2'>
-            <a 
+            <a
               className="link no-underline text-forum
               hover:brightness-90"
               onClick={() => toggleEdit(true)}
             >
               Edit
             </a>
-            <a 
+            <a
               className="link no-underline text-red-600
               hover:brightness-90"
               onClick={() => toggleDeleteModal(true)}
@@ -107,7 +107,7 @@ const ForumReply = ({reply, formatDate, user, handleDeleteReply,handleEditReply}
       </div>
       <DeleteReplyModal visible={deleteModal} deleteFunction={handleDeleteConfirm} cancelDelete={() => toggleDeleteModal(false)}/>
     </div>
-    
+
   );
 }
 

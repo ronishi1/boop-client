@@ -1,14 +1,14 @@
 import React, { useState } 	from 'react';
 import ForumReply from './ForumReply';
 import PageSelectModal from './PageSelectModal';
-    
+
 const ForumReplySection = ({replies, user,handleDeleteReply,handleEditReply}) => {
   const months = [ "Jan", "Feb", "Mar", "April", "May", "June",
   "July", "Aug", "Sep", "Oct", "Nov", "Dec" ];
   const [page, setPage] = useState(1);
   const [pageModal, toggleModal] = useState(false);
   const repliesPerPage = 8;
-  
+
   const formatDate = (reply) => {
     let date = new Date(reply.timestamp);
     let month = months[date.getMonth()];
@@ -25,49 +25,49 @@ const ForumReplySection = ({replies, user,handleDeleteReply,handleEditReply}) =>
     toggleModal(false);
     setPage(page);
   }
-  
+
   return (
-    <div className='card flex flex-col p-4 rounded-none shadow bg-forum bg-opacity-20 space-y-4 mb-4'>
-      {replies.length == 0 ? 
+    <div className='card flex flex-col p-4 rounded-none shadow bg-forum bg-opacity-20 space-y-4 mb-4 static'>
+      {replies.length == 0 ?
       <div>There are currently no replies to this post.</div>
-      : 
+      :
       <div className='space-y-2'>
-        {replies.slice((page-1)*repliesPerPage,page*repliesPerPage).map(reply => 
-          <ForumReply reply={reply} formatDate={formatDate} key={reply._id} user={user} 
+        {replies.slice((page-1)*repliesPerPage,page*repliesPerPage).map(reply =>
+          <ForumReply reply={reply} formatDate={formatDate} key={reply._id} user={user}
             handleDeleteReply={(replyId) => {
               if(page > 1 && replies.slice((page-1)*repliesPerPage,page*repliesPerPage).length == 1)
-                setPage(page-1); 
+                setPage(page-1);
               handleDeleteReply(replyId);
-            }} 
+            }}
             handleEditReply={handleEditReply}
           />
         )}
       </div>
-      
+
       }
       {replies.length > repliesPerPage ? <div className='flex justify-center'>
         <div className='col-start-2 col-end-4 justify-self-center'>
           <div className="btn-group">
-            {page==1 ? <button className="btn btn-disabled">«</button> : 
-              <button 
-                className="btn border-forum bg-forum text-white 
-                hover:border-forum hover:bg-white hover:text-forum" 
+            {page==1 ? <button className="btn btn-disabled">«</button> :
+              <button
+                className="btn border-forum bg-forum text-white
+                hover:border-forum hover:bg-white hover:text-forum"
                 onClick={() => setPage(page-1)}
               >
                 «
               </button>
             }
-            <button 
+            <button
               className="btn w-[10em] border-forum bg-forum text-white
               hover:border-forum hover:bg-white hover:text-forum"
               onClick={() => toggleModal(true)}
             >
               Page {page}
             </button>
-            {page == Math.ceil(replies.length/repliesPerPage) ? <button className="btn btn-disabled">»</button> : 
-              <button 
-                className="btn border-forum bg-forum text-white 
-                hover:border-forum hover:bg-white hover:text-forum" 
+            {page == Math.ceil(replies.length/repliesPerPage) ? <button className="btn btn-disabled">»</button> :
+              <button
+                className="btn border-forum bg-forum text-white
+                hover:border-forum hover:bg-white hover:text-forum"
                 onClick={() => setPage(page+1)}
               >
                 »
@@ -82,4 +82,3 @@ const ForumReplySection = ({replies, user,handleDeleteReply,handleEditReply}) =>
 }
 
 export default ForumReplySection;
-    
