@@ -32,7 +32,7 @@ const ForumReply = ({reply, formatDate, user, handleDeleteReply,handleEditReply}
       <div className='card rounded-none w-full bg-white shadow'>
         <div className='card-title bg-forum text-white p-2 flex justify-between'>
           <p className='w-max text-white hover:underline font-medium'>
-            <Link to={'/profile/'+reply.author}>
+            <Link to={'/profile/'+reply.author_name}>
               {reply.author_name}
             </Link>
           </p>
