@@ -44,7 +44,7 @@ const Activity = ({activity,username}) => {
                   <img
                     className="h-8 -mx-2 object-contain mask mask-circle"
                     src={profile.profile_pic ? profile.profile_pic : "https://sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png"} />
-                  <div className="text-link">{username}</div>
+                  <div className="text-link pl-3">{username}</div>
                 </div>
               </Link>
               <div>
@@ -70,7 +70,7 @@ const Activity = ({activity,username}) => {
                     <img
                       className="h-8 -mx-2 object-contain mask mask-circle"
                       src={profile.profile_pic ? profile.profile_pic : "https://sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png"} />
-                    <div className="text-link">{username}</div>
+                    <div className="text-link pl-3">{username}</div>
                   </div>
                 </Link>
                 <div>
@@ -96,7 +96,7 @@ const Activity = ({activity,username}) => {
                       <img
                         className="h-8 -mx-2 object-contain mask mask-circle"
                         src={profile.profile_pic ? profile.profile_pic : "https://sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png"} />
-                      <div className="text-link">{username}</div>
+                      <div className="text-link pl-3">{username}</div>
                     </div>
                   </Link>
                   <div>
@@ -119,7 +119,7 @@ const Activity = ({activity,username}) => {
                           <img
                             className="h-8 -mx-2 object-contain mask mask-circle"
                             src={profile.profile_pic ? profile.profile_pic : "https://sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png"} />
-                          <div className="text-link">{username}</div>
+                          <div className="text-link pl-3">{username}</div>
                         </div>
                         </Link>
                         <div>
