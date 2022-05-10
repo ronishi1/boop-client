@@ -37,6 +37,7 @@ const NavBar = ({showSidebarCallback,auth,toggleLoginCallback,toggleRegisterCall
         <div className="form-control">
           <label className="input-group">
             <input type="text" placeholder="Search" value={searchTerm} onChange={(e) => {setSearchTerm(e.target.value)}} className="focus:ring-0 focus:outline-none input input-bordered max-w-md w-96 h-10" />
+            {searchTerm !== "" ?
             <Link to={`/search/${searchTerm}`} onClick={() => {setSearchTerm("")}}>
               <span className="cursor-pointer pt-2 pb-2">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 stroke-neutral-500 stroke-1 fill-icon-grey" viewBox="0 0 20 20" fill="currentColor">
@@ -44,6 +45,13 @@ const NavBar = ({showSidebarCallback,auth,toggleLoginCallback,toggleRegisterCall
                 </svg>
               </span>
             </Link>
+            :
+            <span className="cursor-pointer pt-2 pb-2">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 stroke-neutral-500 stroke-1 fill-icon-grey" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
+              </svg>
+            </span>
+            }
           </label>
           </div>
         </div>
