@@ -34,14 +34,14 @@ const SearchEntry = ({content}) => {
         }
     }
     return (
-        <div className="flex flex-row">
+        <div className="flex flex-row h-60 w-[33rem]">
           {content.content_type == "F" ?
             <Link to={`/post/${content.content_ID}`}>
-              <img className="object-cover w-40 h-60 rounded" src={content.content_image}/>
+              <img className="object-cover w-40 h-60 rounded" src={content.content_image ? content.content_image : "https://cdn2.iconfinder.com/data/icons/user-interface-vol-2-21/64/No_Data-512.png"}/>
             </Link>
             :
             <Link to={`/info/${content.content_ID}`}>
-              <img className="object-cover w-40 h-60 rounded" src={content.content_image}/>
+              <img className="object-cover w-40 h-60 rounded" src={content.content_image ? content.content_image: "https://cdn2.iconfinder.com/data/icons/user-interface-vol-2-21/64/No_Data-512.png"}/>
             </Link>
           }
             <div className="ml-2 h-60 w-72">

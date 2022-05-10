@@ -92,7 +92,7 @@ const SearchScreen = () => {
       </div>
       {results.length == 0 ? <div className="text-gray-400 text-xl">There are no results for the search term {search_term}.</div> : <></>}
 
-      <div className="grid gap-3 lg:grid-cols-3 mt-3">
+      <div className="grid gap-y-2 lg:grid-cols-3 mt-3 gap-x-24">
         {results
           .filter((result) => {
             return filterOptions.has(result.content_type);
