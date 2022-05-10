@@ -1,4 +1,4 @@
-import React 	from 'react';
+import React, {useEffect} 	from 'react';
 import { GET_USER_PUBLISHED } from '../../cache/queries';
 import { useQuery } 	from '@apollo/client';
 import ContentCard from '../common/ContentCard';
@@ -10,6 +10,10 @@ const ProfilePublished = ({username}) => {
   const { loading, error, data, refetch } = useQuery(GET_USER_PUBLISHED, {
       variables: { username: username },
     });
+
+    useEffect(() => {
+      refetch();
+    },[])
 
   if(loading) { console.log(loading, 'loading'); }
   if(error) { console.log(error, 'error'); }
