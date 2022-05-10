@@ -2,11 +2,14 @@ import React, {useState} from 'react';
 import { Link } from "react-router-dom";
 import ForumEditModal from '../forum_edit/ForumEditModal';
 import DeleteForumModal from "../modals/DeleteForumModal";
+import { useNavigate } from 'react-router-dom';
 
 const ForumManagementPost = ({postId, cover, title, linked_title, publicationDate, tags, content}) => {
   
   const [showForumEdit, toggleForumEdit] = useState(false);
   const [showForumDelete, toggleForumDelete] = useState(false);
+
+  let navigate = useNavigate();
 
   const months = [ "Jan", "Feb", "Mar", "April", "May", "June",
   "July", "Aug", "Sep", "Oct", "Nov", "Dec" ];
@@ -28,91 +31,106 @@ const ForumManagementPost = ({postId, cover, title, linked_title, publicationDat
   const formatDate = () => {
     let date = new Date(publicationDate);
     let month = months[date.getMonth()];
-    let pm = date.getHours() > 12;
-    let hour = date.getHours();
-    if(pm) hour -= 12;
-    if(hour == 0) hour = 12;
-    let strHour = ("0" + hour).slice(-2);
-    let strMinutes = ("0" + date.getMinutes()).slice(-2);
-    return month + " " + date.getDate() + ", " + strHour + ":" + strMinutes + (pm ? "pm" : "am");
+    return month + " " + date.getDate() + ", " + date.getFullYear();
   }
+
+
 
   return (
     <div>
-      <div className="flex flex-row mb-4 justify-between">
-        <div className="flex flex-row">
-          <div>
-            <Link to={`/post/${postId}`}><img className="max-h-40 max-w-[110px] mb-4 mr-4 rounded" src={cover}/></Link>
-          </div>
-          <div>
-            <Link to={`/post/${postId}`}><div className="text-lg font-medium truncate">{title}</div></Link>
-            <p>{formatDate()}</p>
-            { tags.includes("Spoiler") ? 
-            <div className={`badge bg-spoiler text-white border-spoiler badge-outline text-xs mr-1`}>Spoiler</div> : <div></div>}
-            
-            { tags.includes("NSFW") ? 
-            <div className={`badge bg-nsfw text-white border-nsfw badge-outline text-xs mr-1`}>NSFW</div> : <div></div>}
-            { tags.includes("Discussion") ? 
-            <div className={`badge bg-discussion text-white border-discussion badge-outline text-xs mr-1`}>Discussion</div> : <div></div>}
-            <div className="text-sm line-clamp-3">
+      <div 
+        className='hover:bg-forum hover:bg-opacity-20 flex flex-row'
+      >
+        <div className='w-2/3 flex flex-row space-x-2 px-2'>
+          <img 
+            className="h-36 w-24 rounded-sm object-cover hover:cursor-pointer" 
+            src={(cover) ? cover:"https://cdn2.iconfinder.com/data/icons/user-interface-vol-2-21/64/No_Data-512.png"}
+            onClick={() => navigate("/post/"+postId)}
+          />
+          <div className='flex flex-col truncate'>
+            <div 
+              className="text-md text-link font-semibold truncate hover:cursor-pointer"
+              onClick={() => navigate("/post/"+postId)}
+            >
+              {title}
+            </div>
+            <div className='flex flex-row space-x-2'>
+              {tags.map((tag,i) => <div className={`badge bg-${tag.toLowerCase()} text-white border-${tag.toLowerCase()} text-xs`} key={i}>{tag}</div>)}
+            </div>
+            <div className="text-sm max-h-[6em] whitespace-pre-wrap break-words truncate">
               {content}
             </div>
           </div>
         </div>
-          <div className="flex flex-row">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" onClick={() => (toggleForumCallback(true))}>
+
+        <div className='w-1/6 font-semibold'>
+          {formatDate()}
+        </div>
+
+        <div className='w-1/6'>
+          <div className="flex flex-row justify-end px-4 space-x-1">
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              className="h-6 w-6 cursor-pointer hover:stroke-link" 
+              fill="none" viewBox="0 0 24 24" 
+              stroke="currentColor" 
+              strokeWidth="2" 
+              onClick={(e) => {
+                toggleForumCallback(true);
+              }}
+            >
               <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
             </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 cursor-pointer stroke-red-600" fill="none" viewBox="0 0 24 24" strokeWidth="2" onClick={() => (toggleForumDeleteCallback(true))}>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 cursor-pointer hover:stroke-red-600" stroke="currentColor" fill="none" viewBox="0 0 24 24" strokeWidth="2" onClick={() => (toggleForumDeleteCallback(true))}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
             </svg>
           </div>
         </div>
-
-        <div>
-          <input 
-            readOnly={true}
-            type="checkbox" 
-            id="forum-modal" 
-            className="modal-toggle"
-            checked={showForumEdit}
-            onClick={() => {toggleForumCallback(false)}}/>
-          <div className="modal">
-          
-            <div className="modal-box">
-              <ForumEditModal
+      </div>
+      <div>
+        <input 
+          readOnly={true}
+          type="checkbox" 
+          id="forum-modal" 
+          className="modal-toggle"
+          checked={showForumEdit}
+          onClick={() => {toggleForumCallback(false)}}
+        />
+        <div className="modal">
+          <div className="modal-box">
+            <ForumEditModal
               postId={postId}
               title={title}
               linked_title={linked_title}
               content={content}
               propTags={tags}
               toggleForumCallback={toggleForumCallback}
-              />
-            </div>
+            />
           </div>
         </div>
+      </div>
 
-        <div>
-          <input
-            readOnly={true}
-            type="checkbox"
-            id="delete-forum-modal"
-            className="modal-toggle"
-            checked={showForumDelete}
-            onClick={() => {toggleForumDeleteCallback(false)}}
-          />
-          <label className="modal cursor-pointer">
-            <label className="modal-box w-1/3 max-w-full h-5/12">
-              <DeleteForumModal 
+      <div>
+        <input
+          readOnly={true}
+          type="checkbox"
+          id="delete-forum-modal"
+          className="modal-toggle"
+          checked={showForumDelete}
+          onClick={() => {toggleForumDeleteCallback(false)}}
+        />
+        <div className="modal">
+          <div className="modal-box w-1/3 max-w-full h-5/12">
+            <DeleteForumModal 
               postId={postId}
               title={title} 
               toggleForumDeleteCallback={toggleForumDeleteCallback}
-              />
-            </label>
-          </label>
+            />
+          </div>
         </div>
-        
       </div>
+    </div>
+    
   );
 }
 
