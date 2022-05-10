@@ -185,7 +185,7 @@ const ForumCreateModal = ({toggleForumCreateCallback}) => {
             options={options}
             isClearable={true}
           />
-          {link.contentId !== "" ?
+          {link.contentId !== ""  && link.value !== "Enter Series Title To Link" ?
             <a href={"/info/"+link.contentId} target="_blank"><div 
               className={"card card-bordered mt-2 rounded-none flex flex-row "
               + "hover:bg-opacity-20 hover:bg-"+(link.contentType === "S" ? "story" : "comic")}
