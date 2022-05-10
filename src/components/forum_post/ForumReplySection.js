@@ -8,7 +8,7 @@ const ForumReplySection = ({replies, user,handleDeleteReply,handleEditReply, pos
   "July", "Aug", "Sep", "Oct", "Nov", "Dec" ];
   const [page, setPage] = useState(1);
   const [pageModal, toggleModal] = useState(false);
-  const repliesPerPage = 2;
+  const repliesPerPage = 8;
 
   const formatDate = (reply) => {
     let date = new Date(reply.timestamp);
