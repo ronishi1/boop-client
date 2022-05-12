@@ -113,15 +113,22 @@ const ComicEditScreen = ({tps}) => {
     // let data = null
     // console.log(currentPage)
     // console.log(chapter.page_JSONS[currentPage])
-    // if((chapter.page_JSONS[currentPage] !== undefined && chapter.page_JSONS[currentPage] !== || chapter.page_JSONS[currentPage-1])
-    // if (currentPage == 1) {
-    //   data = JSON.parse(decodeURI(chapter.page_JSONS[currentPage]));
+    // console.log(chapter)
+    // if(chapter.page_JSONS[currentPage] !== undefined && chapter.page_JSONS[currentPage] !== "Unsaved JSON"){
+    //   if (currentPage == 1) {
+    //     data = JSON.parse(decodeURI(chapter.page_JSONS[currentPage]));
+    //   }
+    //   else {
+    //     console.log(chapter.page_JSONS[currentPage-1])
+    //     console.log(decodeURI(chapter.page_JSONS[currentPage-1]))
+    //     data = JSON.parse(decodeURI(chapter.page_JSONS[currentPage-1]));
+    //   }
     // }
-    // else {
-    //   data = JSON.parse(decodeURI(chapter.page_JSONS[currentPage-1]));
+    // console.log(data)
+    // if(data !== null) {
+    //   setLines(data.lines);
+    //   setText(data.text);
     // }
-    // setLines(data.lines);
-    // setText(data.text);
 
     // Background code
     let result = await GetContentChapter({variables: {chapterID:id}});
@@ -328,9 +335,10 @@ const ComicEditScreen = ({tps}) => {
 
     return (
       <Image
+        className="absolute h-[1650px] w-[1275px]"
         image={image}
         x={0}
-        y={0}
+        y={2}
         visible={false}
         ref={backgroundRef}
       />
@@ -549,7 +557,7 @@ const ComicEditScreen = ({tps}) => {
         <div className="flex w-5/6 justify-center relative overflow-hidden">
           <div className="h-[1650px] w-[1275px] border-2">
           {chapter.page_images !== undefined ?
-            <div className="relative">
+            <div className="absolute h-[1650px] w-[1275px]">
               {
                 chapter.page_images[currentPage-1] === undefined  || chapter.page_images[currentPage-1] === "Unsaved URL"
                 ?
@@ -559,7 +567,7 @@ const ComicEditScreen = ({tps}) => {
               }
             </div>
             :
-            <div className="relative"></div>
+            <div className="absolute h-[1650px] w-[1275px]"></div>
             }
             <div className="absolute top-0">
             <Stage
