@@ -107,37 +107,37 @@ const ComicEditScreen = ({tps}) => {
   // attempt to set up undo/redo
 
   async function fetchData() {
-    // let result = await GetContentChapter({variables: {chapterID:id}});
-    // setChapter(result.data.getContentChapter);
-    // let chapter = result.data.getContentChapter
-    // let data = null
-    // console.log(currentPage)
-    // console.log(chapter.page_JSONS[currentPage])
-    // console.log(chapter)
-    // if(chapter.page_JSONS[currentPage] !== undefined && chapter.page_JSONS[currentPage] !== "Unsaved JSON"){
-    //   if (currentPage == 1) {
-    //     data = JSON.parse(decodeURI(chapter.page_JSONS[currentPage]));
-    //   }
-    //   else {
-    //     console.log(chapter.page_JSONS[currentPage-1])
-    //     console.log(decodeURI(chapter.page_JSONS[currentPage-1]))
-    //     data = JSON.parse(decodeURI(chapter.page_JSONS[currentPage-1]));
-    //   }
-    // }
-    // console.log(data)
-    // if(data !== null) {
-    //   setLines(data.lines);
-    //   setText(data.text);
-    // }
-
-    // Background code
     let result = await GetContentChapter({variables: {chapterID:id}});
     setChapter(result.data.getContentChapter);
     let chapter = result.data.getContentChapter
-    const background = chapter.page_images[currentPage-1]
-    if (background !== undefined && background !== "Unsaved URL") {
-      setBackground(chapter.page_images[currentPage-1])
+    let data = null
+    console.log(currentPage)
+    console.log(chapter.page_JSONS[currentPage])
+    console.log(chapter)
+    if(chapter.page_JSONS[currentPage] !== undefined && chapter.page_JSONS[currentPage] !== "Unsaved JSON"){
+      if (currentPage == 1) {
+        data = JSON.parse(decodeURI(chapter.page_JSONS[currentPage]));
+      }
+      else {
+        console.log(chapter.page_JSONS[currentPage-1])
+        console.log(decodeURI(chapter.page_JSONS[currentPage-1]))
+        data = JSON.parse(decodeURI(chapter.page_JSONS[currentPage-1]));
+      }
     }
+    console.log(data)
+    if(data !== null) {
+      setLines(data.lines);
+      setText(data.text);
+    }
+
+    // Background code
+    // let result = await GetContentChapter({variables: {chapterID:id}});
+    // setChapter(result.data.getContentChapter);
+    // let chapter = result.data.getContentChapter
+    // const background = chapter.page_images[currentPage-1]
+    // if (background !== undefined && background !== "Unsaved URL") {
+    //   setBackground(chapter.page_images[currentPage-1])
+    // }
     let dropdown = []
     for(var i = 0; i < chapter.num_pages; i++) {
       dropdown.push(i+1)
@@ -270,6 +270,11 @@ const ComicEditScreen = ({tps}) => {
         console.log(data)
         console.log(encodeURI(JSON.stringify({lines:lines, text:text})));
         await SavePage({variables:{chapterID:chapter._id, pageNumber:currentPage, url:data.url, pageJSON: encodeURI(JSON.stringify({lines:lines, text:text})) }});
+        tps.clearStack()
+        toggleUndo(false)
+        toggleRedo(false)
+        setLines([])
+        setText([])
         console.log("saved!");
         let result = await GetContentChapter({variables: {chapterID:id}});
         setChapter(result.data.getContentChapter);
@@ -321,6 +326,9 @@ const ComicEditScreen = ({tps}) => {
     setShowDelete(false);
   }
   const handleSelectPage = (pageNum) => {
+    tps.clearStack()
+    toggleUndo(false)
+    toggleRedo(false)
     setPage(pageNum)
     setLines([])
     setText([])
@@ -338,7 +346,7 @@ const ComicEditScreen = ({tps}) => {
         className="absolute h-[1650px] w-[1275px]"
         image={image}
         x={0}
-        y={2}
+        y={0}
         visible={false}
         ref={backgroundRef}
       />
@@ -555,7 +563,7 @@ const ComicEditScreen = ({tps}) => {
       <div className='flex flex-row justify-between'>
         <ComicLeftToolbar tool={tool} setTool={setTool}/>
         <div className="flex w-5/6 justify-center relative overflow-hidden">
-          <div className="h-[1650px] w-[1275px] border-2">
+          <div className="h-[1650px] w-[1275px]">
           {chapter.page_images !== undefined ?
             <div className="absolute h-[1650px] w-[1275px]">
               {
