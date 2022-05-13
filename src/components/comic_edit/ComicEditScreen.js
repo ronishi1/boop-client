@@ -562,8 +562,8 @@ const ComicEditScreen = ({tps}) => {
         handleSelectPage={handleSelectPage} handleSave={handleSave} handleAddPage={handleAddPage} handleDeletePage={() => setShowDelete(true)}/>
       <div className='flex flex-row justify-between'>
         <ComicLeftToolbar tool={tool} setTool={setTool}/>
-        <div className="flex w-5/6 justify-center relative overflow-hidden">
-          <div className="h-[1650px] w-[1275px]">
+        <div className="flex w-5/6 justify-center relative overflow-hidden bg-gray-300 p-4">
+          <div className="h-[1650px] w-[1275px] bg-white">
           {chapter.page_images !== undefined ?
             <div className="absolute h-[1650px] w-[1275px]">
               {
@@ -584,6 +584,7 @@ const ComicEditScreen = ({tps}) => {
               onMouseDown={handleMouseDown}
               onMousemove={handleMouseMove}
               onMouseup={handleMouseUp}
+              onMouseLeave={handleMouseUp}
               onClick={(e) => handleClick(e)}
               ref = {stageRef}
             >
