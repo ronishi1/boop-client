@@ -120,7 +120,7 @@ export class comicEditTransaction extends scuffedjsTPS_Transaction {
         this.prev = prev;
         this.data = data;
         this.stateFunc = stateFunc;
-        console.log("jstps data",data)
+        // console.log("jstps data",data)
 	}
     doTransaction() {
         this.stateFunc(this.data);
