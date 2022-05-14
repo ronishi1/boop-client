@@ -58,7 +58,7 @@ export class scuffedjsTPS {
         // check if there are any redo actions on the stack
         if(this.hasTransactionToRedo()) {
             // clear out redo transactions
-            this.transactions.length = this.ptr + 1;
+            this.transactions = this.transactions.slice(0,this.ptr + 1);
         }
         // set maximum number of undoable actions
         if(this.transactions.length >= this.MAX_UNDO){
@@ -120,7 +120,7 @@ export class comicEditTransaction extends scuffedjsTPS_Transaction {
         this.prev = prev;
         this.data = data;
         this.stateFunc = stateFunc;
-        // console.log("jstps data",data)
+        console.log("jstps data",data)
 	}
     doTransaction() {
         this.stateFunc(this.data);
