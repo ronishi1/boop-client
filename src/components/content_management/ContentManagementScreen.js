@@ -216,7 +216,7 @@ const ContentManagementScreen = ({user}) => {
                   <div className="grid items-center space-y-4 p-4 mr-8 ml-8">
                     <div className="w-full flex flex-row justify-between">
                       <div className="text-left text-xl font-medium">
-                        Are you sure you want to delete this chapter?
+                        Are you sure you want to delete this work?
                       </div>
                       <div className="cursor-pointer" onClick={() => {setShowDelete(false)}}>
                         <svg
@@ -269,7 +269,7 @@ const ContentManagementScreen = ({user}) => {
                   <div className="grid items-center space-y-4 p-4 mr-8 ml-8">
                     <div className="w-full flex flex-row justify-between">
                       <div className="text-left text-xl font-medium">
-                        Are you sure you want to delete this work?
+                        Are you sure you want to delete this chapter?
                       </div>
                       <div className="cursor-pointer" onClick={() => {setShowDeleteChapter(false)}}>
                         <svg
