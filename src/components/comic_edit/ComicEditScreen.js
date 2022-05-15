@@ -111,20 +111,20 @@ const ComicEditScreen = ({tps}) => {
     setChapter(result.data.getContentChapter);
     let chapter = result.data.getContentChapter
     let data = null
-    console.log(currentPage)
-    console.log(chapter.page_JSONS[currentPage])
-    console.log(chapter)
+    // console.log(currentPage)
+    // console.log(chapter.page_JSONS[currentPage])
+    // console.log(chapter)
     if(chapter.page_JSONS[currentPage] !== undefined && chapter.page_JSONS[currentPage] !== "Unsaved JSON"){
       if (currentPage == 1) {
         data = JSON.parse(decodeURI(chapter.page_JSONS[currentPage]));
       }
       else {
-        console.log(chapter.page_JSONS[currentPage-1])
-        console.log(decodeURI(chapter.page_JSONS[currentPage-1]))
+        // console.log(chapter.page_JSONS[currentPage-1])
+        // console.log(decodeURI(chapter.page_JSONS[currentPage-1]))
         data = JSON.parse(decodeURI(chapter.page_JSONS[currentPage-1]));
       }
     }
-    console.log(data)
+    // console.log(data)
     if(data !== null) {
       setLines(data.lines);
       setText(data.text);
@@ -228,7 +228,7 @@ const ComicEditScreen = ({tps}) => {
   };
 
   const handleMouseUp = () => {
-    if(tool === 'pen' || tool === 'eraser'){
+    if((tool === 'pen' || tool === 'eraser') && isDrawing.current === true){
       isDrawing.current = false;
       tps.transactions.pop();
       tps.ptr--;
@@ -267,26 +267,26 @@ const ComicEditScreen = ({tps}) => {
     }).then(
         response => response.json()
     ).then(async data => {
-        console.log(data)
-        console.log(encodeURI(JSON.stringify({lines:lines, text:text})));
+        // console.log(data)
+        // console.log(encodeURI(JSON.stringify({lines:lines, text:text})));
         await SavePage({variables:{chapterID:chapter._id, pageNumber:currentPage, url:data.url, pageJSON: encodeURI(JSON.stringify({lines:lines, text:text})) }});
         tps.clearStack()
         toggleUndo(false)
         toggleRedo(false)
         setLines([])
         setText([])
-        console.log("saved!");
+        // console.log("saved!");
         let result = await GetContentChapter({variables: {chapterID:id}});
         setChapter(result.data.getContentChapter);
         setBackground(data.url)
-        console.log(result.data.getContentChapter, data.url)
+        // console.log(result.data.getContentChapter, data.url)
     });
   }
 
   const handlePublish = async () => {
     await PublishChapter({variables:{chapterID: chapter._id}});
     refetch();
-    console.log(chapter);
+    // console.log(chapter);
     navigate(`/content-management/${chapter.series_id}`);
   }
 
@@ -306,20 +306,20 @@ const ComicEditScreen = ({tps}) => {
     if (currentPage > 1) {
       setPage(currentPage - 1)
     }
-    console.log(pageDropdown)
+    // console.log(pageDropdown)
     let deletedPage = pageDropdown
     deletedPage.pop()
     // setLines(JSON.parse(decodeURI(chapter.page_JSONS[currentPage])).lines);
     setLines([])
     setText([])
-    console.log(currentPage)
+    // console.log(currentPage)
     if(deletedPage.length === 0) {
       await AddPage({variables: {chapterID: chapter._id}})
       deletedPage.push(1)
       await fetchData()
     }
     else {
-      console.log(deletedPage.length)
+      // console.log(deletedPage.length)
       setDropdown(deletedPage)
       await fetchData()
     }

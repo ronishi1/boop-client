@@ -475,7 +475,7 @@ const ContentManagementScreen = ({user}) => {
                               </svg>
                             </div>
                           </label>
-                          <input type="file" id="upload-photo" hidden="true" onChange={handleUpload}/>
+                          <input type="file" id="upload-photo" hidden={true} onChange={handleUpload}/>
 
                         </div>
                       }
