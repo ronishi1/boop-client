@@ -7,7 +7,7 @@ import {useParams} from 'react-router-dom';
 import Loading from '../loading/Loading'
 import ForumReplySection from "./ForumReplySection";
 import { Transition } from '@headlessui/react';
-
+import PageNotFound from '../page_not_found/PageNotFound';
 const ForumPostScreen = ({auth, user}) => {
   // https://www.figma.com/file/oP2NOFuaNPMCreFx2L7iSU/Boop-Mockups?node-id=329%3A2498
   const { id } = useParams();
@@ -41,7 +41,7 @@ const ForumPostScreen = ({auth, user}) => {
 
   const handleDeleteReply = async (replyId) => {
     await DeleteReply({variables: {
-      postID: id, 
+      postID: id,
       replyID: replyId
     }});
     refetch();
@@ -49,8 +49,8 @@ const ForumPostScreen = ({auth, user}) => {
 
   const handleEditReply = async (replyId, content) => {
     await EditReply({ variables: {
-      postID: id, 
-      content: content, 
+      postID: id,
+      content: content,
       replyID: replyId
     }});
     refetch();
@@ -59,17 +59,20 @@ const ForumPostScreen = ({auth, user}) => {
   if(loading || (auth && !user)){
     return <Loading />
   }
+  if(data.getPost == null){
+    return <PageNotFound />
+  }
   console.log(data.getPost.author_name)
   return (
     <div className="flex justify-center">
       <div className='flex flex-col w-5/6 space-y-4'>
-        <div 
+        <div
           className="flex shadow justify-between items-center h-16 w-full p-4 bg-forum"
         >
           <div className='text-white font-bold'>
             {data.getPost.title}
           </div>
-          {user && !isReplying ? <button 
+          {user && !isReplying ? <button
             className="btn btn-outline btn-sm border-white text-white
             hover:text-forum hover:bg-white hover:border-white"
             onClick={() => {
@@ -85,7 +88,7 @@ const ForumPostScreen = ({auth, user}) => {
             <ForumPostLink post={data.getPost} />
           </div>
           <div className="w-3/4 space-y-4">
-            {isReplying ? 
+            {isReplying ?
               <div className='card flex flex-col p-4 rounded-none shadow'>
                 <div className='space-y-2'>
                   <Transition
@@ -105,14 +108,14 @@ const ForumPostScreen = ({auth, user}) => {
                     </div>
                   </Transition>
                   <label>Reply to <strong>{data.getPost.title}</strong></label>
-                  <textarea 
+                  <textarea
                     className='w-full textarea textarea-bordered leading-normal whitespace-pre-wrap'
                     onChange={(e) => setReply(e.target.value)}
                     value={reply}
                     placeholder="Reply to post"
                   />
                   <div className='flex justify-end space-x-4'>
-                    <a 
+                    <a
                       className="link no-underline text-gray-400
                       hover:brightness-90"
                       onClick={() => {
@@ -122,7 +125,7 @@ const ForumPostScreen = ({auth, user}) => {
                     >
                       Cancel
                     </a>
-                    <a 
+                    <a
                       className="link no-underline text-forum font-semibold
                       hover:brightness-90"
                       onClick={handleCreateReply}
@@ -134,7 +137,7 @@ const ForumPostScreen = ({auth, user}) => {
               </div>: <></>
             }
             <ForumReplySection replies={data.getPost.replies} user={user} handleDeleteReply={handleDeleteReply}
-            handleEditReply={handleEditReply} 
+            handleEditReply={handleEditReply}
             post={{
               content:data.getPost.content,
               author: data.getPost.author,

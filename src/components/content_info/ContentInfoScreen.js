@@ -38,7 +38,7 @@ const ContentInfoScreen = ({auth}) => {
   let content = data.getContentInfo;
   console.log(content)
   if(!content || (new Date(content.publication_date).getTime() == (new Date(0)).getTime())) {
-    return <div className="flex place-content-center">Could not find content</div>
+    return <PageNotFound />;
   }
 
   let contentColor = "";
@@ -131,7 +131,7 @@ const ContentInfoScreen = ({auth}) => {
           <figure className="h-full">
             <img
               className="h-56 w-40 object-cover"
-              src={content.cover_image}
+              src={content.cover_image ? content.cover_image : "https://cdn2.iconfinder.com/data/icons/user-interface-vol-2-21/64/No_Data-512.png"}
               alt="cover art"
             />
             {auth && user ? <div className="self-start pt-1">
