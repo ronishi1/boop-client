@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import ChapterTable from "./ChapterTable";
 import DiscussionPost from "./DiscussionPost";
 import PopularPost from "./PopularPost";
@@ -27,6 +27,10 @@ const ContentInfoScreen = ({auth}) => {
   const [FollowUser] = useMutation(FOLLOW_USER);
   const [UnfollowUser] = useMutation(UNFOLLOW_USER);
 
+  useEffect(() => {
+    refetch();
+  })
+  
   if(loading || userLoading){
     return <></>;
   }
