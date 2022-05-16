@@ -10,6 +10,8 @@ import { uploadFile } from '../../utils/utils.js';
 import { useNavigate } from 'react-router-dom';
 import PageNotFound from '../page_not_found/PageNotFound';
 import Loading from '../loading/Loading';
+import {Link} from 'react-router-dom';
+
 const ProfileScreen = ({fetchUser,user}) => {
   let profile = {};
   let { username } = useParams();
@@ -131,18 +133,20 @@ const ProfileScreen = ({fetchUser,user}) => {
               onClick={() => {navigate(`/favorites/${username}`)}}>Favorites</div>
         </div>
         <div className="grid grid-cols-2 justify-items-center">
-          <div>
+          <div className="rounded p-4">
             <div className="font-bold text-center">
               {profile.followers ? readableNumber(profile.followers.length) : 0}
             </div>
             <div>Followers</div>
           </div>
-          <div>
+          <Link to="/followed">
+          <div className="rounded p-4 hover:bg-gray-300">
             <div className="font-bold text-center">
               {profile.following ? readableNumber(profile.following.length) : 0}
             </div>
             <div>Following</div>
           </div>
+          </Link>
         </div>
         <div className="flex flex-col place-content-center mb-8 pt-4 px-16">
           {editingBio ?
