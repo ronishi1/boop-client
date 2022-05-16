@@ -67,7 +67,7 @@ const ContentViewScreen = () => {
       <div className='flex place-content-center'>
         <div className='flex flex-col w-2/3'>
           <div className=''>
-            Series Title: <strong className="cursor-pointer" onClick={handleSeries}>{chapter.series_title}</strong>
+            Series Title: <strong className="cursor-pointer text-discussion" onClick={handleSeries}>{chapter.series_title}</strong>
           </div>
           <ChapterSelect chapter={chapter} currentChapter={currentChapter} chapterTitles={chapterTitles} id={id} chapterIds={chapterIds} handleChapter={handleChapter} currentPage={currentPage}
           pageDropdown={pageDropdown} handleSelectPage={handleSelectPage} contentType={chapter.content_type}/>
