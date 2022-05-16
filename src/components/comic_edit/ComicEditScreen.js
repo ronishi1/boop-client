@@ -114,21 +114,21 @@ const ComicEditScreen = ({tps}) => {
     // console.log(currentPage)
     // console.log(chapter.page_JSONS[currentPage])
     // console.log(chapter)
-    if(chapter.page_JSONS[currentPage] !== undefined && chapter.page_JSONS[currentPage] !== "Unsaved JSON"){
-      if (currentPage == 1) {
-        data = JSON.parse(decodeURI(chapter.page_JSONS[currentPage]));
-      }
-      else {
-        // console.log(chapter.page_JSONS[currentPage-1])
-        // console.log(decodeURI(chapter.page_JSONS[currentPage-1]))
-        data = JSON.parse(decodeURI(chapter.page_JSONS[currentPage-1]));
-      }
-    }
+    // if(chapter.page_JSONS[currentPage] !== undefined && chapter.page_JSONS[currentPage] !== "Unsaved JSON"){
+    //   if (currentPage == 1) {
+    //     data = JSON.parse(decodeURI(chapter.page_JSONS[currentPage]));
+    //   }
+    //   else {
+    //     // console.log(chapter.page_JSONS[currentPage-1])
+    //     // console.log(decodeURI(chapter.page_JSONS[currentPage-1]))
+    //     data = JSON.parse(decodeURI(chapter.page_JSONS[currentPage-1]));
+    //   }
+    // }
     // console.log(data)
-    if(data !== null) {
-      setLines(data.lines);
-      setText(data.text);
-    }
+    // if(data !== null) {
+    //   setLines(data.lines);
+    //   setText(data.text);
+    // }
 
     // Background code
     // let result = await GetContentChapter({variables: {chapterID:id}});
