@@ -1,4 +1,4 @@
-import React 	from 'react';
+import React, {useEffect} from 'react';
 import ListTemplate from './ListTemplate';
 import { useParams } from 'react-router-dom'
 import { GET_READ_LIST} from '../../cache/queries';
@@ -13,6 +13,10 @@ const ReadListScreen = () => {
   const { loading, error, data, refetch } = useQuery(GET_READ_LIST, {
       variables: { username: username }
     });
+
+  useEffect(() => {
+    refetch();
+  },[]);
 
   if(loading) { console.log(loading, 'loading'); }
 	if(error) { return <PageNotFound /> }

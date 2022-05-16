@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProfileActivity from "./ProfileActivity";
 import ProfilePublished from "./ProfilePublished";
 import { useParams } from 'react-router-dom';
@@ -19,8 +19,6 @@ const ProfileScreen = ({fetchUser,user}) => {
       variables: { username: username },
     });
 
-
-
   const [UpdateBio] = useMutation(UPDATE_BIO);
   const [FollowUser] = useMutation(FOLLOW_USER);
   const [UnfollowUser] = useMutation(UNFOLLOW_USER);
@@ -31,6 +29,10 @@ const ProfileScreen = ({fetchUser,user}) => {
   const [input, setInput] = useState("");
   const [selectedCollection, setSelectedCollection] = useState("Published");
   const [imageError, setImageError] = useState({status:false,message:""})
+
+  useEffect(() => {
+    refetch();
+  },[]);
 
   if(loading) { return <Loading /> }
 	if(error) { console.log(error, 'error'); }

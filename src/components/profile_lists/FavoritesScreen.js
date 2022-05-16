@@ -1,4 +1,4 @@
-import React 	from 'react';
+import React, {useEffect} from 'react';
 import ListTemplate from './ListTemplate';
 import { useParams } from 'react-router-dom'
 import { GET_FAVORITES } from '../../cache/queries';
@@ -13,6 +13,10 @@ const FavoritesScreen = () => {
   const { loading, error, data, refetch } = useQuery(GET_FAVORITES, {
       variables: { username: username }
     });
+
+  useEffect(() => {
+    refetch();
+  },[]);
 
   if(loading) { console.log(loading, 'loading'); }
 	if(error) { return <PageNotFound />}
