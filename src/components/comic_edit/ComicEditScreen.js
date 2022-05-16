@@ -323,6 +323,9 @@ const ComicEditScreen = ({tps}) => {
       setDropdown(deletedPage)
       await fetchData()
     }
+    tps.clearStack()
+    toggleUndo(false)
+    toggleRedo(false)
     setShowDelete(false);
   }
   const handleSelectPage = (pageNum) => {
