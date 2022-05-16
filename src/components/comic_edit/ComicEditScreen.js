@@ -575,9 +575,9 @@ const ComicEditScreen = ({tps}) => {
               }
             </div>
             :
-            <div className="absolute h-[1650px] w-[1275px]"></div>
+            <div className="h-[1650px] w-[1275px]"></div>
             }
-            <div className="absolute top-0">
+            <div>
             <Stage
               height={1650}
               width={1275}
